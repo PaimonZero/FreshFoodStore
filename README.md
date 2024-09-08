@@ -122,10 +122,12 @@
 ***
 
 **Câu hỏi**
+
     Khi tôi thêm unitPrice vào InputDetail thì làm sao để tôi truy ra giá của sản phầm đó được:
 Ví dụ cùng 1 loại thịt từ 1 nhà cung cấp, trong kho của tôi đang có thịt từ 2 đợt nhập hàng khác nhau, giá thịt đợt sau thì cao hơn đợt nhập hàng trước. Vậy làm như thế nào để tôi có thể hiện thị giá thịt ấy trong list sản phẩm
 
 **Trả lời**
+
 Bạn hoàn toàn đúng khi đặt câu hỏi về việc truy xuất giá sản phẩm khi có nhiều đơn giá khác nhau cho cùng một sản phẩm. Đây là một vấn đề khá phổ biến trong quản lý kho hàng, đặc biệt khi giá cả thị trường biến động.
 
 **Để giải quyết vấn đề này, chúng ta cần xem xét một số phương pháp:**
