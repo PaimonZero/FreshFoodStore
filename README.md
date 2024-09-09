@@ -285,70 +285,87 @@ Sử dụng View là một cách tiếp cận linh hoạt và hiệu quả để
 ***
 ***
 
+BatchId, InputDetailId, ProductId, Quantity, ExpiryDate, UnitPriceIn 
+Đây là các trường của bảng Batch, Mục đích của bản này là lưu trữ thông tin về số lượng và ngày hết hạn của hàng hóa của từng lô hàng đang còn trong kho. Vậy tôi sẽ tạo view cho Kho hàng như thế nào
 
-Tôi muốn khi hiển thị danh sách sản phẩm thì không hiện ngày hết hạn, khi chọn drop down thì hiển thị list các sản phầm theo các lô hàng và hiển thị cả ngày hết hạn. 
-Vậy thì chỉnh database như thế nào
+## Tạo View để Hiển thị Thông tin Tồn Kho
 
-***
-***
+**Hiểu rõ vấn đề:**
 
-## Đánh giá và Điều chỉnh Cấu trúc Cơ sở Dữ liệu
+Bạn đã có một bảng `Batches` để lưu trữ thông tin chi tiết về từng lô hàng, bao gồm số lượng hiện tại, ngày hết hạn và các thông tin liên quan. Để có một cái nhìn tổng quan về tình trạng tồn kho, chúng ta sẽ tạo một view.
 
-**Cảm ơn bạn đã chia sẻ cấu trúc cơ sở dữ liệu chi tiết.** Tôi nhận thấy rằng bạn đã thiết kế một hệ thống khá toàn diện, bao gồm các bảng chính để quản lý sản phẩm, nhà cung cấp, khách hàng, phiếu nhập xuất và tồn kho.
+**Mục tiêu của view:**
 
-**Tuy nhiên, tôi xin đưa ra một số gợi ý điều chỉnh để tối ưu hóa hơn nữa cấu trúc này:**
+* Hiển thị tổng số lượng tồn kho của từng sản phẩm.
+* Hiển thị số lượng tồn kho của từng lô hàng.
+* Có thể lọc dữ liệu theo các tiêu chí như sản phẩm, ngày hết hạn, v.v.
 
-### 1. **Bảng Objects:**
-* **Loại bỏ trường ExpiryDate:** Trường này nên được đưa vào bảng InputDetail, vì ngày hết hạn của một sản phẩm có thể khác nhau tùy thuộc vào lô hàng.
-* **Thêm trường Status:** Để quản lý trạng thái của sản phẩm (ví dụ: đang bán, ngừng kinh doanh).
+**Cấu trúc của view:**
 
-### 2. **Bảng InputDetail:**
-* **Giữ nguyên:** Cấu trúc này đã khá hợp lý, lưu trữ chi tiết về từng lô hàng nhập.
+```sql
+CREATE VIEW vw_Inventory AS
+SELECT 
+    b.ProductId, 
+    p.ProductName,
+    b.BatchId,
+    SUM(b.Quantity) AS QuantityInStock,
+    MAX(b.ExpiryDate) AS LatestExpiryDate
+FROM 
+    Batches b
+INNER JOIN Products p ON b.ProductId = p.ProductId
+GROUP BY 
+    b.ProductId, p.ProductName, b.BatchId;
+```
 
-### 3. **Bảng OutputDetail:**
-* **Giữ nguyên:** Tương tự như bảng InputDetail, lưu trữ chi tiết về từng lô hàng xuất.
+**Giải thích:**
 
-### 4. **Bảng Inventories:**
-* **Loại bỏ:** Thay vào đó, chúng ta có thể tính toán số lượng tồn kho trực tiếp từ bảng InputDetail và OutputDetail khi cần thiết. Việc duy trì một bảng Inventories riêng có thể gây ra sự không nhất quán giữa dữ liệu.
+* **INNER JOIN:** Kết hợp bảng `Batches` và `Products` để lấy thêm thông tin tên sản phẩm.
+* **SUM(b.Quantity):** Tính tổng số lượng của từng lô hàng.
+* **MAX(b.ExpiryDate):** Lấy ngày hết hạn gần nhất của từng lô hàng.
+* **GROUP BY:** Nhóm kết quả theo `ProductId`, `ProductName` và `BatchId` để hiển thị thông tin cho từng lô hàng.
 
-### 5. **Bảng Promotions:**
-* **Thêm trường ObjectId:** Để liên kết với bảng Batches thay vì bảng Objects. Điều này sẽ cho phép áp dụng khuyến mãi cho từng lô hàng cụ thể.
+**Sử dụng view:**
 
-### Cấu trúc mới đề xuất:
+Để xem thông tin tồn kho của tất cả các sản phẩm:
 
-| Bảng | Các trường chính | Mô tả |
-|---|---|---|
-| **Products** | ProductId, Name, UnitId, SupplierId, Description, Image, Status | Thông tin chung về sản phẩm |
-| **Units** | UnitId, Name | Đơn vị tính |
-| **Suppliers** | SupplierId, Name, Address, Phone, Email, MoreInfo | Thông tin nhà cung cấp |
-| **Batches** | BatchId, ProductId, SupplierId, PurchaseDate, Quantity, UnitPrice, ExpiryDate, BatchNumber, UnitPriceIn | Thông tin chi tiết về từng lô hàng |
-| **Input** | InputId, TotalPrice, DateInput | Thông tin về phiếu nhập |
-| **Output** | OutputId, TotalPrice, DateOutput | Thông tin về phiếu xuất |
-| **Promotions** | PromotionId, BatchId, Discount, StartDate, EndDate | Thông tin về chương trình khuyến mãi áp dụng cho từng lô hàng |
+```sql
+SELECT * FROM vw_Inventory;
+```
 
-### Lý do thay đổi:
-* **Loại bỏ trùng lặp:** Việc loại bỏ trường ExpiryDate khỏi bảng Objects giúp tránh trùng lặp dữ liệu và đảm bảo tính chính xác.
-* **Tính linh hoạt:** Bằng cách liên kết khuyến mãi với từng lô hàng, chúng ta có thể áp dụng các chương trình khuyến mãi linh hoạt hơn.
-* **Hiệu suất:** Việc loại bỏ bảng Inventories sẽ giúp giảm số lượng truy vấn và tăng hiệu suất hệ thống.
+Để xem thông tin tồn kho của sản phẩm có mã là 'PRD001':
 
-**Lợi ích của cấu trúc mới:**
-* **Rõ ràng:** Cấu trúc rõ ràng, dễ hiểu và dễ quản lý.
-* **Linh hoạt:** Dễ dàng mở rộng và tùy chỉnh để đáp ứng các yêu cầu mới.
-* **Hiệu quả:** Giảm thiểu sự trùng lặp dữ liệu và tăng hiệu suất truy vấn.
+```sql
+SELECT * FROM vw_Inventory WHERE ProductId = 'PRD001';
+```
 
-**Các câu hỏi để thảo luận thêm:**
-* **Chi tiết về trường Status:** Bạn muốn theo dõi những trạng thái nào của sản phẩm (ví dụ: đang bán, ngừng kinh doanh, tạm ngưng)?
-* **Tính năng báo cáo:** Bạn muốn tạo các báo cáo nào (ví dụ: báo cáo tồn kho, báo cáo doanh thu, báo cáo sản phẩm bán chạy)?
-* **Tích hợp với hệ thống khác:** Bạn có kế hoạch tích hợp hệ thống này với các hệ thống khác (ví dụ: hệ thống bán hàng, hệ thống kế toán)?
+**Mở rộng chức năng:**
 
-**Với cấu trúc này, bạn có thể dễ dàng xây dựng các tính năng như:**
-* **Quản lý tồn kho:** Tính toán số lượng tồn kho thực tế dựa trên các giao dịch nhập xuất.
-* **Quản lý khuyến mãi:** Áp dụng các chương trình khuyến mãi linh hoạt cho từng lô hàng.
-* **Báo cáo doanh thu:** Tính toán doanh thu theo sản phẩm, nhà cung cấp, thời gian.
+* **Thêm cột:** Bạn có thể thêm các cột tính toán khác như giá trị tồn kho (QuantityInStock * UnitPriceIn), ngày sản xuất, v.v.
+* **Lọc dữ liệu:** Sử dụng mệnh đề WHERE để lọc dữ liệu theo các tiêu chí như ngày hết hạn, nhà cung cấp, v.v.
+* **Tính toán tổng:** Sử dụng hàm SUM, AVG để tính tổng, trung bình của các cột số.
 
-**Tôi sẵn sàng hỗ trợ bạn thêm nếu bạn có bất kỳ câu hỏi nào khác.**
+**Lưu ý:**
 
-**Bạn có muốn thảo luận sâu hơn về bất kỳ khía cạnh nào của cấu trúc này không?**
+* **Hiệu suất:** Nếu bảng `Batches` rất lớn, việc tạo view và thực hiện các truy vấn có thể ảnh hưởng đến hiệu suất của cơ sở dữ liệu. Bạn có thể tạo index cho các cột thường được sử dụng để tăng tốc độ truy vấn.
+* **Cập nhật view:** View chỉ là một "lát cắt" của dữ liệu tại thời điểm tạo. Nếu dữ liệu trong bảng `Batches` thay đổi, bạn cần làm mới view để có kết quả chính xác.
+* **Materialized view:** Một số hệ quản trị cơ sở dữ liệu hỗ trợ materialized view, đây là một loại view đặc biệt lưu trữ kết quả của truy vấn. Việc cập nhật materialized view có thể được tự động hóa, giúp tăng tốc độ truy vấn.
+
+**Ví dụ về materialized view (MySQL):**
+
+```sql
+CREATE MATERIALIZED VIEW vw_Inventory AS
+SELECT ... -- Câu lệnh SELECT giống như ở trên
+WITH REFRESH MATERIALIZED EVERY 1 HOUR;
+```
+
+**Lựa chọn phương pháp:**
+
+Việc chọn sử dụng view thông thường hay materialized view phụ thuộc vào nhu cầu cụ thể của hệ thống, bao gồm tần suất truy vấn, kích thước dữ liệu và yêu cầu về thời gian thực.
+
+**Với view, bạn có thể dễ dàng quản lý và theo dõi tình trạng tồn kho của từng lô hàng, từ đó đưa ra các quyết định kinh doanh hiệu quả hơn.**
+
+**Bạn có muốn tìm hiểu thêm về các tính năng khác của view hoặc các cách tối ưu hóa hiệu suất truy vấn không?**
+
 
 ***
 ***
