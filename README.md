@@ -72,6 +72,9 @@
      * **orderId:** Mã đơn hàng.
      * **totalPrice:** Tổng giá trị đơn hàng.
      * **dateOutput:** Ngày xuất hàng.
+     * **status:** Tình trạng vận chuyển
+     * **customerId:** Người ngận đơn       (là khóa ngoại từ userId của bảng Users)
+     * **shipperId:** Người chuyển đơn      (là khóa ngoại từ userId của bảng Users)
 
 **8. Bảng OrderDetail (Chi tiết phiếu xuất):**
    * **Mục đích:** Lưu trữ chi tiết các sản phẩm trong một đơn hàng.
@@ -111,7 +114,7 @@
      * **batchId:** Mã lô hàng
      * **inputDetailId:** Liên kết chi tiết đơn nhập.
      * **productId:** Liên kết đến sản phẩm.
-     * **quantity:** Mức giảm giá.
+     * **quantity:** Số lượng sản phẩm
      * **expiryDate:** Ngày hết hạn của lô hàng.
    * **Mối quan hệ:**
      * **Một đối một** với bảng InputDetail (qua inputDetailId): Mỗi chi tiết đơn nhập thì chỉ tạo ra 1 batchProduct để quản lý sản phẩm đó
@@ -128,8 +131,14 @@
      * **status:** Trạng thái xử lý.
    * **Mối quan hệ:**
      * **Một đối một** với bảng Orders (qua orderId): Mỗi lần yêu cầu hoàn tiền chỉ liên kết với một đơn hàng cụ thể.
-     * **Một đối nhiều** với bảng Users (qua customerId): 1 customer có thể retun nhiều lần  
+     * **Một đối nhiều** với bảng Users (qua customerId): 1 customer có thể gửi request return từ nhiều đơn khác nhau.
 
+**13. Bảng Roles:
+   * **Mục đích:** Thông tin về role của user, bao gồm:customer, shipper, staff, manager
+   * **Các trường:**
+     * **roleId:** Mã role.
+     * **name:** Tên của role
+  
 ///
 /
 /
