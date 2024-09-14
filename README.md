@@ -3,96 +3,153 @@
 
 ### Phân tích chi tiết các bảng và mối quan hệ
 
-**1. Bảng Objects (Sản phẩm):**
+**1. Bảng Products (Sản phẩm):**
    * **Mục đích:** Lưu trữ thông tin chi tiết về từng sản phẩm.
    * **Các trường:**
-     * **ObjectId:** Mã sản phẩm duy nhất.
-     * **Name:** Tên sản phẩm.
-     * **UnitId:** Liên kết đến đơn vị tính của sản phẩm.
-     * **SupplierId:** Liên kết đến nhà cung cấp của sản phẩm.
-     * **ExpiryDate:** Ngày hết hạn.
-     * **Description:** Mô tả chi tiết về sản phẩm.
-     * **Image:** Đường dẫn đến hình ảnh sản phẩm.
+     * **productId:** Mã sản phẩm duy nhất.
+     * **name:** Tên sản phẩm.
+     * **unitId:** Liên kết đến đơn vị tính của sản phẩm.
+     * **supplierId:** Liên kết đến nhà cung cấp của sản phẩm.
+     * **description:** Mô tả chi tiết về sản phẩm.
+     * **image:** Đường dẫn đến hình ảnh sản phẩm.
+     * **unitPrice:** Giá bán lẻ của sản phẩm.
+     * **status:** Tình trạng sản phẩm (còn hàng, hết hàng, ngừng kinh doanh)
    * **Mối quan hệ:**
-     * **Một đối một** với bảng Units (qua UnitId): Mỗi sản phẩm chỉ có một đơn vị tính.
-     * **Một đối một** với bảng Suppliers (qua SupplierId): Mỗi sản phẩm chỉ có một nhà cung cấp.
+     * **Nhiều đối một** với bảng Units (qua UnitId): Mỗi sản phẩm chỉ có một đơn vị tính, 1 đơn vị tính có thể sài được cho nhiều sản phẩm
+     * **Nhiều đối một** với bảng Suppliers (qua SupplierId): Mỗi sản phẩm chỉ có một nhà cung cấp, 1 nhà cung cấp có thể cung cấp nhiều sản phẩm
 
 **2. Bảng Units (Đơn vị tính):**
    * **Mục đích:** Lưu trữ danh sách các đơn vị tính sử dụng.
    * **Các trường:**
-     * **UnitId:** Mã đơn vị tính.
-     * **Name:** Tên đơn vị tính (ví dụ: kg, lít, cái).
+     * **unitId:** Mã đơn vị tính.
+     * **name:** Tên đơn vị tính (ví dụ: kg, lít, cái).
 
 **3. Bảng Suppliers (Nhà cung cấp):**
    * **Mục đích:** Lưu trữ thông tin về các nhà cung cấp.
    * **Các trường:**
-     * **SupplierId:** Mã nhà cung cấp.
-     * **Name:** Tên nhà cung cấp.
-     * **Address:** Địa chỉ.
-     * **Phone:** Số điện thoại.
-     * **Email:** Email.
-     * **MoreInfo:** Thông tin thêm.
+     * **supplierId:** Mã nhà cung cấp.
+     * **name:** Tên nhà cung cấp.
+     * **address:** Địa chỉ.
+     * **phone:** Số điện thoại.
+     * **email:** Email.
+     * **moreInfo:** Thông tin thêm.
 
-**4. Bảng Customers (Khách hàng):**
-   * **Mục đích:** Lưu trữ thông tin về khách hàng.
+**4. Bảng User (Người dùng hệ thống):**
+   * **Mục đích:** Lưu trữ thông tin về người dùng.
    * **Các trường:**
-     * **CustomerId:** Mã khách hàng.
-     * **Name:** Tên khách hàng.
-     * **Address:** Địa chỉ.
-     * **Phone:** Số điện thoại.
-     * **Email:** Email.
-     * **MoreInfo:** Thông tin thêm.
+     * **userId:** Mã khách hàng.
+     * **fullName:** Tên khách hàng.
+     * **address:** Địa chỉ.
+     * **phone:** Số điện thoại.
+     * **email:** Email.
+     * **password:** Mật khẩu.
+     * **roleId:** Quyền của User.
+     * **otp:** Mã otp của người dùng.
 
-**5. Bảng Input (Phiếu nhập):**
+**5. Bảng Inputs (Phiếu nhập):**
    * **Mục đích:** Lưu trữ thông tin về các phiếu nhập hàng.
    * **Các trường:**
-     * **InputId:** Mã phiếu nhập.
-     * **TotalPrice:** Tổng giá trị phiếu nhập.
-     * **DateInput:** Ngày nhập hàng.
+     * **inputId:** Mã phiếu nhập.
+     * **totalPrice:** Tổng giá trị phiếu nhập.
+     * **dateInput:** Ngày nhập hàng.
 
 **6. Bảng InputDetail (Chi tiết phiếu nhập):**
    * **Mục đích:** Lưu trữ chi tiết các sản phẩm trong một phiếu nhập.
    * **Các trường:**
-     * **InputDetailId:** Mã chi tiết phiếu nhập.
-     * **InputId:** Liên kết đến phiếu nhập.
-     * **ObjectId:** Liên kết đến sản phẩm.
-     * **Quantity:** Số lượng nhập.
-     * **InputPrice:** Giá nhập.
-     * **ExpiryDate:** Ngày hết hạn của lô hàng này.
-     * **BatchNumber:** Số lô hàng.
-     * **UnitPriceIn:** Giá bán dự kiến.
-
-**7. Bảng Output (Phiếu xuất):**
+     * **inputDetailId:** Mã chi tiết phiếu nhập.
+     * **inputId:** Liên kết đến phiếu nhập.
+     * **productId:** Liên kết đến sản phẩm.
+     * **quantity:** Số lượng nhập.
+     * **inputPrice:** Giá nhập.
+     * **expiryDate:** Ngày hết hạn của lô hàng này.
+   * **Mối quan hệ:**
+     * **Nhiều đối một** với bảng Input (qua inputId): 1 đơn nhập có nhiều mặt hàng khác nhau
+     * **Nhiều đối một** với bảng Products (qua productId): 1 đơn nhập có nhiều mặt hàng khác nhau
+       
+**7. Bảng Orders (Đơn hàng):**
    * **Mục đích:** Lưu trữ thông tin về các phiếu xuất hàng.
    * **Các trường:**
-     * **OutputId:** Mã phiếu xuất.
-     * **TotalPrice:** Tổng giá trị phiếu xuất.
-     * **DateOutput:** Ngày xuất hàng.
+     * **orderId:** Mã đơn hàng.
+     * **totalPrice:** Tổng giá trị đơn hàng.
+     * **dateOutput:** Ngày xuất hàng.
 
-**8. Bảng OutputDetail (Chi tiết phiếu xuất):**
-   * **Mục đích:** Lưu trữ chi tiết các sản phẩm trong một phiếu xuất.
+**8. Bảng OrderDetail (Chi tiết phiếu xuất):**
+   * **Mục đích:** Lưu trữ chi tiết các sản phẩm trong một đơn hàng.
    * **Các trường:**
-     * **OutputDetailId:** Mã chi tiết phiếu xuất.
-     * **OutputId:** Liên kết đến phiếu xuất.
-     * **ObjectId:** Liên kết đến sản phẩm.
-     * **Quantity:** Số lượng xuất.
-     * **UnitPriceOut:** Giá bán ra.
+     * **outputDetailId:** Mã chi tiết phiếu xuất.
+     * **orderId:** Liên kết đến phiếu xuất.
+     * **productId:** Liên kết đến sản phẩm.
+     * **quantity:** Số lượng xuất.
+     * **isReturn:** Trường check số lượng mặt hàng bị trả trong 1 order
+   * **Mối quan hệ:**
+     * **Nhiều đối một** với bảng Orders (qua orderId): 1 đơn hàng có nhiều mặt hàng khác nhau
+     * **Một đối một** với bảng Products (qua productId): 1 chi tiết đơn hàng chỉ có 1 sản phẩm
 
-**9. Bảng Inventories (Tồn kho):**
+**9. Bảng Inventories (Tồn kho):** (Sử dụng view hoặc truy vấn)
    * **Mục đích:** Theo dõi số lượng tồn kho thực tế của từng sản phẩm tại từng thời điểm.
    * **Các trường:**
-     * **InventoryId:** Mã kho.
-     * **ObjectId:** Liên kết đến sản phẩm.
+     * **inventoryId:** Mã kho.
+     * **productId:** Liên kết đến sản phẩm.
      * **Quantity:** Số lượng hiện có.
      * **LastUpdated:** Thời điểm cập nhật cuối cùng.
 
 **10. Bảng Promotions (Khuyến mãi):**
    * **Mục đích:** Quản lý các chương trình khuyến mãi.
    * **Các trường:**
-     * **PromotionId:** Mã khuyến mãi.
-     * **ObjectId:** Liên kết đến sản phẩm.
-     * **Discount:** Mức giảm giá.
-     * **StartDate**, **EndDate:** Thời gian bắt đầu và kết thúc khuyến mãi.
+     * **promotionId:** Mã khuyến mãi.
+     * **batchId:** Kiểm tra
+     * **inventoryId:** Liên kết đến sản phẩm.
+     * **discount:** Mức giảm giá.
+     * **startDate**, **EndDate:** Thời gian bắt đầu và kết thúc khuyến mãi.
+     * **batchId**: Lưu trữ thông tin lô hàng của sản phẩm
+   * **Mối quan hệ:**
+     * **một đối một** với bảng Batches (qua batchId): mỗi lô hàng có thể set 1 mã khuyến mãi khác nhau
+
+**11. Bảng BatchesProduct (Các lô hàng của sản phẩm):**
+   * **Mục đích:** Quản lý số lượng, ngày hết hạn của từng lô hàng nhập vào của mỗi sản phẩm
+   * **Các trường:**
+     * **batchId:** Mã lô hàng
+     * **inputDetailId:** Liên kết chi tiết đơn nhập.
+     * **productId:** Liên kết đến sản phẩm.
+     * **quantity:** Mức giảm giá.
+     * **expiryDate:** Ngày hết hạn của lô hàng.
+   * **Mối quan hệ:**
+     * **Một đối một** với bảng InputDetail (qua inputDetailId): Mỗi chi tiết đơn nhập thì chỉ tạo ra 1 batchProduct để quản lý sản phẩm đó
+     * **Một đối nhiều** với bảng Products (qua productId): 1 product có nhiều batchsProduct để quản lý số lượng từng lô, 1 batchsProduct thì chỉ hướng đến 1 product
+
+**12. Bảng ReturnRequests (Các lô hàng của các khiếu nại trả hàng, hoàn tiền):**
+   * **Mục đích:** Cải thiện và rút gọn thời gian xử lý trả hàng, Nâng cao trải nghiệm của khách hàng
+   * **Các trường:**
+     * **requestId:** Mã lô hàng.
+     * **orderId:** Liên kết chi tiết đơn nhập.
+     * **customerId:** Liên kết đến sản phẩm.
+     * **returnReason:** Lý đo đổi trả.
+     * **requestDate:** Ngày yêu cầu .
+     * **status:** Trạng thái xử lý.
+   * **Mối quan hệ:**
+     * **Một đối một** với bảng Orders (qua orderId): Mỗi lần yêu cầu hoàn tiền chỉ liên kết với một đơn hàng cụ thể.
+     * **Một đối nhiều** với bảng Users (qua customerId): 1 customer có thể retun nhiều lần
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ### Logic hoạt động và mối quan hệ
 * **Khi nhập hàng:** Tạo một bản ghi mới trong bảng Input và các chi tiết tương ứng trong bảng InputDetail. Cập nhật số lượng tồn kho trong bảng Inventories.
