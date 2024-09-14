@@ -128,28 +128,22 @@
      * **status:** Trạng thái xử lý.
    * **Mối quan hệ:**
      * **Một đối một** với bảng Orders (qua orderId): Mỗi lần yêu cầu hoàn tiền chỉ liên kết với một đơn hàng cụ thể.
-     * **Một đối nhiều** với bảng Users (qua customerId): 1 customer có thể retun nhiều lần
-    
+     * **Một đối nhiều** với bảng Users (qua customerId): 1 customer có thể retun nhiều lần  
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+///
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+///
 
 ### Logic hoạt động và mối quan hệ
 * **Khi nhập hàng:** Tạo một bản ghi mới trong bảng Input và các chi tiết tương ứng trong bảng InputDetail. Cập nhật số lượng tồn kho trong bảng Inventories.
