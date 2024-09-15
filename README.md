@@ -1,4 +1,4 @@
-# QuanLyKhoHang
+# BanThucPhamOnline
 Đồ án môn SWP391
 
 ### Phân tích chi tiết các bảng và mối quan hệ
