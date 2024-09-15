@@ -34,7 +34,7 @@
      * **email:** Email.
      * **moreInfo:** Thông tin thêm.
 
-**4. Bảng User (Người dùng hệ thống):**
+**4. Bảng Users (Người dùng hệ thống):**
    * **Mục đích:** Lưu trữ thông tin về người dùng.
    * **Các trường:**
      * **userId:** Mã khách hàng.
@@ -53,7 +53,7 @@
      * **totalPrice:** Tổng giá trị phiếu nhập.
      * **dateInput:** Ngày nhập hàng.
 
-**6. Bảng InputDetail (Chi tiết phiếu nhập):**
+**6. Bảng InputDetails (Chi tiết phiếu nhập):**
    * **Mục đích:** Lưu trữ chi tiết các sản phẩm trong một phiếu nhập.
    * **Các trường:**
      * **inputDetailId:** Mã chi tiết phiếu nhập.
@@ -64,7 +64,7 @@
      * **expiryDate:** Ngày hết hạn của lô hàng này.
    * **Mối quan hệ:**
      * **Nhiều đối một** với bảng Input (qua inputId): 1 đơn nhập có nhiều mặt hàng khác nhau
-     * **Nhiều đối một** với bảng Products (qua productId): 1 đơn nhập có nhiều mặt hàng khác nhau
+     * **Nhiều đối một** với bảng Products (qua productId): 1 chi tiết đơn nhập chỉ cho 1 product, 1 product thì có thể có nhiều chi tiết đơn nhập
        
 **7. Bảng Orders (Đơn hàng):**
    * **Mục đích:** Lưu trữ thông tin về các phiếu xuất hàng.
@@ -73,41 +73,54 @@
      * **totalPrice:** Tổng giá trị đơn hàng.
      * **dateOutput:** Ngày xuất hàng.
      * **status:** Tình trạng vận chuyển
-     * **customerId:** Người ngận đơn       (là khóa ngoại từ userId của bảng Users)
+     * **customerId:** Người đặt hàng       (là khóa ngoại từ userId của bảng Users)
      * **shipperId:** Người chuyển đơn      (là khóa ngoại từ userId của bảng Users)
-
-**8. Bảng OrderDetail (Chi tiết phiếu xuất):**
+   * **Mối quan hệ:**
+     * **Nhiều đối một** với bảng Users (qua customerId và shipperId): 1 đơn nhập có nhiều mặt hàng khác nhau
+     * **Lưu ý:** Vì khi tạo bảng với shipperId là khóa phụ thì ko đc để trống => khi order đc tạo thì shipperId mặt định sẽ là manager hoặc ai đó
+     * 
+**8. Bảng OrderDetails (Chi tiết phiếu xuất):**
    * **Mục đích:** Lưu trữ chi tiết các sản phẩm trong một đơn hàng.
    * **Các trường:**
      * **outputDetailId:** Mã chi tiết phiếu xuất.
      * **orderId:** Liên kết đến phiếu xuất.
      * **productId:** Liên kết đến sản phẩm.
+     * **batchId:** Mã lô hàng của sản phẩm (không để khóa ngoại)
      * **quantity:** Số lượng xuất.
      * **isReturn:** Trường check số lượng mặt hàng bị trả trong 1 order
    * **Mối quan hệ:**
      * **Nhiều đối một** với bảng Orders (qua orderId): 1 đơn hàng có nhiều mặt hàng khác nhau
-     * **Một đối một** với bảng Products (qua productId): 1 chi tiết đơn hàng chỉ có 1 sản phẩm
+     * **Nhiều đối một** với bảng Products (qua productId): 1 chi tiết đơn hàng chỉ cho 1 product, 1 product thì có thể có nhiều chi tiết đơn hàng
+   * **Lưu ý:**
+     * **Việc cập nhật batchId** trường này sẽ được cập nhật khi customer ấn thanh toán, bằng cách sử dụng order by để tìm lô hàng cũ nhất của sản phẩm đó.
+       Điều này giúp ta có thể quản lý được số lượng và hạn sử đụng của sản phẩm tốt hơn theo từng lô nhập về 
+```
+SELECT *  
+    SELECT *  
+    FROM table_name  
+    ORDER BY ngay_thang_nam DESC;     //desc là giảm dần (từ mới nhất đến cũ nhất)
+```
+
 
 **9. Bảng Inventories (Tồn kho):** (Sử dụng view hoặc truy vấn)
    * **Mục đích:** Theo dõi số lượng tồn kho thực tế của từng sản phẩm tại từng thời điểm.
    * **Các trường:**
      * **inventoryId:** Mã kho.
      * **productId:** Liên kết đến sản phẩm.
-     * **Quantity:** Số lượng hiện có.
-     * **LastUpdated:** Thời điểm cập nhật cuối cùng.
+     * **quantity:** Số lượng hiện có.
+     * **lastUpdated:** Thời điểm cập nhật cuối cùng.
 
-**10. Bảng Promotions (Khuyến mãi):**
+**10. Bảng Promos (Khuyến mãi):**
    * **Mục đích:** Quản lý các chương trình khuyến mãi.
    * **Các trường:**
-     * **promotionId:** Mã khuyến mãi.
-     * **batchId:** Kiểm tra
-     * **inventoryId:** Liên kết đến sản phẩm.
+     * **promotionId:** Id chương trình khuyến mãi.
+     * **productId:** Sản phẩm giảm giá (khóa ngoại)
+     * **quantitySale:** số lượng sản phẩm khuyến mãi
      * **discount:** Mức giảm giá.
-     * **startDate**, **EndDate:** Thời gian bắt đầu và kết thúc khuyến mãi.
-     * **batchId**: Lưu trữ thông tin lô hàng của sản phẩm
+     * **startDate**, **endDate:** Thời gian bắt đầu và kết thúc khuyến mãi.
    * **Mối quan hệ:**
-     * **một đối một** với bảng Batches (qua batchId): mỗi lô hàng có thể set 1 mã khuyến mãi khác nhau
-
+     * **Nhiều đối một** với bảng Products (qua productId): 1 mặt hàng có thể có nhiều lần khuyến mãi
+     
 **11. Bảng BatchesProduct (Các lô hàng của sản phẩm):**
    * **Mục đích:** Quản lý số lượng, ngày hết hạn của từng lô hàng nhập vào của mỗi sản phẩm
    * **Các trường:**
@@ -124,14 +137,14 @@
    * **Mục đích:** Cải thiện và rút gọn thời gian xử lý trả hàng, Nâng cao trải nghiệm của khách hàng
    * **Các trường:**
      * **requestId:** Mã lô hàng.
-     * **orderId:** Liên kết chi tiết đơn nhập.
+     * **orderDetailId:** Liên kết chi tiết đơn nhập.
      * **customerId:** Liên kết đến sản phẩm.
      * **returnReason:** Lý đo đổi trả.
      * **requestDate:** Ngày yêu cầu .
      * **status:** Trạng thái xử lý.
    * **Mối quan hệ:**
-     * **Một đối một** với bảng Orders (qua orderId): Mỗi lần yêu cầu hoàn tiền chỉ liên kết với một đơn hàng cụ thể.
-     * **Một đối nhiều** với bảng Users (qua customerId): 1 customer có thể gửi request return từ nhiều đơn khác nhau.
+     * **Một đối một** với bảng OrderDetails (qua orderDetailId): 1 yêu cầu hoàn tiền chỉ liên kết với sản phẩm cụ thể trong order.
+     * **Nhiều đối một** với bảng Users (qua customerId): 1 customer có thể gửi request return từ nhiều đơn khác nhau.
 
 **13. Bảng Roles:
    * **Mục đích:** Thông tin về role của user, bao gồm:customer, shipper, staff, manager
