@@ -108,6 +108,7 @@
      * **outputDetailId:** Mã chi tiết phiếu xuất.
      * **orderId:** Liên kết đến phiếu xuất.
      * **batchId:** Mã lô hàng của sản phẩm
+     * **unitPriceOut:** Giá tiền của sản phẩm khi bán ra
      * **quantity:** Số lượng xuất.
      * **isReturn:** Trường check số lượng mặt hàng bị trả trong 1 order
    * **Mối quan hệ:**
