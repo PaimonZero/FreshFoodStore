@@ -34,11 +34,11 @@
      * **email:** Email.
      * **moreInfo:** Thông tin thêm.
 
-**4. Bảng Users (Người dùng hệ thống):**
+**4. Bảng Users (Người dùng hệ thống admin):**
    * **Mục đích:** Lưu trữ thông tin về người dùng.
    * **Các trường:**
-     * **userId:** Mã khách hàng.
-     * **fullName:** Tên khách hàng.
+     * **userId:** Mã người dùng
+     * **fullName:** Tên người dùng
      * **address:** Địa chỉ.
      * **phone:** Số điện thoại.
      * **email:** Email.
@@ -46,6 +46,28 @@
      * **roleId:** Quyền của User.
      * **otp:** Mã otp của người dùng.
 
+**4. Bảng Customer (Khách hàng):**
+   * **Mục đích:** Lưu trữ thông tin về người dùng.
+   * **Các trường:**
+     * **customerId:** Mã khách hàng.
+     * **fullName:** Tên khách hàng.
+     * **address:** Địa chỉ.
+     * **phone:** Số điện thoại.
+     * **email:** Email.
+     * **password:** Mật khẩu.
+     * **otp:** Mã otp của người dùng.
+       
+**4. Bảng Shipper (Người giao hàng):**
+   * **Mục đích:** Lưu trữ thông tin về người dùng.
+   * **Các trường:**
+     * **shipperId:** Mã khách hàng.
+     * **fullName:** Tên khách hàng.
+     * **address:** Địa chỉ.
+     * **phone:** Số điện thoại.
+     * **email:** Email.
+     * **password:** Mật khẩu.
+     * **otp:** Mã otp của người dùng.
+       
 **5. Bảng Inputs (Phiếu nhập):**
    * **Mục đích:** Lưu trữ thông tin về các phiếu nhập hàng.
    * **Các trường:**
@@ -73,10 +95,11 @@
      * **totalPrice:** Tổng giá trị đơn hàng.
      * **dateOutput:** Ngày xuất hàng.
      * **status:** Tình trạng vận chuyển
-     * **customerId:** Người đặt hàng       (là khóa ngoại từ userId của bảng Users)
-     * **shipperId:** Người chuyển đơn      (là khóa ngoại từ userId của bảng Users)
+     * **customerId:** Người đặt hàng       
+     * **shipperId:** Người chuyển đơn      
    * **Mối quan hệ:**
-     * **Nhiều đối một** với bảng Users (qua customerId và shipperId): 1 đơn nhập có nhiều mặt hàng khác nhau
+     * **Nhiều đối một** với bảng Customers (qua customerId ): 1 khách hàng có thể có nhiều order
+     * **Nhiều đối một** với bảng Shippers (qua shipperId ): 1 shipper có thể vận chuyển nhiều order
      * **Lưu ý:** Vì khi tạo bảng với shipperId là khóa phụ thì ko đc để trống => khi order đc tạo thì shipperId mặt định sẽ là manager hoặc ai đó
      * 
 **8. Bảng OrderDetails (Chi tiết phiếu xuất):**
@@ -84,15 +107,14 @@
    * **Các trường:**
      * **outputDetailId:** Mã chi tiết phiếu xuất.
      * **orderId:** Liên kết đến phiếu xuất.
-     * **productId:** Liên kết đến sản phẩm.
-     * **batchId:** Mã lô hàng của sản phẩm (không để khóa ngoại)
+     * **batchId:** Mã lô hàng của sản phẩm
      * **quantity:** Số lượng xuất.
      * **isReturn:** Trường check số lượng mặt hàng bị trả trong 1 order
    * **Mối quan hệ:**
      * **Nhiều đối một** với bảng Orders (qua orderId): 1 đơn hàng có nhiều mặt hàng khác nhau
      * **Nhiều đối một** với bảng Products (qua productId): 1 chi tiết đơn hàng chỉ cho 1 product, 1 product thì có thể có nhiều chi tiết đơn hàng
    * **Lưu ý:**
-     * **Việc cập nhật batchId** trường này sẽ được cập nhật khi customer ấn thanh toán, bằng cách sử dụng order by để tìm lô hàng cũ nhất của sản phẩm đó.
+     * **Việc cập nhật batchId** trường này sẽ được cập nhật khi customer ấn để vào giỏ hàng và ấn thanh toán, bằng cách sử dụng order by để tìm lô hàng cũ nhất của sản phẩm đó.
        Điều này giúp ta có thể quản lý được số lượng và hạn sử đụng của sản phẩm tốt hơn theo từng lô nhập về 
 ```
 SELECT *  
@@ -147,7 +169,7 @@ SELECT *
      * **Nhiều đối một** với bảng Users (qua customerId): 1 customer có thể gửi request return từ nhiều đơn khác nhau.
 
 **13. Bảng Roles:
-   * **Mục đích:** Thông tin về role của user, bao gồm:customer, shipper, staff, manager
+   * **Mục đích:** Thông tin về role của user, bao gồm: staff, manager
    * **Các trường:**
      * **roleId:** Mã role.
      * **name:** Tên của role
