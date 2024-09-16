@@ -112,7 +112,7 @@
      * **isReturn:** Trường check số lượng mặt hàng bị trả trong 1 order
    * **Mối quan hệ:**
      * **Nhiều đối một** với bảng Orders (qua orderId): 1 đơn hàng có nhiều mặt hàng khác nhau
-     * **Nhiều đối một** với bảng Products (qua productId): 1 chi tiết đơn hàng chỉ cho 1 product, 1 product thì có thể có nhiều chi tiết đơn hàng
+     * **Nhiều đối một** với bảng BatchesProduct (qua batchId): 1 chi tiết đơn hàng chỉ cho 1 product, 1 product thì có thể có nhiều chi tiết đơn hàng
    * **Lưu ý:**
      * **Việc cập nhật batchId** trường này sẽ được cập nhật khi customer ấn để vào giỏ hàng và ấn thanh toán, bằng cách sử dụng order by để tìm lô hàng cũ nhất của sản phẩm đó.
        Điều này giúp ta có thể quản lý được số lượng và hạn sử đụng của sản phẩm tốt hơn theo từng lô nhập về 
