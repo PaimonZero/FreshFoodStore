@@ -72,7 +72,6 @@
    * **Mục đích:** Lưu trữ thông tin về các phiếu nhập hàng.
    * **Các trường:**
      * **inputId:** Mã phiếu nhập.
-     * **totalPrice:** Tổng giá trị phiếu nhập.
      * **dateInput:** Ngày nhập hàng.
 
 **6. Bảng InputDetails (Chi tiết phiếu nhập):**
@@ -92,8 +91,8 @@
    * **Mục đích:** Lưu trữ thông tin về các phiếu xuất hàng.
    * **Các trường:**
      * **orderId:** Mã đơn hàng.
-     * **totalPrice:** Tổng giá trị đơn hàng.
      * **dateOutput:** Ngày xuất hàng.
+     * **shippingFee:** Phí vận chuyển.
      * **status:** Tình trạng vận chuyển
      * **customerId:** Người đặt hàng       
      * **shipperId:** Người chuyển đơn      
@@ -159,11 +158,10 @@ SELECT *
 **12. Bảng ReturnRequests (Các lô hàng của các khiếu nại trả hàng, hoàn tiền):**
    * **Mục đích:** Cải thiện và rút gọn thời gian xử lý trả hàng, Nâng cao trải nghiệm của khách hàng
    * **Các trường:**
-     * **requestId:** Mã lô hàng.
-     * **orderDetailId:** Liên kết chi tiết đơn nhập.
-     * **customerId:** Liên kết đến sản phẩm.
+     * **requestId:** Mã yêu cầu đổi trả
+     * **orderDetailId:** Liên kết chi tiết đơn bán.
      * **returnReason:** Lý đo đổi trả.
-     * **requestDate:** Ngày yêu cầu .
+     * **requestDate:** Ngày yêu cầu.
      * **status:** Trạng thái xử lý.
    * **Mối quan hệ:**
      * **Một đối một** với bảng OrderDetails (qua orderDetailId): 1 yêu cầu hoàn tiền chỉ liên kết với sản phẩm cụ thể trong order.
@@ -175,6 +173,11 @@ SELECT *
      * **roleId:** Mã role.
      * **name:** Tên của role
   
+**13. Bảng Category:
+   * **Mục đích:** Thông tin về danh mục sản phẩm
+   * **Các trường:**
+     * **categoryId:** Mã role.
+     * **name:** Tên của category
 ///
 /
 /
