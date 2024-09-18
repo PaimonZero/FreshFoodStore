@@ -144,7 +144,7 @@ SELECT *
      * **startDate**, **endDate:** Thời gian bắt đầu và kết thúc khuyến mãi.
    * **Mối quan hệ:**
      * **Nhiều đối một** với bảng Products (qua productId): 1 mặt hàng có thể có nhiều lần khuyến mãi
-     
+
 **11. Bảng BatchesProduct (Các lô hàng của sản phẩm):**
    * **Mục đích:** Quản lý số lượng, ngày hết hạn của từng lô hàng nhập vào của mỗi sản phẩm
    * **Các trường:**
@@ -157,6 +157,21 @@ SELECT *
      * **Một đối một** với bảng InputDetail (qua inputDetailId): Mỗi chi tiết đơn nhập thì chỉ tạo ra 1 batchProduct để quản lý sản phẩm đó
      * **Một đối nhiều** với bảng Products (qua productId): 1 product có nhiều batchsProduct để quản lý số lượng từng lô, 1 batchsProduct thì chỉ hướng đến 1 product
 
+**12. Bảng Roles:
+   * **Mục đích:** Thông tin về role của user, bao gồm: staff, manager
+   * **Các trường:**
+     * **roleId:** Mã role.
+     * **name:** Tên của role
+
+    ///////////////////////////////////////////////////////////////////////////
+  **9. Bảng Inventories (Tồn kho):** (Sử dụng view hoặc truy vấn)
+   * **Mục đích:** Theo dõi số lượng tồn kho thực tế của từng sản phẩm tại từng thời điểm.
+   * **Các trường:**
+     * **inventoryId:** Mã kho.
+     * **productId:** Liên kết đến sản phẩm.
+     * **quantity:** Số lượng hiện có.
+     * **lastUpdated:** Thời điểm cập nhật cuối cùng.
+    
 **12. Bảng ReturnRequests (Các lô hàng của các khiếu nại trả hàng, hoàn tiền):**
    * **Mục đích:** Cải thiện và rút gọn thời gian xử lý trả hàng, Nâng cao trải nghiệm của khách hàng
    * **Các trường:**
@@ -168,21 +183,6 @@ SELECT *
    * **Mối quan hệ:**
      * **Một đối một** với bảng OrderDetails (qua orderDetailId): 1 yêu cầu hoàn tiền chỉ liên kết với sản phẩm cụ thể trong order.
      * **Nhiều đối một** với bảng Users (qua customerId): 1 customer có thể gửi request return từ nhiều đơn khác nhau.
-
-**13. Bảng Roles:
-   * **Mục đích:** Thông tin về role của user, bao gồm: staff, manager
-   * **Các trường:**
-     * **roleId:** Mã role.
-     * **name:** Tên của role
-
-    
-  **9. Bảng Inventories (Tồn kho):** (Sử dụng view hoặc truy vấn)
-   * **Mục đích:** Theo dõi số lượng tồn kho thực tế của từng sản phẩm tại từng thời điểm.
-   * **Các trường:**
-     * **inventoryId:** Mã kho.
-     * **productId:** Liên kết đến sản phẩm.
-     * **quantity:** Số lượng hiện có.
-     * **lastUpdated:** Thời điểm cập nhật cuối cùng.
 ///
 /
 /
