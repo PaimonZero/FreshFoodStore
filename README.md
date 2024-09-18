@@ -10,6 +10,7 @@
      * **name:** Tên sản phẩm.
      * **unitId:** Liên kết đến đơn vị tính của sản phẩm.
      * **supplierId:** Liên kết đến nhà cung cấp của sản phẩm.
+     * **categoryId:** Liên kết đến danh mục sản phẩm
      * **description:** Mô tả chi tiết về sản phẩm.
      * **image:** Đường dẫn đến hình ảnh sản phẩm.
      * **unitPrice:** Giá bán lẻ của sản phẩm.
@@ -17,6 +18,7 @@
    * **Mối quan hệ:**
      * **Nhiều đối một** với bảng Units (qua UnitId): Mỗi sản phẩm chỉ có một đơn vị tính, 1 đơn vị tính có thể sài được cho nhiều sản phẩm
      * **Nhiều đối một** với bảng Suppliers (qua SupplierId): Mỗi sản phẩm chỉ có một nhà cung cấp, 1 nhà cung cấp có thể cung cấp nhiều sản phẩm
+     * **Nhiều đối một** với bảng Category (qua categoryId): 1 danh mục sản phẩm có chứa nhiều sản phẩm
 
 **2. Bảng Units (Đơn vị tính):**
    * **Mục đích:** Lưu trữ danh sách các đơn vị tính sử dụng.
@@ -126,14 +128,11 @@ SELECT *
     ORDER BY ngay_thang_nam DESC;     //desc là giảm dần (từ mới nhất đến cũ nhất)
 ```
 
-
-**9. Bảng Inventories (Tồn kho):** (Sử dụng view hoặc truy vấn)
-   * **Mục đích:** Theo dõi số lượng tồn kho thực tế của từng sản phẩm tại từng thời điểm.
+**9. Bảng Category:
+   * **Mục đích:** Thông tin về danh mục sản phẩm
    * **Các trường:**
-     * **inventoryId:** Mã kho.
-     * **productId:** Liên kết đến sản phẩm.
-     * **quantity:** Số lượng hiện có.
-     * **lastUpdated:** Thời điểm cập nhật cuối cùng.
+     * **categoryId:** Mã role.
+     * **name:** Tên của category
 
 **10. Bảng Promos (Khuyến mãi):**
    * **Mục đích:** Quản lý các chương trình khuyến mãi.
@@ -175,12 +174,15 @@ SELECT *
    * **Các trường:**
      * **roleId:** Mã role.
      * **name:** Tên của role
-  
-**13. Bảng Category:
-   * **Mục đích:** Thông tin về danh mục sản phẩm
+
+    
+  **9. Bảng Inventories (Tồn kho):** (Sử dụng view hoặc truy vấn)
+   * **Mục đích:** Theo dõi số lượng tồn kho thực tế của từng sản phẩm tại từng thời điểm.
    * **Các trường:**
-     * **categoryId:** Mã role.
-     * **name:** Tên của category
+     * **inventoryId:** Mã kho.
+     * **productId:** Liên kết đến sản phẩm.
+     * **quantity:** Số lượng hiện có.
+     * **lastUpdated:** Thời điểm cập nhật cuối cùng.
 ///
 /
 /
