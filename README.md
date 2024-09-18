@@ -73,6 +73,9 @@
    * **Các trường:**
      * **inputId:** Mã phiếu nhập.
      * **dateInput:** Ngày nhập hàng.
+     * **supplierId:** Nhà cung cấp.
+   * **Mối quan hệ:**
+     * **Nhiều đối một** với bảng Suppliers (qua supplierId): 1 nhà cung cáp có thể cung cấp nhiều lần
 
 **6. Bảng InputDetails (Chi tiết phiếu nhập):**
    * **Mục đích:** Lưu trữ chi tiết các sản phẩm trong một phiếu nhập.
