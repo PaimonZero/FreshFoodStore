@@ -1,5 +1,6 @@
 # Phân tích database, lệnh truy vấn sql
 
+<https://doidev.com/markdown-co-ban/>
 
 ### Cách xác định vai trò của người dùng
 Để biết vai trò của một người dùng cụ thể, bạn có thể sử dụng các truy vấn SQL để kiểm tra sự hiện diện của `userId` trong các bảng con (`Customers`, `Shippers`, `Staff`, `Managers`).
