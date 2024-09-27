@@ -62,3 +62,63 @@ Tương tự, bạn có thể thêm người dùng vào các bảng `Shippers`, 
 
 ### Kết luận:
 Bằng cách sử dụng các bảng con liên kết với bảng `Users` và không dùng bảng `Roles`, bạn vẫn có thể dễ dàng quản lý vai trò của người dùng thông qua các truy vấn SQL. Cách tiếp cận này cung cấp sự linh hoạt khi không cần lưu trữ dữ liệu đặc thù theo vai trò, đồng thời vẫn có thể phân biệt vai trò người dùng một cách hiệu quả.
+
+---
+
+Trong SQL Server, các ràng buộc khóa ngoại (foreign key constraints) có thể định nghĩa cách hành động khi một bản ghi từ bảng cha (bảng được tham chiếu) bị **xóa** hoặc **cập nhật**. Các tùy chọn như `ON DELETE` và `ON UPDATE` chỉ định hành vi khi có sự thay đổi trong bảng cha đối với bản ghi được tham chiếu bởi khóa ngoại.
+
+Dưới đây là giải thích chi tiết cho các lựa chọn bạn đã hỏi:
+
+### 1. `ON DELETE SET NULL ON UPDATE CASCADE`
+
+- **`ON DELETE SET NULL`**: Khi một bản ghi trong bảng cha (bảng được tham chiếu) bị **xóa**, giá trị khóa ngoại trong bảng con sẽ được **đặt thành NULL**. Điều này có nghĩa là thay vì xóa bản ghi liên quan trong bảng con, giá trị khóa ngoại được đặt thành `NULL` để biểu thị rằng không còn liên kết nào với bản ghi đã bị xóa.
+
+  - **Ví dụ**: Trong bảng `Orders`, nếu `userId` là khóa ngoại liên kết với bảng `Users`, và một người dùng bị xóa khỏi bảng `Users`, thì cột `userId` trong bảng `Orders` sẽ được đặt thành `NULL` thay vì xóa bản ghi đơn hàng.
+
+  ```sql
+  userId INT FOREIGN KEY REFERENCES Users(userId) ON DELETE SET NULL
+  ```
+
+- **`ON UPDATE CASCADE`**: Khi một giá trị khóa chính (Primary Key) trong bảng cha bị **cập nhật**, tất cả các giá trị khóa ngoại tương ứng trong bảng con sẽ được **tự động cập nhật theo**. Điều này giúp giữ cho các bản ghi ở cả hai bảng luôn đồng bộ.
+
+  - **Ví dụ**: Nếu `userId` của một người dùng trong bảng `Users` được thay đổi, giá trị `userId` trong bảng `Orders` sẽ được tự động cập nhật để giữ cho liên kết không bị mất.
+
+  ```sql
+  userId INT FOREIGN KEY REFERENCES Users(userId) ON UPDATE CASCADE
+  ```
+
+### 2. `ON DELETE CASCADE ON UPDATE CASCADE`
+
+- **`ON DELETE CASCADE`**: Khi một bản ghi trong bảng cha bị **xóa**, tất cả các bản ghi liên quan trong bảng con cũng sẽ bị **xóa tự động**. Điều này hữu ích khi bạn muốn đảm bảo rằng nếu bản ghi chính bị xóa, thì không có bản ghi liên quan nào còn tồn tại trong bảng con, vì chúng không còn hợp lệ.
+
+  - **Ví dụ**: Nếu một người dùng bị xóa khỏi bảng `Users`, tất cả các đơn hàng mà người dùng đó đã thực hiện trong bảng `Orders` cũng sẽ bị xóa.
+
+  ```sql
+  userId INT FOREIGN KEY REFERENCES Users(userId) ON DELETE CASCADE
+  ```
+
+- **`ON UPDATE CASCADE`**: Giống như phần trên, khi giá trị khóa chính trong bảng cha bị cập nhật, tất cả các giá trị khóa ngoại tương ứng trong bảng con sẽ được tự động cập nhật.
+
+---
+
+### Sự khác biệt chính:
+- **`SET NULL`** (trong `ON DELETE`): Thay vì xóa bản ghi trong bảng con khi bản ghi liên quan trong bảng cha bị xóa, khóa ngoại được đặt thành `NULL`, giữ lại bản ghi trong bảng con nhưng không còn liên kết.
+- **`CASCADE`** (trong `ON DELETE`): Xóa tất cả các bản ghi liên quan trong bảng con khi bản ghi trong bảng cha bị xóa.
+
+---
+
+### Ví dụ cụ thể:
+
+#### `ON DELETE SET NULL ON UPDATE CASCADE`
+- Khi **xóa** một người dùng (`Users`), cột `userId` trong các đơn hàng của người dùng đó (`Orders`) sẽ được đặt thành `NULL`.
+- Khi **cập nhật** `userId` của người dùng trong bảng `Users`, tất cả các giá trị `userId` tương ứng trong bảng `Orders` cũng sẽ tự động cập nhật.
+
+#### `ON DELETE CASCADE ON UPDATE CASCADE`
+- Khi **xóa** một người dùng trong bảng `Users`, tất cả các đơn hàng của người dùng đó trong bảng `Orders` cũng bị xóa.
+- Khi **cập nhật** `userId` của người dùng, tất cả các giá trị `userId` trong bảng `Orders` sẽ được cập nhật theo.
+
+### Ứng dụng thực tế:
+- **`ON DELETE CASCADE`** phù hợp khi dữ liệu liên quan không có ý nghĩa nếu bản ghi cha bị xóa, ví dụ như khi xóa người dùng và muốn xóa hết các đơn hàng của họ.
+- **`ON DELETE SET NULL`** hữu ích khi bạn muốn giữ lại các bản ghi trong bảng con nhưng biểu thị rằng chúng không còn liên kết với bản ghi cha bị xóa.
+
+Hy vọng giải thích này rõ ràng và giúp bạn hiểu rõ hơn về cách sử dụng hai tùy chọn này trong SQL Server.
