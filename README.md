@@ -64,6 +64,9 @@ Tương tự, bạn có thể thêm người dùng vào các bảng `Shippers`, 
 Bằng cách sử dụng các bảng con liên kết với bảng `Users` và không dùng bảng `Roles`, bạn vẫn có thể dễ dàng quản lý vai trò của người dùng thông qua các truy vấn SQL. Cách tiếp cận này cung cấp sự linh hoạt khi không cần lưu trữ dữ liệu đặc thù theo vai trò, đồng thời vẫn có thể phân biệt vai trò người dùng một cách hiệu quả.
 
 ---
+---
+
+# Giải thích ON DELETE SET NULL ON UPDATE CASCADE và  ON DELETE CASCADE ON UPDATE CASCADE
 
 Trong SQL Server, các ràng buộc khóa ngoại (foreign key constraints) có thể định nghĩa cách hành động khi một bản ghi từ bảng cha (bảng được tham chiếu) bị **xóa** hoặc **cập nhật**. Các tùy chọn như `ON DELETE` và `ON UPDATE` chỉ định hành vi khi có sự thay đổi trong bảng cha đối với bản ghi được tham chiếu bởi khóa ngoại.
 
