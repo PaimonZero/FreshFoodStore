@@ -1,0 +1,198 @@
+body {
+  font-family: Arial, sans-serif;
+}
+
+.create-account-section {
+  background-color: #f8f9fa;
+}
+
+.card {
+  border-radius: 10px;
+}
+
+.card-body {
+  padding: 30px;
+}
+
+/* Sidebar Navigation */
+.nav-link {
+  color: #333;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+.nav-link.active {
+  background-color: #e9f7ef;
+  color: #28a745;
+}
+
+.nav-link:hover {
+  background-color: #f0f0f0;
+  color: #28a745;
+}
+
+/* Table */
+.table-borderless th, .table-borderless td {
+  border: none;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+/* Progress Tracker */
+.progress-container {
+  width: 100%;
+  position: relative;
+  margin-top: 20px;
+  padding: 0;
+}
+
+.progress-container::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background-color: #ddd;
+  z-index: 0;
+}
+
+.progress-step {
+  list-style: none;
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  width: 25%;
+}
+
+.step-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #ddd;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 10px;
+  font-size: 20px;
+  font-weight: bold;
+  z-index: 1;
+  position: relative;
+}
+
+.progress-step.completed .step-circle {
+  background-color: #28a745;
+}
+
+.progress-step.completed .step-circle i {
+  font-size: 24px;
+}
+
+.progress-step.active .step-circle {
+  background-color: #28a745;
+  color: white;
+}
+
+.progress-container::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background-color: #ddd;
+  z-index: 0;
+}
+
+.progress-step.completed + .progress-step::before {
+  background-color: #28a745;
+  width: calc(100% - 25%);
+  height: 5px;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  z-index: 0;
+}
+
+.progress-step.completed::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: -50%;
+  height: 5px;
+  background-color: #28a745;
+  z-index: 0;
+}
+
+span {
+  display: block;
+  color: #555;
+}
+/* Product Table Styling */
+.table-hover tbody tr {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.table-hover tbody tr:last-child {
+  border-bottom: none;
+}
+
+/* Product Image Styling */
+.product-img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+td {
+  vertical-align: middle;
+}
+
+.product-name {
+  font-weight: 500;
+  color: #333;
+}
+/* Error Page Styling */
+.error-page-content {
+  margin-top: 50px;
+}
+
+.error-code {
+  font-size: 100px;
+  font-weight: 700;
+  color: #28a745;
+  line-height: 1;
+}
+
+.error-message {
+  font-size: 28px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.error-description {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+/* Image Styling */
+.error-page-content img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 30px;
+}
+
+.btn-success {
+  padding: 10px 30px;
+  font-size: 16px;
+  border-radius: 25px;
+}

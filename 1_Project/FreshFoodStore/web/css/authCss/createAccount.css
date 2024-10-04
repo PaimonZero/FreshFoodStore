@@ -1,0 +1,78 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+/*header {
+  background-color: #343a40;
+  color: white;
+}
+
+header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header img {
+  max-height: 50px;
+}*/
+
+.create-account-section {
+    background-color: #f8f9fa;
+}
+
+.card {
+    border-radius: 10px;
+}
+
+.card-body {
+    padding: 30px;
+}
+/*trung thêm*/
+.input-form{
+    padding: 12px;
+}
+.link a{
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+.field-icon {
+    position: absolute;
+    right: 10px;
+    top: 9px;
+    color: grey;
+    font-size: 20px;
+}
+/* Breadcrumb section */
+.breadcrumb-section {
+    background-image: url(../../images/Breadcrumbs.jpg);
+    background-size: cover;
+    background-position: center;
+    padding: 30px 0;
+    color: black;
+}
+.breadcrumb-content {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    color: white;
+}
+
+.breadcrumb-content a {
+    color: green;
+    text-decoration: none;
+}
+
+.breadcrumb-content a:hover {
+    color: lightgreen;
+}
+
+.breadcrumb-content span.active {
+    color: #ddd;
+}
+/*có thể trùng lưu ý*/
+.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
+}
