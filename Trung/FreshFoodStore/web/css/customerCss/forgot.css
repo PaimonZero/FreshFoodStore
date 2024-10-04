@@ -1,0 +1,149 @@
+
+/* Body style */
+body {
+  font-family: Arial, sans-serif;
+}
+
+.navbar-brand {
+  font-weight: bold;
+  color: green;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  color: black;
+}
+
+/* Breadcrumb section */
+breadcrumb-section {
+  background-image: url(../../images/Breadcrumbs.jpg);
+  background-size: cover;
+  background-position: center;
+  padding: 30px 0;
+  color: white;
+}
+.breadcrumb-content {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+}
+
+.breadcrumb-content a {
+  color: green;
+  text-decoration: none;
+}
+
+.breadcrumb-content a:hover {
+  color: lightgreen;
+}
+
+.breadcrumb-content span.active {
+  color: #ddd;
+}
+
+/* Forgot Password form section */
+.forgot-password-section {
+  background-color: #f8f9fa;
+  padding: 100px 0;
+}
+
+.card {
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card h3 {
+  font-weight: bold;
+}
+
+.card p {
+  color: #666;
+  font-size: 16px;
+}
+
+.btn-success {
+  background-color: #28a745;
+  border: none;
+  padding: 12px 0;
+  font-size: 16px;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+}
+
+/* Checkbox and text */
+.form-check-label {
+  font-weight: 400;
+}
+
+.text-center p {
+  font-weight: 400;
+  color: #666;
+}
+
+.text-center p a {
+  color: #28a745;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.text-center p a:hover {
+  text-decoration: underline;
+}
+
+/* Password toggle (eye icon) */
+.password-toggle {
+  position: absolute;
+  right: 20px;
+  top: 35px;
+  cursor: pointer;
+  color: #aaa;
+}
+
+.password-toggle:hover {
+  color: #333;
+}
+
+/* General form styling */
+form .form-control {
+  border-radius: 0.25rem;
+  border: 1px solid #ced4da;
+}
+
+form .form-control:focus {
+  border-color: #28a745;
+  box-shadow: none;
+}
+
+form label {
+  font-weight: 500;
+  color: #000000;
+}
+
+.text-center a {
+  color: #28a745;
+  text-decoration: none;
+}
+
+.text-center a:hover {
+  text-decoration: underline;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #f8f9fa;
+}
+
+.navbar .nav-link {
+  color: #333;
+  font-weight: bold;
+}
+
+.navbar .nav-link:hover {
+  color: green;
+}
+
+/*trung thêm*/
+.input-form{
+    padding: 15px;
+}
