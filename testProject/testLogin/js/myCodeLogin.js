@@ -13,8 +13,8 @@ signInButton.addEventListener('click', () => {
 
 // Switch sign up và sign in trên mobile
 document.addEventListener('DOMContentLoaded', function () {
-    const signUpLink = document.getElementById('signUpLink');
-    const signInLink = document.getElementById('signInLink');
+    const signUpLink = document.getElementById('signUpUP');
+    const signInLink = document.getElementById('signInUP');
     const registerForm = document.querySelector('.register-form');
     const loginForm = document.querySelector('.login-form');
 
