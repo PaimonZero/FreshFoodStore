@@ -1,6 +1,9 @@
-const signUpasdsd = document.getElementById('signUp');
-const signInsdsdsds = document.getElementById('signIn');
+
+const signUpbcd = document.getElementById('signUp');
+const signInmng = document.getElementById('signIn');
+
 const container = document.getElementById('container');
+const num = 1;
 
 signUpButton.addEventListener('click', () => {
 	container.classList.add("right-panel-active");
