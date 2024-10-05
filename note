@@ -1,4 +1,5 @@
 ### Logic hoạt động và mối quan hệ
+#### Xin chao
 * **Khi nhập hàng:** Tạo một bản ghi mới trong bảng Input và các chi tiết tương ứng trong bảng InputDetail. Cập nhật số lượng tồn kho trong bảng Inventories.
 * **Khi xuất hàng:** Tạo một bản ghi mới trong bảng Output và các chi tiết tương ứng trong bảng OutputDetail. Cập nhật số lượng tồn kho trong bảng Inventories.
 * **Quản lý tồn kho:** Bảng Inventories luôn được cập nhật khi có phiếu nhập hoặc xuất.
