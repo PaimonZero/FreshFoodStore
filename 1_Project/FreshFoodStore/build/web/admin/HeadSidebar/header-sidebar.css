@@ -1,0 +1,147 @@
+.sidebar {
+    height: 100vh;
+    width: 250px;
+    max-width: 100%;
+    background-color: #ffffff;
+    border-right: 1px solid #e0e0e0;
+    padding: 20px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    /*margin-top: 84px;*/
+}
+
+.sidebar h2 {
+    display: flex;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2b2b2b;
+}
+
+.sidebar h2 img {
+    height: 24px;
+    margin-right: 10px;
+}
+
+.menu-item {
+    display: flex;
+    padding: 10px 0;
+    color: #4f4f4f;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+
+.menu-item.active {
+    color: #27ae60;
+}
+
+.menu-item .icon {
+    font-size: 1.25rem;
+    margin-right: 15px;
+
+}
+
+.logo {
+    font-size: 2rem;
+    margin-right: 15px;
+}
+
+.menu-item.active .icon {
+    color: #27ae60;
+}
+
+.menu-item:hover {
+    color: #27ae60;
+    cursor: pointer;
+}
+
+.menu-item:hover .icon {
+    color: #27ae60;
+}
+
+.sidebar .menu-section {
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.settings-section {
+    margin-top: auto;
+    padding-top: 30px;
+    border-top: 1px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-footer {
+    background-color: #f7f7f7;
+    height: 100px;
+}
+
+
+.header {
+    border-bottom: 2px solid #EEEEEE;
+    width: 84%;
+    /* Đảm bảo header chiếm toàn bộ chiều rộng */
+    margin-left: auto;
+}
+
+.search-bar {
+/*    width: 400px;*/
+    width: 30%;
+    position: relative;
+    margin-left: 0.5%;
+}
+
+input.form-control {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.search-icon {
+    position: absolute;
+    left: 10px;
+    top: 40%;
+    transform: translateY(-45%);
+    color: #000000;
+    font-size: 18px;
+}
+
+
+/* Nút sidebar toggle */
+.sidebar-toggle-btn {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    display: none; /* Ẩn đi ở màn hình lớn */
+}
+
+/* Hiển thị nút ở màn hình nhỏ (dưới 768px) */
+@media (max-width: 768px) {
+    .sidebar-toggle-btn {
+        display: block;
+    }
+
+    .sidebar {
+        transform: translateX(-100%); /* Ẩn sidebar ban đầu */
+    }
+
+    .sidebar.active {
+        transform: translateX(0); /* Hiển thị sidebar khi nhấn nút */
+    }
+    .header{
+        width: 100%;
+    }
+    .search-bar{
+        width: 100%;
+    }
+}
+

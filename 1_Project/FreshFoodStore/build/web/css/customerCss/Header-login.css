@@ -207,7 +207,7 @@ input.searchInput::placeholder {
         width: 100%; /* Điều chỉnh chiều rộng khi mở */
         padding: 0.5rem; /* Điều chỉnh padding cho input */
         border: 1px solid #ccc; /* Điều chỉnh border cho input */
-        
+
     }
 
     .search-btn {
@@ -234,4 +234,7 @@ input.searchInput::placeholder {
 /* body */
 body {
     font-family: 'Inter', sans-serif;
+}
+.dropdown{
+    list-style: none;
 }

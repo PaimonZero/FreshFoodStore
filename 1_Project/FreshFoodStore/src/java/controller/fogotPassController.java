@@ -72,7 +72,7 @@ public class fogotPassController extends HttpServlet {
             request.setAttribute("emailUser", request.getParameter("emailUser"));
             request.setAttribute("otp", otp);
             request.setAttribute("userID", userID);
-            
+
             request.setAttribute("notifyForgot", "saiOtp");
             request.getRequestDispatcher("ResetPass.jsp").forward(request, response);
         }
@@ -167,7 +167,6 @@ public class fogotPassController extends HttpServlet {
                     + "</html>";
             Email.sendEmail(acc.getEmail().trim(), tieuDe, noiDung);
 
-            acc.setOtp(otp);
             request.setAttribute("acc", acc);
             request.setAttribute("otp", otp);
             request.setAttribute("userID", acc.getUserId());

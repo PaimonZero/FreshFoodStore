@@ -98,7 +98,7 @@
                                 <!-- OTP Input -->
                                 <div class="form-group">
                                     <label for="otp" class="sr-only">Enter OTP</label>
-                                    <input type="text" name="OTP" required class="form-control input-form" id="otp" placeholder="Enter OTP">
+                                    <input type="number" name="OTP" required class="form-control input-form" id="otp" placeholder="Enter OTP">
                                 </div>
                                 <!-- Resend OTP Link -->
                                 <div class="text-right mb-3 mt-3">

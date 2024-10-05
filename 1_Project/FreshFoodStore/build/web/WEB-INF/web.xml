@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+    <servlet>
+        <servlet-name>CustomerDashboard</servlet-name>
+        <servlet-class>controller.DashboardController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>HomepageController</servlet-name>
+        <servlet-class>controller.HomepageController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CustomerDashboard</servlet-name>
+        <url-pattern>/customer/Dashboard</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HomepageController</servlet-name>
+        <url-pattern>/customer/Homepage</url-pattern>
+    </servlet-mapping>
     <welcome-file-list>
         <welcome-file>SignIn.jsp</welcome-file>
     </welcome-file-list>

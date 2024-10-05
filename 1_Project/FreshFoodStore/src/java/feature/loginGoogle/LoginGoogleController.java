@@ -81,7 +81,7 @@ public class LoginGoogleController extends HttpServlet {
                 break;
             case "customer":
                 //Chuyển hướng trang qua user
-                targetURL = "index.html";      //đổi dường dẫn ở đây
+                targetURL = "customer/CustomerDashboard.jsp";      //đổi dường dẫn ở đây
                 encodedURL = response.encodeRedirectURL(targetURL);
                 break;
             default:

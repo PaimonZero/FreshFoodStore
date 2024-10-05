@@ -12,8 +12,8 @@ public class Users {
     private String email;
     private String password;
     private String passGoogle;
-    private int otp;
     private Date createdAt;
+    private String avatar;
     //not in db
     private String role;
 
@@ -33,18 +33,27 @@ public class Users {
         this.phone = phone;
         this.address = address;
     }
-    
-    public Users() {
-    }
 
-    public Users(int userId, String fullName, String address, String phone, String emmail, String password, int otp, Date createdAt) {
+    public Users(int userId, String fullName, String address, String phone, String email, String password, String avatar) {
         this.userId = userId;
         this.fullName = fullName;
         this.address = address;
         this.phone = phone;
-        this.email = emmail;
+        this.email = email;
         this.password = password;
-        this.otp = otp;
+        this.avatar = avatar;
+    }
+    
+    public Users() {
+    }
+
+    public Users(int userId, String fullName, String address, String phone, String email, String password, Date createdAt) {
+        this.userId = userId;
+        this.fullName = fullName;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+        this.password = password;
         this.createdAt = createdAt;
     }
 
@@ -128,17 +137,22 @@ public class Users {
         this.password = password;
     }
 
-    public int getOtp() {
-        return otp;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public void setOtp(int otp) {
-        this.otp = otp;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
+
+//    @Override
+//    public String toString() {
+//        return "Users{" + "userId=" + userId+ ", role=" + role + ", fullName=" + fullName + ", address=" + address + ", phone=" + phone + ", emmail=" + email + ", password=" + password + ", otp=" + otp + ", createdAt=" + createdAt + '}';
+//    }
 
     @Override
     public String toString() {
-        return "Users{" + "userId=" + userId+ ", role=" + role + ", fullName=" + fullName + ", address=" + address + ", phone=" + phone + ", emmail=" + email + ", password=" + password + ", otp=" + otp + ", createdAt=" + createdAt + '}';
+        return "Users{" + "userId=" + userId + ", fullName=" + fullName + ", address=" + address + ", phone=" + phone + ", email=" + email + ", password=" + password + ", avatar=" + avatar + '}';
     }
-
+    
 }
