@@ -12,6 +12,7 @@ public class Users {
     private String email;
     private String password;
     private String passGoogle;
+    private int otp;
     private Date createdAt;
     private String avatar;
     //not in db
@@ -47,13 +48,14 @@ public class Users {
     public Users() {
     }
 
-    public Users(int userId, String fullName, String address, String phone, String email, String password, Date createdAt) {
+    public Users(int userId, String fullName, String address, String phone, String email, String password, int otp, Date createdAt) {
         this.userId = userId;
         this.fullName = fullName;
         this.address = address;
         this.phone = phone;
         this.email = email;
         this.password = password;
+        this.otp = otp;
         this.createdAt = createdAt;
     }
 
@@ -135,6 +137,14 @@ public class Users {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getOtp() {
+        return otp;
+    }
+
+    public void setOtp(int otp) {
+        this.otp = otp;
     }
 
     public String getAvatar() {

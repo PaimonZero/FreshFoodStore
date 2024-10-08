@@ -2,7 +2,7 @@ package feature.loginGoogle;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import dal.UserDAO;
+import dao.UserDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -81,7 +81,7 @@ public class LoginGoogleController extends HttpServlet {
                 break;
             case "customer":
                 //Chuyển hướng trang qua user
-                targetURL = "customer/CustomerDashboard.jsp";      //đổi dường dẫn ở đây
+                targetURL = "index.html";      //đổi dường dẫn ở đây
                 encodedURL = response.encodeRedirectURL(targetURL);
                 break;
             default:

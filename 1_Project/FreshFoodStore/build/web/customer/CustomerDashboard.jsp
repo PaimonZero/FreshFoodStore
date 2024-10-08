@@ -170,9 +170,6 @@
                 </div>
             </div>
         </div>
-<!--        <form action="Dashboard">
-            <button type="submit">submit</button>
-        </form>-->
         <%@include file="Footer.jsp" %>
         <script src="../js/bootstrap.bundle.min.js"></script>
         <script>

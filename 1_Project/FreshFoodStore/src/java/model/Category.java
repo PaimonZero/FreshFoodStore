@@ -4,28 +4,26 @@
  */
 package model;
 
-/**
- *
- * @author nguye
- */
 public class Category {
-    private int CategoryId;
+    private int categoryId;
     private String name;
 
+    // Constructor
     public Category() {
     }
 
-    public Category(int CategoryId, String name) {
-        this.CategoryId = CategoryId;
+    public Category(int categoryId, String name) {
+        this.categoryId = categoryId;
         this.name = name;
     }
 
+    // Getter và Setter
     public int getCategoryId() {
-        return CategoryId;
+        return categoryId;
     }
 
-    public void setCategoryId(int CategoryId) {
-        this.CategoryId = CategoryId;
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 
     public String getName() {
@@ -35,11 +33,5 @@ public class Category {
     public void setName(String name) {
         this.name = name;
     }
-
-    @Override
-    public String toString() {
-        return "Category{" + "CategoryId=" + CategoryId + ", name=" + name + '}';
-    }
-    
-    
 }
+

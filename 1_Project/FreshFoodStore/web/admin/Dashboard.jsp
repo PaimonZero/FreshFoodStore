@@ -340,6 +340,8 @@
     <!-- Custom JS -->
     <script src="../admin/HeadSidebar/MenuButton.js"></script>
     <script src="../js/adminJs/Dashboard.js"></script>
+    <script src="../admin/HeadSidebar/SideBar.js"></script>
+
 </body>
 
 </html>

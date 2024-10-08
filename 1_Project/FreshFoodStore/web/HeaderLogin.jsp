@@ -1,6 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@page contentType="text/html" import="model.*,java.util.*, dal.*" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -10,7 +8,7 @@
     </head>
     <body>
         <header class="position-fixed w-100 bg-light hight--header d-flex flex-column">
-
+            
 
             <!--mới sửa class navbar thêm vào bg-light-->
             <!-- Nav-bar -->
@@ -84,40 +82,10 @@
                                 </button>
                             </div>
                         </div>
-                        <c:choose>
-                            <c:when test="${not empty account}">
-                                <form action="auth?action=logout" method="POST">
-                                    <li class="dropdown" id="icon-drop" style="list-style: none;">
-                                        <a href="Dashboard?action=viewDashboard&account=${account}">
-                                            <div class="user-icon">
-                                                <img src="../images/${account.avatar}" width="40" height="40" style="object-fit: cover; border-radius: 50%;" alt="alt"/>
-                                            </div>
-                                        </a>
-                                        <a class="nav-link dropdown-toggle arrow-none nav-user px-2 pt-0 pb-0 m-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                                            <span class="d-lg-flex flex-column gap-1 d-none"></span>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated profile-dropdown">
-
-                                            <button style="background-color: transparent; border: none; color: inherit; cursor: pointer; padding: 0;">
-                                                <img class="d-none d-lg-inline-block" src="../images/png/box-arrow-in-right.svg" alt="box-arrow">
-                                                Logout
-                                            </button>
-                                        </div>
-                                    </li>
-                                </form>
-
-                            </c:when>
-                            <c:otherwise>
-                                <form action="auth?action=login" method="POST">
-                                    <a>
-                                        <button id="loginBtn" class="btn btn-sm m-sm-2 m-1 bg-primary text-white rounded-5 px-sm-3 px-2">
-                                            Login
-                                            <img class="d-none d-lg-inline-block" src="./images/png/box-arrow-in-right.svg" alt="box-arrow">
-                                        </button>
-                                    </a>
-                                </form>
-                            </c:otherwise>
-                        </c:choose>
+                        <button id="loginBtn" class="btn btn-sm m-sm-2 m-1 bg-primary text-white rounded-5 px-sm-3 px-2">Login
+                            <img class="d-none d-lg-inline-block" src="./images/png/box-arrow-in-right.svg"
+                                 alt="box-arrow">
+                        </button>
                     </div>
                 </div>
             </nav>

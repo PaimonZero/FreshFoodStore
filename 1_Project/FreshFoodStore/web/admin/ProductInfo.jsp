@@ -1,205 +1,251 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.util.List"%>
+<%@page import="dao.ProductInfoDao"%>
+<%@page import="model.BatchProduct"%>
+<%@page import="model.Promos"%>
+<%@page import="model.ProductInfo"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
+<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/bootstrap.css">
-    <link rel="stylesheet" href="../css/adminCss/ProductInfo.css">
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" href="../admin/HeadSidebar/header-sidebar.css">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../css/bootstrap.css">
+        <link rel="stylesheet" href="../css/adminCss/ProductInfo.css">
+        <link rel="stylesheet" href="../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../admin/HeadSidebar/header-sidebar.css">
+        <title>Product Information</title>
+    </head>
 
-    <title>Product Information</title>
-</head>
+    <body>
+        <%@include file="HeadSidebar/sidebar.jsp" %> 
+        <%@include file="HeadSidebar/header.jsp" %>
+        <div class="scale-container">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-2 bg-Secondary text-white">
+                        <div id="sidebar-container"></div>
+                    </div>  
+                    <div class="col-md-10 bg-Secondary text-white">
+                        <div id="header-container"></div>
 
-<body>
-    <%@include file="HeadSidebar/sidebar.jsp" %> 
-    <%@include file="HeadSidebar/header.jsp" %>
-    <div class="scale-container">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-2 bg-Secondary text-white">
-                    <div id="sidebar-container"></div>
-                </div>  
-                <div class="col-md-10 bg-Secondary text-white">
-                    <div id="header-container"></div>
+                        <div class="row mt-4">
+                            <div class="col-md-12">
+                                <div class="card text-dark bg-light d-flex mb-3">
 
-                    <div class="row mt-4">
-                        <div class="col-md-12">
-                            <div class="card text-dark bg-light d-flex mb-3">
-                                <div class="card-header bg-light d-flex align-items-center justify-content-between">
-                                    <h4 class="mb-0" style="font-weight: bold;">Product</h4> <!--chỗ này thế bằng tên sản phẩm-->
-                                    <div>
-                                        <button class="btn btn-sm btn-outline-success"style="width: 105px;">Edit Product</button>
-                                        <button class="btn btn-sm btn-outline-secondary"style="width: 105px;">Download All</button>
+                                    <%
+                                        // Lấy productId từ query string
+                                        String productIdParam = request.getParameter("productId");
+                                        int productId = Integer.parseInt(productIdParam); // Chuyển đổi sang int
+                                    
+                                        // Tạo ProductInfoDao và lấy thông tin sản phẩm
+                                        ProductInfoDao productInfoDao = new ProductInfoDao();
+                                        ProductInfo productInfo = productInfoDao.getProductInfoById(productId); // Thêm phương thức này vào ProductInfoDao
+                                    %>
+
+                                    <div class="card-header bg-light d-flex align-items-center justify-content-between">
+                                        <h4 class="mb-0" style="font-weight: bold;"><%= productInfo.getProductName() %></h4>
+                                        <div>
+                                            <button class="btn btn-sm btn-outline-success" style="width: 105px;">Edit Product</button>
+                                            <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
+                                                    data-bs-target="#deleteConfirmationModal"  style="width: 105px;">Delete</button>
+
+                                        </div>
                                     </div>
-                                </div>
 
-                                <!-- Start of the Content Section with 2 Columns -->
-                                <div class="card-body">
-                                    <div class="row">
-                                        <!-- Column for Product Details and Information -->
-                                        <div class="col-md-7">
-                                            <h4 class="mb-4" style="text-align: left; text-decoration: underline; text-decoration-color: #27ae60;">Overview</h4>
-                                            <h5 class="mb-4" style="text-align: left;">Chi tiết sản phẩm</h5>
+                                    <!-- Start of the Content Section with 2 Columns -->
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <!-- Column for Product Details and Information -->
+                                            <div class="col-md-7">
+                                                <h4 class="mb-4" style="text-align: left; text-decoration: underline; text-decoration-color: #27ae60;">Overview</h4>
+                                                <h5 class="mb-4" style="text-align: left;">Chi tiết sản phẩm</h5>
 
-                                            <div class="row mb-4">
-                                                <div class="col-md-12">
-                                                    <table class="table table-borderless" style="width: 100%; border-collapse: separate; border-spacing: 0 10px;">
+                                                <div class="row mb-4">
+                                                    <div class="col-md-12">
+                                                        <table class="table table-borderless" style="width: 100%; border-collapse: separate; border-spacing: 0 10px;">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td style="padding: 10px 10px;"><strong>Tên sản phẩm:</strong></td>
+                                                                    <td style="padding: 10px 10px;"><%= productInfo.getProductName() %></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="padding: 10px 10px;"><strong>Mã sản phẩm:</strong></td>
+                                                                    <td style="padding: 10px 10px;"><%= productInfo.getProductId() %></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="padding: 10px 10px;"><strong>Danh mục sản phẩm:</strong></td>
+                                                                    <td style="padding: 10px 10px;"><%= productInfo.getCategoryName() %></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="padding: 10px 10px;"><strong>Đơn vị tính:</strong></td>
+                                                                    <td style="padding: 10px 10px;"><%= productInfo.getUnitMeasure() %></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="padding: 10px 10px;"><strong>Giá bán ra:</strong></td>
+                                                                    <td style="padding: 10px 10px;"><%= productInfo.getUnitPrice() %> VND</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                                <div class="supplier-info mb-4">
+                                                    <h2 class="h5">Thông tin nhà cung cấp</h2>
+                                                    <div class="col-md-12">
+                                                        <table class="table table-borderless" style="width: 100%; border-collapse: separate; border-spacing: 0 10px;">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td style="padding: 10px 10px;"><strong>Tên Nhà Cung Cấp</strong></td>
+                                                                    <td style="padding: 10px 10px;"><%= productInfo.getSupplierName() %></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="padding: 10px 10px;"><strong>Số điện thoại</strong></td>
+                                                                    <td style="padding: 10px 10px;"><%= productInfo.getSupplierPhone() %></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Các phần thông tin khác có thể được thêm sau -->
+                                                <div class="batch-info mb-4">
+                                                    <h2 class="h5">Các lô hàng hiện có</h2>
+                                                    <table class="table table-bordered text-center">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Mã lô hàng</th>
+                                                                <th>Ngày nhập</th>
+                                                                <th>Ngày hết hạn</th>
+                                                                <th>Số lượng hiện có</th>
+                                                            </tr>
+                                                        </thead>
                                                         <tbody>
+                                                            <%
+                                                                // Lấy danh sách các lô hàng từ ProductInfo
+                                                                List<BatchProduct> batchProducts = productInfo.getBatchProducts();
+                                                                if (batchProducts != null && !batchProducts.isEmpty()) {
+                                                                    for (BatchProduct batchProduct : batchProducts) {
+                                                            %>
                                                             <tr>
-                                                                <td style="padding: 10px 10px;"><strong>Tên sản phẩm:</strong></td>
-                                                                <td style="padding: 10px 10px;">Thịt heo ba chỉ</td>
+                                                                <td><%= batchProduct.getBatchId() %></td>
+                                                                <td><%= batchProduct.getCreatedAt() %></td>
+                                                                <td><%= batchProduct.getExpiryDate() %></td>
+                                                                <td><%= batchProduct.getQuantity() %></td>
                                                             </tr>
+                                                            <%
+                                                                    }
+                                                                } else {
+                                                            %>
                                                             <tr>
-                                                                <td style="padding: 10px 10px;"><strong>Mã sản phẩm:</strong></td>
-                                                                <td style="padding: 10px 10px;">456567</td>
+                                                                <td colspan="4">Không có lô hàng nào.</td>
                                                             </tr>
+                                                            <%
+                                                                }
+                                                            %>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                                <div class="promotion-info">
+                                                    <h2 class="h5">Chương trình khuyến mãi</h2>
+                                                    <table class="table table-bordered text-center">
+                                                        <thead>
                                                             <tr>
-                                                                <td style="padding: 10px 10px;"><strong>Danh mục sản phẩm:</strong></td>
-                                                                <td style="padding: 10px 10px;">Thịt</td>
+                                                                <th>Id khuyến mãi</th>
+                                                                <th>Ngày bắt đầu</th>
+                                                                <th>Ngày kết thúc</th>
+                                                                <th class="no-border-right">Chiết khấu (%)</th>
+                                                                <th class="no-border-left"></th>
                                                             </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <%
+                                                                // Lấy danh sách các chương trình khuyến mãi từ ProductInfo
+                                                                List<Promos> promosList = productInfo.getPromosList();
+                                                                if (promosList != null && !promosList.isEmpty()) {
+                                                                    for (Promos promo : promosList) {
+                                                            %>
                                                             <tr>
-                                                                <td style="padding: 10px 10px;"><strong>Đơn vị tính:</strong></td>
-                                                                <td style="padding: 10px 10px;">Kg</td>
+                                                                <td><%= promo.getPromotionId() %></td>
+                                                                <td><%= promo.getStartDate() %></td>
+                                                                <td><%= promo.getEndDate() %></td>
+                                                                <td><%= promo.getDiscount() %></td>
+                                                                <td>
+                                                                    <button class="btn btn-sm btn-outline-secondary">
+                                                                        <ion-icon name="pencil-outline"></ion-icon>
+                                                                    </button>
+                                                                </td>
                                                             </tr>
+                                                            <%
+                                                                    }
+                                                                } else {
+                                                            %>
                                                             <tr>
-                                                                <td style="padding: 10px 10px;"><strong>Giá bán ra:</strong></td>
-                                                                <td style="padding: 10px 10px;">200.000 vnd</td>
+                                                                <td colspan="5">Không có chương trình khuyến mãi nào.</td>
                                                             </tr>
+                                                            <%
+                                                                }
+                                                            %>
                                                         </tbody>
                                                     </table>
                                                 </div>
                                             </div>
-
-                                            <div class="supplier-info mb-4">
-                                                <h2 class="h5">Thông tin nhà cung cấp</h2>
-                                                <div class="col-md-12">
-                                                    <table class="table table-borderless" style="width: 100%; border-collapse: separate; border-spacing: 0 10px;">
-                                                        <tbody>
-                                                            <tr>
-                                                                <td style="padding: 10px 10px;"><strong>Tên Nhà Cung Cấp</strong></td>
-                                                                <td style="padding: 10px 10px;">Ronald Martin</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td style="padding: 10px 10px;"><strong>Số điện thoại</strong></td>
-                                                                <td style="padding: 10px 10px;">0123456789</td>
-                                                            </tr>
-
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-
-                                            <div class="batch-info mb-4">
-                                                <h2 class="h5">Các lô hàng hiện có</h2>
-                                                <table class="table table-bordered text-center">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Mã lô hàng</th>
-                                                            <th>Giá nhập</th>
-                                                            <th>Ngày hết hạn</th>
-                                                            <th>Số lượng hiện có</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>5</td>
-                                                            <td>₹430</td>
-                                                            <td>11/12/24</td>
-                                                            <td>15</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>25</td>
-                                                            <td>₹257</td>
-                                                            <td>21/12/24</td>
-                                                            <td>19</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-
-                                            <div class="promotion-info">
-                                                <h2 class="h5">Chương trình khuyến mãi</h2>
-                                                <table class="table table-bordered text-center">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Id khuyến mãi</th>
-                                                            <th>Ngày bắt đầu</th>
-                                                            <th>Ngày kết thúc</th>
-                                                            <th class="no-border-right">Chiết khấu (%)</th>
-                                                            <th class="no-border-left"></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>3</td>
-                                                            <td>11/12/24</td>
-                                                            <td>12/12/24</td>
-                                                            <td class="no-border-right">35 </td>
-                                                            <td class="no-border-left">
-                                                                <button class="btn btn-sm btn-outline-secondary" >
-                                                                    <ion-icon name="pencil-outline" ></ion-icon>
-                                                                </button>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                        <div class = "col-md-1">
-
-                                        </div>
-                                        <!-- Column for Product Image -->
-                                        <div class="col-md-4">
-                                            <div class="d-flex flex-column align-items-center">
-                                                <div class="product-image mb-2">
-                                                    <img src="image.png" alt="Sản phẩm" class="img-fluid">
-                                                </div>
-                                                <div class="product-quantity text-center">
-                                                    <p><strong>Hiện có:</strong> 34</p>
-                                                    <p><strong>Số lượng hàng trong kho:</strong> 10</p>
+                                            <div class="col-md-1"></div>
+                                            <!-- Column for Product Image -->
+                                            <div class="col-md-4">
+                                                <div class="d-flex flex-column align-items-center">
+                                                    <div class="product-image mb-2">
+                                                        <img src="image.png" alt="Sản phẩm" class="img-fluid">
+                                                    </div>
+                                                    <div class="product-quantity text-center">
+                                                        <p><strong>Hiện có:</strong> 34</p>
+                                                        <p><strong>Số lượng hàng trong kho:</strong> 10</p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- End of the Content Section -->
                                 </div>
-                                <!-- End of the Content Section -->
                             </div>
                         </div>
+
                     </div>
-
                 </div>
-
-
             </div>
-
         </div>
-    </div>
+        <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteConfirmationModalLabel">Xác nhận xóa sản phẩm</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Bạn có chắc chắn muốn xóa sản phẩm này không?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <form action="DeleteProductServlet" method="post">
+                            <input type="hidden" name="productId" value="<%= productInfo.getProductId() %>">
+                            <button type="submit" class="btn btn-danger">Xóa</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <!--    <script>
-            // Load sidebar
-            fetch('./HeadSidebar/sidebar.html')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('sidebar-container').innerHTML = data;
-                });
-    
-            // Load header
-            fetch('./HeadSidebar/header.html')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('header-container').innerHTML = data;
-                });
-        </script>-->
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js">
-    </script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/bootstrap.js"></script>
-    <!--<script src="../Style/js/Product.js"></script>-->
-    <script src="../admin/HeadSidebar/MenuButton.js"></script>
 
-</body>
+
+        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/bootstrap.js"></script>
+        <script src="../admin/HeadSidebar/MenuButton.js"></script>
+        <script src="../admin/HeadSidebar/SideBar.js"></script>
+
+    </body>
 
 </html>

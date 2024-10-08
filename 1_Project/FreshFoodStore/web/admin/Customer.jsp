@@ -297,8 +297,8 @@
     <!--<script src="../BootstrapJS/bootstrap.min.js"></script>-->
     <script src="../js/bootstrap.bundle.min.js"></script>
     <script src="../js/bootstrap.js"></script>
-    <script src="../js/adminJs/Product.js"></script> <!--??? không thấy Product.js-->
     <script src="../admin/HeadSidebar/MenuButton.js"></script>
+    
 
 </body>
 

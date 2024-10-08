@@ -1,6 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@page contentType="text/html" import="model.*,java.util.*, dal.*" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -10,7 +8,7 @@
     </head>
     <body>
         <header class="position-fixed w-100 bg-light hight--header d-flex flex-column">
-
+            
 
             <!--mới sửa class navbar thêm vào bg-light-->
             <!-- Nav-bar -->
@@ -84,41 +82,10 @@
                                 </button>
                             </div>
                         </div>
-                        <c:choose>
-                            <c:when test="${not empty account}">
-                                <form id="infoForm" action="Dashboard?action=listInfo" method="POST">
-                                    <div class="user-icon" onclick="document.getElementById('infoForm').submit();" style="cursor: pointer;">
-                                        <img src="../images/${account.avatar}" width="40" height="40" style="object-fit: cover; border-radius: 50%;" alt="alt"/>
-                                    </div>
-                                </form>
-                                <!---->               
-                                <li class="dropdown" id="icon-drop" style="list-style: none;">
-                                    <a class="nav-link dropdown-toggle arrow-none nav-user px-2 pt-0 pb-0 m-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                                        <span class="d-lg-flex flex-column gap-1 d-none"></span>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated profile-dropdown">
-                                        <form action="auth?action=logout" method="POST">
-                                            <button style="background-color: transparent; border: none; color: inherit; cursor: pointer; padding: 0;">
-                                                <img class="d-none d-lg-inline-block" src="../images/png/box-arrow-in-right.svg" alt="box-arrow">
-                                                Logout
-                                            </button>
-                                        </form>
-                                    </div>
-                                </li>
-
-
-                            </c:when>
-                            <c:otherwise>
-                                <form action="auth?action=login" method="POST">
-                                    <a>
-                                        <button id="loginBtn" class="btn btn-sm m-sm-2 m-1 bg-primary text-white rounded-5 px-sm-3 px-2">
-                                            Login
-                                            <img class="d-none d-lg-inline-block" src="../images/png/box-arrow-in-right.svg" alt="box-arrow">
-                                        </button>
-                                    </a>
-                                </form>
-                            </c:otherwise>
-                        </c:choose>
+                        <button id="loginBtn" class="btn btn-sm m-sm-2 m-1 bg-primary text-white rounded-5 px-sm-3 px-2">Login
+                            <img class="d-none d-lg-inline-block" src="../images/png/box-arrow-in-right.svg"
+                                 alt="box-arrow">
+                        </button>
                     </div>
                 </div>
             </nav>
@@ -154,14 +121,5 @@
             </nav>
         </header>
         <script src="../js/authJs/myCode.js"></script>
-        <script>
-                                        //test link đến product detail
-                                        function redirectToHref(event) {
-                                            event.preventDefault();  // Ngăn chặn form submit thông thường
-                                            var href = "https://getbootstrap.com/docs/5.0/components/buttons/"; // Lấy href từ div
-                                            window.location.href = href;  // Chuyển hướng đến URL trong href
-                                        }
-
-        </script>
     </body>
 </html>

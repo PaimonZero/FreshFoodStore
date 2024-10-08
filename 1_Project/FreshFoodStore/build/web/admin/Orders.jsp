@@ -263,6 +263,7 @@
     <script src="../js/bootstrap.js"></script>
     <!--<script src="../Style/js/Product.js"></script>-->
     <script src="../admin/HeadSidebar/MenuButton.js"></script>
+    <script src="../admin/HeadSidebar/SideBar.js"></script>
 
 </body>
 

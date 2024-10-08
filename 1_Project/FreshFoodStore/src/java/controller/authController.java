@@ -1,6 +1,7 @@
+
 package controller;
 
-import dal.UserDAO;
+import dao.UserDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.Cookie;
@@ -23,7 +24,7 @@ public class authController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet authController</title>");
+            out.println("<title>Servlet authController</title>");            
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet authController at " + request.getContextPath() + "</h1>");
@@ -35,7 +36,7 @@ public class authController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("SignIn.jsp").forward(request, response);
+                request.getRequestDispatcher("auth.jsp").forward(request, response);
     }
 
     @Override
@@ -58,7 +59,7 @@ public class authController extends HttpServlet {
                 throw new AssertionError();
         }
     }
-
+    
     private void handleLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         // Set session timeout to 30 minutes
@@ -103,18 +104,18 @@ public class authController extends HttpServlet {
                     //Chuyển hướng trang qua admin 
                     session.setAttribute("account", account);
                     request.setAttribute("notifyAuth", "success");
-
+                    
                     //targetURL = request.getContextPath() + "/Admin/index";
-                    targetURL = "index2.html";                                      //đổi dường dẫn ở đây
+                    targetURL = "admin/Dashboard.jsp"; //đổi dường dẫn ở đây
                     encodedURL = response.encodeRedirectURL(targetURL);
                     response.sendRedirect(encodedURL);
                     break;
                 case "customer":
                     session.setAttribute("account", account);
                     request.setAttribute("notifyAuth", "success");
-
+                    
                     //Chuyển hướng trang qua user
-                    targetURL = request.getContextPath() + "/customer/Homepage";      //đổi dường dẫn ở đây  //homePage
+                    targetURL = "index.html";      //đổi dường dẫn ở đây  //homePage
                     encodedURL = response.encodeRedirectURL(targetURL);
                     response.sendRedirect(encodedURL);
                     break;
@@ -155,10 +156,8 @@ public class authController extends HttpServlet {
             session.invalidate();
         }
 
-        String targetURL = request.getContextPath() + "/SignIn.jsp";
-        String encodedURL = response.encodeRedirectURL(targetURL);
+        String encodedURL = response.encodeRedirectURL("SignIn.jsp");
         response.sendRedirect(encodedURL);
-
     }
 
     private void handleSignup(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

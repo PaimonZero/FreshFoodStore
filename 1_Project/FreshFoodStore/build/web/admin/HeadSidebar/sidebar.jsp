@@ -6,38 +6,38 @@
             Ecobazar
         </h2>
         <div class="menu-section">
-            <div class="menu-item active">
+            <div class="menu-item" id="Dashboard">
                 <span class="icon">
                     <ion-icon name="home-outline"></ion-icon>
                 </span>
                 <p>Dashboard</p>
             </div>
-            <div class="menu-item">
+            <div class="menu-item" id="Inventory" >
                 <span class="icon">
                     <ion-icon name="file-tray-stacked-outline"></ion-icon>
                 </span>
                 <p>Inventory</p>
             </div>
 
-            <div class="menu-item">
+            <div class="menu-item" id="Product">
                 <span class="icon">
                     <ion-icon name="bag-outline"></ion-icon>
                 </span>
                 <p>Products</p>
             </div>
-            <div class="menu-item">
+            <div class="menu-item" id="Report">
                 <span class="icon">
                     <ion-icon name="arrow-undo-outline"></ion-icon>
                 </span>
                 <p>Reports</p>
             </div>
-            <div class="menu-item">
+            <div class="menu-item" id="Supplier">
                 <span class="icon">
                     <ion-icon name="person-outline"></ion-icon>
                 </span>
                 <p>Suppliers</p>
             </div>
-            <div class="menu-item">
+            <div class="menu-item" id="Orders">
                 <span class="icon">
                     <ion-icon name="cart-outline"></ion-icon>
                 </span>

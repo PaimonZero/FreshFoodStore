@@ -1,6 +1,6 @@
 package controller;
 
-import dal.UserDAO;
+import dao.UserDAO;
 import feature.sendEmail.Email;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -69,7 +69,6 @@ public class fogotPassController extends HttpServlet {
             response.sendRedirect("SignIn.jsp");
         } else {                //nếu sai otp
             //Thông báo cho khách hàng và chuyển lại trang quên mk
-            request.setAttribute("emailUser", request.getParameter("emailUser"));
             request.setAttribute("otp", otp);
             request.setAttribute("userID", userID);
 
@@ -167,6 +166,7 @@ public class fogotPassController extends HttpServlet {
                     + "</html>";
             Email.sendEmail(acc.getEmail().trim(), tieuDe, noiDung);
 
+            acc.setOtp(otp);
             request.setAttribute("acc", acc);
             request.setAttribute("otp", otp);
             request.setAttribute("userID", acc.getUserId());

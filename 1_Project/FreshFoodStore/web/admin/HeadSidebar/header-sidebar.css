@@ -36,11 +36,6 @@
     transition: color 0.3s ease;
 }
 
-
-.menu-item.active {
-    color: #27ae60;
-}
-
 .menu-item .icon {
     font-size: 1.25rem;
     margin-right: 15px;
@@ -52,9 +47,6 @@
     margin-right: 15px;
 }
 
-.menu-item.active .icon {
-    color: #27ae60;
-}
 
 .menu-item:hover {
     color: #27ae60;
@@ -63,6 +55,14 @@
 
 .menu-item:hover .icon {
     color: #27ae60;
+}
+
+.menu-item.active {
+    color: #27ae60; /* Màu văn bản khi active */
+}
+
+.menu-item.active .icon {
+    color: #27ae60; /* Màu icon khi active */
 }
 
 .sidebar .menu-section {
