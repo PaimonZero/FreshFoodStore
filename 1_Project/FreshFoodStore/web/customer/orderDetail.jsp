@@ -43,22 +43,28 @@
                                 </form>
                             </li>
                             <li>
-                                <a href="#" class="nav-link active">
-                                    <i class="fas fa-sync-alt me-2"></i>
-                                    Lịch sử đơn hàng
-                                </a>
+                                <form id="infoForm2" action="OrderHistory" method="POST"> <%--đổi đường dẫn--%>
+                                    <a class="nav-link active" onclick="document.getElementById('infoForm2').submit();" style="cursor: pointer;">
+                                        <i class="fas fa-sync-alt me-2"></i>
+                                        Lịch sử đơn hàng
+                                    </a>
+                                </form>
                             </li>
                             <li>
-                                <a href="#" class="nav-link">
-                                    <i class="far fa-heart me-2"></i>
-                                    Danh sách yêu thích
-                                </a>
+                                <form id="infoForm3" action="" method="POST"> <%--đổi đường dẫn--%>
+                                    <a class="nav-link" onclick="document.getElementById('infoForm3').submit();" style="cursor: pointer;">
+                                        <i class="far fa-heart me-2"></i>
+                                        Danh sách yêu thích
+                                    </a>
+                                </form>
                             </li>
                             <li>
-                                <a href="ShoppingCart.jsp" class="nav-link"><!--để tạm-->
-                                    <i class="bi bi-bag me-2"></i>
-                                    Giỏ hàng
-                                </a>
+                                <form id="infoForm4" action="" method="POST"> <%--đổi đường dẫn--%>
+                                    <a class="nav-link" onclick="document.getElementById('infoForm4').submit();" style="cursor: pointer;">
+                                        <i class="bi bi-bag me-2"></i>
+                                        Giỏ hàng
+                                    </a>
+                                </form>
                             </li>
                             <li>
                                 <form id="infoForm5" action="AccountSetting?action=showData" method="POST"> <%--đổi đường dẫn--%>
@@ -69,10 +75,12 @@
                                 </form>
                             </li>
                             <li>
-                                <a href="#" class="nav-link">
-                                    <i class="fas fa-sign-out-alt me-2"></i>
-                                    Đăng xuất
-                                </a>
+                                <form id="infoForm6" action="" method="POST"> <%--đổi đường dẫn--%>
+                                    <a class="nav-link" onclick="document.getElementById('infoForm6').submit();" style="cursor: pointer;">
+                                        <i class="fas fa-sign-out-alt me-2"></i>
+                                        Đăng xuất
+                                    </a>
+                                </form>
                             </li>
                         </ul>
                     </div>
@@ -83,13 +91,13 @@
                         <div class="card-header">
                             <div class="d-flex justify-content-between align-items-center mb-2 mt-2 content">
                                 <h5 class="card-title text-center fw-bold">Order Details &#8901; <small
-                                        class="text-muted fw-light">${orderCurrent.orderCreatedAtString} &#8901;${orderCurrent.quantity} product</small></h5>
+                                        class="text-muted fw-light">${orderCurrent.orderCreatedAtString} &#8901;${orderCurrent.quantity} sản phẩm</small></h5>
                                 <a href="#" class="text-success fw-bold">Back to List</a> <%--trỏ qua orderHistory--%>
                             </div>
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-8">
+                                <div class="col-md-7">
                                     <div class="row mb-4 g-0">
                                         <div class="col-md-6">
                                             <div class="card" style="border-radius: 0;">
@@ -119,16 +127,16 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-5">
                                     <div class="card">
                                         <div class="card-header text-muted">
                                             <div class="row p-2">
                                                 <div class="col-md-5" style="border-right: 2px solid #ccc;">
-                                                    <h6>Order ID: </h6>
+                                                    <h6>Mã đơn hàng: </h6>
                                                     <strong class="text-dark">${orderCurrent.orderId}</strong>
                                                 </div>
                                                 <div class="col-md-7">
-                                                    <h6>Payment Method: </h6>
+                                                    <h6>Phương thức thanh toán: </h6>
                                                     <strong class="text-dark">${orderCurrent.paymentType}</strong>
                                                 </div>
                                             </div>
@@ -140,15 +148,11 @@
                                                     <td class="subtotal"></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Giảm giá:</td>
-                                                    <td class="discount">${orderCurrent.discountString}%</td>
-                                                </tr>
-                                                <tr>
                                                     <td>Phí vận chuyển:</td>
                                                     <td class="shippingFee">${orderCurrent.shippingFeeString}đ</td>
                                                 </tr>
                                                 <tr>
-                                                    <td style="font-size: 20px;">Tổng tiền:</td>
+                                                    <td style="font-size: 19px;">Tổng thanh toán: </td>
                                                     <td><strong style="font-size: 23px; color: rgb(52, 171, 52);" class="total">$84.00</strong></td>
                                                 </tr>
                                             </table>
@@ -188,10 +192,11 @@
                         <table class="table table-hover">
                             <thead class="table-active">
                                 <tr>
-                                    <th>Product</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Subtotal</th>
+                                    <th>Sản phẩm</th>
+                                    <th>Giá</th>
+                                    <th>Số lượng</th>
+                                    <th>Giảm giá</th>
+                                    <th>Tổng tiền</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -203,6 +208,7 @@
                                     </td>
                                     <td class="item-price">${orderCurrent.unitPriceOutString}đ</td>
                                     <td class="input-qty">${orderCurrent.quantity}</td>
+                                    <td class="discount">${orderCurrent.discountString}%</td>
                                     <td class="item-total-price"></td>
                                 </tr>
                             </tbody>
@@ -215,12 +221,75 @@
         <%@include file="Footer.jsp" %>
         <script src="../js/bootstrap.bundle.min.js"></script>
         <script src="../js/authJs/orderDetail.js"></script>
-
         <script>
-                                        //hiện thanh sidebar mobile
-                                        document.querySelector('.menu-toggle').addEventListener('click', function () {
-                                            document.getElementById('sidebar').classList.toggle('show');
-                                        });
+                                        function calculateTotal() {
+                                            // Get all the rows in the table
+                                            const rows = document.querySelectorAll('tr');
+
+                                            rows.forEach(row => {
+                                                // Get the price, quantity, discount, and total price elements
+                                                const priceElement = row.querySelector('.item-price');
+                                                const qtyElement = row.querySelector('.input-qty');
+                                                const discountElement = row.querySelector('.discount');
+                                                const totalElement = row.querySelector('.item-total-price');
+
+                                                // If all required elements exist
+                                                if (priceElement && qtyElement && discountElement && totalElement) {
+                                                    // Get price (remove 'đ', commas, and periods, and convert to number)
+                                                    let price = priceElement.textContent.trim().replace('đ', '').replace(/\./g, '').replace(/,/g, '');
+                                                    let quantity = qtyElement.textContent.trim();
+                                                    let discount = discountElement.textContent.trim().replace('%', '');
+
+                                                    // Convert price, quantity, and discount to numbers
+                                                    price = parseFloat(price);
+                                                    quantity = parseInt(quantity);
+                                                    discount = parseFloat(discount) / 100; // Convert discount to decimal
+
+                                                    // Calculate total price with discount applied
+                                                    const totalPrice = price * quantity * (1 - discount);
+
+                                                    // Format total price with commas and 'đ' and update the total element
+                                                    totalElement.textContent = new Intl.NumberFormat('vi-VN').format(totalPrice) + 'đ';
+                                                }
+                                            });
+                                        }
+
+// Run the function when the page loads
+                                        document.addEventListener('DOMContentLoaded', calculateTotal);
+
+                                        // Function to calculate subtotal, shipping fee, and total
+                                        function calculateCartSummary() {
+                                            // Calculate subtotal by summing all item total prices
+                                            let subtotal = 0;
+                                            document.querySelectorAll('.item-total-price').forEach(item => {
+                                                // Remove 'đ' and dots, then convert to number
+                                                let itemTotal = item.textContent.trim().replace('đ', '').replace(/\./g, '');
+                                                itemTotal = parseFloat(itemTotal);
+                                                subtotal += itemTotal;
+                                            });
+
+                                            // Update subtotal in the table (format with dots and 'đ')
+                                            document.querySelector('.subtotal').textContent = new Intl.NumberFormat('vi-VN').format(subtotal) + 'đ';
+
+                                            // Get shipping fee (remove 'đ' and dots)
+                                            let shippingFee = document.querySelector('.shippingFee').textContent.trim().replace('đ', '').replace(/\./g, '');
+                                            shippingFee = parseFloat(shippingFee);
+
+                                            // Calculate total (subtotal plus shipping)
+                                            const total = subtotal + shippingFee;
+
+                                            // Update total in the table (format with dots and 'đ')
+                                            document.querySelector('.total').textContent = new Intl.NumberFormat('vi-VN').format(total) + 'đ';
+                                        }
+
+                                        document.addEventListener('DOMContentLoaded', calculateCartSummary);
+
+        </script>
+        <script>
+            //hiện thanh sidebar mobile
+            document.querySelector('.menu-toggle').addEventListener('click', function () {
+                document.getElementById('sidebar').classList.toggle('show');
+            });
         </script>
     </body>
 

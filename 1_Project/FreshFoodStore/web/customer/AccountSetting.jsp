@@ -13,16 +13,16 @@
     </head>
     <body>
         <%@include file="HeaderLogin1.jsp" %>
-        <div class="mobile-header">
-            <div class="d-flex justify-content-between align-items-center">
-                <button class="menu-toggle btn btn-outline-secondary">
-                    <i class="fas fa-bars"></i> Menu
-                </button>
-            </div>
-        </div>
+        <!--        <div class="mobile-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <button class="menu-toggle btn btn-outline-secondary">
+                            <i class="fas fa-bars"></i> Menu
+                        </button>
+                    </div>
+                </div>-->
 
-        <div class="container mobile-content">
-            <div class="row mt-4">
+        <div class="container mobile-content" style="padding-top: 100px;">
+            <div class="row mt-3">
                 <div class="col-lg-3 mt-2">
                     <div class="sidebar d-flex flex-column flex-shrink-0 bg-body-tertiary" id="sidebar">
                         <span class="fs-4 p-3" style="font-weight: 500;">Menu</span>
@@ -36,22 +36,28 @@
                                 </form>
                             </li>
                             <li>
-                                <a href="#" class="nav-link">
-                                    <i class="fas fa-sync-alt me-2"></i>
-                                    Lịch sử đơn hàng
-                                </a>
+                                <form id="infoForm2" action="OrderHistory" method="POST"> <%--đổi đường dẫn--%>
+                                    <a class="nav-link" onclick="document.getElementById('infoForm2').submit();" style="cursor: pointer;">
+                                        <i class="fas fa-sync-alt me-2"></i>
+                                        Lịch sử đơn hàng
+                                    </a>
+                                </form>
                             </li>
                             <li>
-                                <a href="#" class="nav-link">
-                                    <i class="far fa-heart me-2"></i>
-                                    Danh sách yêu thích
-                                </a>
+                                <form id="infoForm3" action="" method="POST"> <%--đổi đường dẫn--%>
+                                    <a class="nav-link" onclick="document.getElementById('infoForm3').submit();" style="cursor: pointer;">
+                                        <i class="far fa-heart me-2"></i>
+                                        Danh sách yêu thích
+                                    </a>
+                                </form>
                             </li>
                             <li>
-                                <a href="ShoppingCart.jsp" class="nav-link"><!--để tạm-->
-                                    <i class="bi bi-bag me-2"></i>
-                                    Giỏ hàng
-                                </a>
+                                <form id="infoForm4" action="" method="POST"> <%--đổi đường dẫn--%>
+                                    <a class="nav-link" onclick="document.getElementById('infoForm4').submit();" style="cursor: pointer;">
+                                        <i class="bi bi-bag me-2"></i>
+                                        Giỏ hàng
+                                    </a>
+                                </form>
                             </li>
                             <li>
                                 <form id="infoForm5" action="AccountSetting?action=showData" method="POST"> <%--đổi đường dẫn--%>
@@ -62,10 +68,12 @@
                                 </form>
                             </li>
                             <li>
-                                <a href="#" class="nav-link">
-                                    <i class="fas fa-sign-out-alt me-2"></i>
-                                    Đăng xuất
-                                </a>
+                                <form id="infoForm6" action="" method="POST"> <%--đổi đường dẫn--%>
+                                    <a class="nav-link" onclick="document.getElementById('infoForm6').submit();" style="cursor: pointer;">
+                                        <i class="fas fa-sign-out-alt me-2"></i>
+                                        Đăng xuất
+                                    </a>
+                                </form>
                             </li>
                         </ul>
                     </div>
@@ -76,41 +84,63 @@
                             <h5 class="card-title">Cài đặt tài khoản</h5>
                         </div>
                         <div class="card-body">
-                            <form action="">
-                                <div class="row">
-                                    <div class="col-md-6 px-3 desktop-view">
-                                        <div class="mt-4 mb-3">
-                                            <label for="exampleFormControlInput1" class="form-label">Họ và tên</label>
-                                            <input type="text" class="form-control input" id="exampleFormControlInput1"
-                                                   placeholder="Họ" value="${listInfo.fullName}" required>
+
+                            <div class="row">
+                                <form action="AccountSetting?action=editData" method="POST" enctype="multipart/form-data">
+                                    <div class="row">
+
+                                        <div class="col-md-6 px-3 desktop-view"><%--lưu ý cái này cho máy tính--%>
+                                            <div class="mb-3">
+                                                <label for="exampleFormControlInput1" class="form-label">Họ và tên</label>
+                                                <input type="text" class="form-control input" id="exampleFormControlInput1"
+                                                       placeholder="Họ và tên" name="fullName" value="${listInfo.fullName}" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="exampleFormControlInput3" class="form-label">Email</label>
+                                                <input type="email" class="form-control input" id="exampleFormControlInput3"
+                                                       placeholder="Email" name="email" value="${listInfo.email}">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="exampleFormControlInput4" class="form-label">Số điện thoại</label>
+                                                <input type="text" class="form-control input" id="exampleFormControlInput4"
+                                                       placeholder="Số điện thoại" pattern="[0-9]{10}"
+                                                       title="Vui lòng nhập đúng số điện thoại" name="phoneNumber" value="${listInfo.phone}" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="address" class="form-label">Địa chỉ nhận hàng</label>
+                                                <input type="text" class="form-control input" id="address"
+                                                       placeholder="Đại học FPT Đà Nẵng" name="address" value="${listInfo.address}" required>
+                                            </div>
+                                            <div>
+                                                <button type="submit" class="save-btn" disabled>Lưu thay đổi</button>
+                                            </div>
                                         </div>
-<!--                                        <div class="mb-3">
-                                            <label for="exampleFormControlInput2" class="form-label">Tên</label>
-                                            <input type="text" class="form-control input" id="exampleFormControlInput2"
-                                                   placeholder="Tên" required>
-                                        </div>-->
-                                        <div class="mb-3">
-                                            <label for="exampleFormControlInput3" class="form-label">Email</label>
-                                            <input type="email" class="form-control input" id="exampleFormControlInput3"
-                                                   placeholder="Email" value="${listInfo.email}">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="exampleFormControlInput4" class="form-label">Số điện thoại</label>
-                                            <input type="text" class="form-control input" id="exampleFormControlInput4"
-                                                   placeholder="Số điện thoại" pattern="[0-9]{10}"
-                                                   title="Vui lòng nhập đúng số điện thoại" value="${listInfo.phone}" required>
-                                        </div>
-                                        <div>
-                                            <button type="submit" class="save-btn" disabled>Lưu thay đổi</button>
-                                        </div>
+                                        <div class="col-md-6 desktop-view ">
+                                            <img src="../images/${listInfo.avatar}"
+                                                 alt="Uploaded Image" class="user-img" id="uploaded-image2">
+                                            <div class="panel">
+                                                <div class="button_outer">
+                                                    <div class="btn_upload">
+                                                        <input type="file" id="upload-file2" name="userImg">
+                                                        Upload Image
+                                                    </div>
+                                                    <div class="processing_bar"></div>
+                                                    <div class="success_box"></div>
+                                                </div>
+                                                <div class="error_msg"></div>
+                                            </div>
+                                        </div> 
+
                                     </div>
-                                    <div class="col-md-6">
+                                </form>
+                                <form action="">
+                                    <div class="col-md-6 mobile-view">
                                         <img src="../images/${listInfo.avatar}"
-                                             alt="Uploaded Image" class="user-img" id="uploaded-image">
+                                             alt="Uploaded Image" class="user-img" id="uploaded-image2">
                                         <div class="panel">
                                             <div class="button_outer">
                                                 <div class="btn_upload">
-                                                    <input type="file" id="upload-file" name="userImg">
+                                                    <input type="file" id="upload-file2" name="userImg">
                                                     Upload Image
                                                 </div>
                                                 <div class="processing_bar"></div>
@@ -118,101 +148,43 @@
                                             </div>
                                             <div class="error_msg"></div>
                                         </div>
-
                                     </div>
-                                    <div class="col-md-6 mobile-view">
+                                    <div class="col-md-6 mobile-view"> <%--cái này cho điện thoại--%>
                                         <div class="mb-3">
                                             <label for="exampleFormControlInput1" class="form-label">Họ và tên</label>
                                             <input type="text" class="form-control input" id="exampleFormControlInput1"
-                                                   placeholder="Họ" required>
+                                                   placeholder="Họ và tên" value="${listInfo.fullName}" name="fullName" required>
                                         </div>
-<!--                                        <div class="mb-3">
-                                            <label for="exampleFormControlInput2" class="form-label">Tên</label>
-                                            <input type="text" class="form-control input" id="exampleFormControlInput2"
-                                                   placeholder="Tên" required>
-                                        </div>-->
+                                        <!--                                        <div class="mb-3">
+                                                                                    <label for="exampleFormControlInput2" class="form-label">Tên</label>
+                                                                                    <input type="text" class="form-control input" id="exampleFormControlInput2"
+                                                                                           placeholder="Tên" required>
+                                                                                </div>-->
                                         <div class="mb-3">
                                             <label for="exampleFormControlInput3" class="form-label">Email</label>
                                             <input type="email" class="form-control input" id="exampleFormControlInput2"
-                                                   placeholder="Email">
+                                                   placeholder="Email" value="${listInfo.email}" name="email">
                                         </div>
                                         <div class="mb-3">
                                             <label for="exampleFormControlInput3" class="form-label">Số điện thoại</label>
                                             <input type="text" class="form-control input" id="exampleFormControlInput2"
                                                    placeholder="Số điện thoại" pattern="[0-9]{10}"
-                                                   title="Vui lòng nhập đúng số điện thoại" required>
+                                                   title="Vui lòng nhập đúng số điện thoại" value="${listInfo.phone}" name="phoneNumber" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="address" class="form-label">Địa chỉ nhận hàng</label>
+                                            <input type="text" class="form-control input" id="address"
+                                                   placeholder="Đại học FPT Đà Nẵng" value="${listInfo.address}" name="address" required>
                                         </div>
                                         <div>
                                             <button type="submit" class="save-btn">Lưu thay đổi</button>
                                         </div>
                                     </div>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                    <div class="card mt-3">
-                        <div class="card-header">
-                            <h5 class="card-title">Địa chỉ thanh toán</h5>
-                        </div>
-                        <div class="card-body">
-                            <form action="">
-                                <div class="row mb-3 g-3">
-                                    <div class="col-md-6">
-                                        <label for="first-name" class="form-label">Họ và tên người nhận</label>
-                                        <input type="text" class="form-control input" id="first-name" placeholder="Họ"
-                                               required>
-                                    </div>
-<!--                                    <div class="col-md-4">
-                                        <label for="last-name" class="form-label">Tên người nhận</label>
-                                        <input type="text" class="form-control input" id="last-name" placeholder="Tên"
-                                               required>
-                                    </div>-->
-                                    <div class="col-md-6">
-                                        <label for="company-name" class="form-label">Tên công ty (tùy chọn)</label>
-                                        <input type="text" class="form-control input" id="company-name"
-                                               placeholder="Tên công ty">
-                                    </div>
-                                </div>
-                                <div>
-                                    <label for="address" class="form-label">Địa chỉ nhận hàng</label>
-                                    <input type="text" class="form-control input" id="address"
-                                           placeholder="Đại học FPT Đà Nẵng" required>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="form-group col-md-4">
-                                        <label for="city" class="form-label">Chọn thành phố</label>
-                                        <select id="city" class="form-control input" required>
-                                            <option value="">Chọn thành phố</option>
-                                            <option value="da-nang">Đà Nẵng</option>
-                                            <option value="ho-chi-minh">Hồ Chí Minh</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label for="district" class="form-label">Chọn tỉnh</label>
-                                        <select id="district" class="form-control input" required>
-                                            <option value="">Chọn tỉnh</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row g-3 mt-2">
-                                    <div class="col-md-6">
-                                        <label for="exampleFormControlInput3" class="form-label">Email</label>
-                                        <input type="email" class="form-control input" id="exampleFormControlInput2"
-                                               placeholder="Email">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="exampleFormControlInput3" class="form-label">Số điện thoại</label>
-                                        <input type="text" class="form-control input" id="exampleFormControlInput3"
-                                               placeholder="Phone Number" pattern="[0-9]{10}"
-                                               title="Vui lòng nhập đúng số điện thoại">
-                                    </div>
-                                </div>
-                                <div>
-                                    <button type="submit" class="save-btn mt-3">Lưu thay đổi</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+
                     <div class="card mt-3 mb-3">
                         <div class="card-header">
                             <h5 class="card-title">Thay đổi mật khẩu</h5>

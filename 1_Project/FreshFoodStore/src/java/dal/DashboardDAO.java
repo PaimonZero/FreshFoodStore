@@ -5,6 +5,7 @@
 package dal;
 
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import model.Orders;
@@ -52,51 +53,55 @@ public class DashboardDAO extends DBContext {
     }
 
     //list ra các order gần đây dự kiến bên jsp cho hiện 3-5 orders
-    public ArrayList<Orders> findAllReccentOrder(int userId) {
+    public ArrayList<Orders> findAllRecentOrder(int userId) {
         ArrayList<Orders> allOrders = new ArrayList<>();
         //- connect w/Database
         connection = getConnection();
         //- Chuan bi cau lenhj sql
-        String sql = " SELECT \n"
+        String sql = "SELECT \n"
                 + "    O.orderId, \n"
                 + "    O.userId, \n"
-                + "	u.fullName,\n"
-                + "	O.shippingFee,\n"
-                + "	O.isConfirmed,\n"
-                + "	O.paymentStatus, \n"
+                + "    u.fullName,\n"
+                + "    O.shippingFee,\n"
+                + "    O.isConfirmed,\n"
+                + "    O.paymentStatus, \n"
                 + "    O.deliveryStatus, \n"
                 + "    O.paymentType,\n"
-                + "	O.deliveryLocation,\n"
+                + "    O.deliveryLocation,\n"
                 + "    O.receiverName, \n"
                 + "    O.receiverPhone, \n"
                 + "    O.shipperId, \n"
                 + "    O.orderCreatedAt,\n"
-                + "	O.orderCompletedAt,\n"
-                + "	OD.quantity,\n"
-                + "    SUM(OD.quantity * OD.unitPriceOut-o.shippingFee) AS totalAmount\n"
+                + "    O.orderCompletedAt,\n"
+                + "    OD.quantity,\n"
+                + "    SUM(OD.quantity * OD.unitPriceOut *(1-(pro.discount/100))+ O.shippingFee) AS totalAmount\n"
                 + "FROM \n"
                 + "    Orders O\n"
                 + "INNER JOIN \n"
-                + "	Users u on O.userId = u.userId\n"
+                + "    Users u ON O.userId = u.userId\n"
                 + "INNER JOIN \n"
                 + "    OrderDetails OD ON O.orderId = OD.orderId\n"
-                + "where O.userId = ?\n"
+                + "inner join BatchesProduct bp on od.batchId = bp.batchId\n"
+                + "inner join Products p on bp.productId = p.productId\n"
+                + "inner join Promos pro on p.productId = pro.productId\n"
+                + "WHERE \n"
+                + "    O.userId = ?\n"
                 + "GROUP BY \n"
                 + "    O.orderId, \n"
                 + "    O.userId, \n"
-                + "	u.fullName,\n"
-                + "	O.shippingFee,\n"
-                + "	O.isConfirmed,\n"
-                + "	O.paymentStatus, \n"
+                + "    u.fullName,\n"
+                + "    O.shippingFee,\n"
+                + "    O.isConfirmed,\n"
+                + "    O.paymentStatus, \n"
                 + "    O.deliveryStatus, \n"
                 + "    O.paymentType,\n"
-                + "	O.deliveryLocation,\n"
+                + "    O.deliveryLocation,\n"
                 + "    O.receiverName, \n"
                 + "    O.receiverPhone, \n"
                 + "    O.shipperId, \n"
                 + "    O.orderCreatedAt,\n"
-                + "	O.orderCompletedAt,\n"
-                + "	OD.quantity\n"
+                + "    O.orderCompletedAt,\n"
+                + "    OD.quantity\n"
                 + "ORDER BY \n"
                 + "    O.orderCreatedAt DESC;";//chỗ này chưa chắc (sắp xếp theo thứ tự giảm dần của orderCreatedAt
 
@@ -134,59 +139,66 @@ public class DashboardDAO extends DBContext {
         return allOrders;
     }
 
-    //list hết order hiển thị theo thứ tự orderId
-    public ArrayList<Orders> findAllOrder(int userId) {
+    //list hết order hiển thị theo thứ tự orderId cái này cho orderHistory
+    public ArrayList<Orders> findAllOrder(int userId, int offset, int row) {
         ArrayList<Orders> allOrders = new ArrayList<>();
         //- connect w/Database
         connection = getConnection();
         //- Chuan bi cau lenhj sql
-        String sql = " SELECT \n"
+        String sql = "SELECT \n"
                 + "    O.orderId, \n"
                 + "    O.userId, \n"
-                + "	u.fullName,\n"
-                + "	O.shippingFee,\n"
-                + "	O.isConfirmed,\n"
-                + "	O.paymentStatus, \n"
+                + "    u.fullName,\n"
+                + "    O.shippingFee,\n"
+                + "    O.isConfirmed,\n"
+                + "    O.paymentStatus, \n"
                 + "    O.deliveryStatus, \n"
                 + "    O.paymentType,\n"
-                + "	O.deliveryLocation,\n"
+                + "    O.deliveryLocation,\n"
                 + "    O.receiverName, \n"
                 + "    O.receiverPhone, \n"
                 + "    O.shipperId, \n"
                 + "    O.orderCreatedAt,\n"
-                + "	O.orderCompletedAt,\n"
-                + "	OD.quantity,\n"
-                + "    SUM(OD.quantity * OD.unitPriceOut-o.shippingFee) AS totalAmount\n"
+                + "    O.orderCompletedAt,\n"
+                + "    OD.quantity,\n"
+                + "    SUM(OD.quantity * OD.unitPriceOut *(1-(pro.discount/100))+ O.shippingFee) AS totalAmount\n"
                 + "FROM \n"
                 + "    Orders O\n"
                 + "INNER JOIN \n"
-                + "	Users u on O.userId = u.userId\n"
+                + "    Users u ON O.userId = u.userId\n"
                 + "INNER JOIN \n"
                 + "    OrderDetails OD ON O.orderId = OD.orderId\n"
-                + "where O.userId = ?\n"
+                + "inner join BatchesProduct bp on od.batchId = bp.batchId\n"
+                + "inner join Products p on bp.productId = p.productId\n"
+                + "inner join Promos pro on p.productId = pro.productId\n"
+                + "WHERE \n"
+                + "    O.userId = ?\n"
                 + "GROUP BY \n"
                 + "    O.orderId, \n"
                 + "    O.userId, \n"
-                + "	u.fullName,\n"
-                + "	O.shippingFee,\n"
-                + "	O.isConfirmed,\n"
-                + "	O.paymentStatus, \n"
+                + "    u.fullName,\n"
+                + "    O.shippingFee,\n"
+                + "    O.isConfirmed,\n"
+                + "    O.paymentStatus, \n"
                 + "    O.deliveryStatus, \n"
                 + "    O.paymentType,\n"
-                + "	O.deliveryLocation,\n"
+                + "    O.deliveryLocation,\n"
                 + "    O.receiverName, \n"
                 + "    O.receiverPhone, \n"
                 + "    O.shipperId, \n"
                 + "    O.orderCreatedAt,\n"
-                + "	O.orderCompletedAt,\n"
-                + "	OD.quantity\n"
+                + "    O.orderCompletedAt,\n"
+                + "    OD.quantity\n"
                 + "ORDER BY \n"
-                + "    O.orderId;";
+                + "    O.orderId \n"
+                + "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
 
         try {
             //- Tao doi tuong prepareStatement
             preStatement = connection.prepareStatement(sql);
             preStatement.setInt(1, userId);
+            preStatement.setInt(2, offset);
+            preStatement.setInt(3, row);
             //- set parameter (optional)
             //- thuc thi cau lenh
             resultSet = preStatement.executeQuery();
@@ -215,6 +227,36 @@ public class DashboardDAO extends DBContext {
             System.out.println("??(DashboardDAO)findAllOrder" + e.getMessage());
         }
         return allOrders;
+    }
+
+    public int CountOrder(int userId) {
+        connection = getConnection();
+        //- Chuan bi cau lenhj sql
+        String sql = " SELECT \n"
+                + "    count (*) \n"
+                + "FROM \n"
+                + "    Orders O\n"
+                + "INNER JOIN \n"
+                + "    Users u ON O.userId = u.userId\n"
+                + "INNER JOIN \n"
+                + "    OrderDetails OD ON O.orderId = OD.orderId\n"
+                + "WHERE \n"
+                + "    O.userId = ?";
+        try {
+            //- Tao doi tuong prepareStatement
+            preStatement = connection.prepareStatement(sql);
+            preStatement.setInt(1, userId);
+            //- set parameter (optional)
+            //- thuc thi cau lenh
+            resultSet = preStatement.executeQuery();
+            //- tra ve ket qua
+            while (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println("??(DashboardDAO)findAllOrder" + e.getMessage());
+        }
+        return 0;
     }
 
     //list ra chi tiết về order
@@ -274,10 +316,50 @@ public class DashboardDAO extends DBContext {
         return null;
     }
 
+    public int updateUserInfo(int userId, String name, String email, String phone, String address) {
+        //- connect w/Database
+        connection = getConnection();
+        //- Chuan bi cau lenh sql
+        String sql = """
+                     UPDATE [dbo].[Users]
+                        SET [fullName] = ?
+                           ,[email] = ?
+                           ,[phone] = ?
+                           ,[address] = ?
+                      WHERE [userId] = ?""";
+        try {
+            //- Tao doi tuong prepareStatement (thêm generated key vao tham so thu 2)
+            preStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            //- set parameter
+            preStatement.setObject(1, name);
+            preStatement.setObject(2, email);
+            preStatement.setObject(3, phone);
+            preStatement.setObject(4, address);
+            preStatement.setObject(5, userId);
+
+            //- thuc thi cau lenh
+            preStatement.executeUpdate();
+            //- tra ve ket qua mới thêm
+            resultSet = preStatement.getGeneratedKeys();
+            if(resultSet.next()){
+                userId = resultSet.getInt(1);
+            }
+            return userId;
+        } catch (SQLException e) {
+            System.out.println("??updateUserInfo: " + e.getMessage());
+        }
+        return -1;
+    }
+    
+
     public static void main(String[] args) {
-//        DashboardDAO test1 = new DashboardDAO();
-//        ArrayList<OrderDetail> list1 = test1.listOrderDetail(1);
-//        for (OrderDetail item : list1) {
+        DashboardDAO test1 = new DashboardDAO();
+        ArrayList<Orders> list1 = test1.findAllOrder(1, 0, 2);
+        for (Orders item : list1) {
+            System.out.println(item.toString());
+        }
+//        ArrayList<Orders> list2 = test1.findAllRecentOrder(1);
+//        for (Orders item : list2) {
 //            System.out.println(item.toString());
 //        }
     }

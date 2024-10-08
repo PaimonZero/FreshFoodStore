@@ -21,8 +21,9 @@ import util.Validate;
  *
  * @author DELL
  */
-//url pattern: Dashboard
-public class DashboardController extends HttpServlet {
+public class OrderHistoryController extends HttpServlet {
+
+    private static final int PAGE_SIZE = 12;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +42,10 @@ public class DashboardController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CustomerDashboard</title>");
+            out.println("<title>Servlet OrderHistoryController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CustomerDashboard at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet OrderHistoryController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,9 +63,35 @@ public class DashboardController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        processRequest(request, response);
-        request.getRequestDispatcher("/customer/CustomerDashboard.jsp").forward(request, response);
-        
+        DashboardDAO dao = new DashboardDAO();
+        HttpSession session = request.getSession();
+
+        //Lấy về userID từ account trong sesion khi đăng nhập
+        Users account = (Users) session.getAttribute("account");
+        int page = 1;
+        if (request.getParameter("page") != null) {
+            page = Integer.parseInt(request.getParameter("page"));
+        }
+        int count = dao.CountOrder(account.getUserId());
+        int offset = (page - 1) * PAGE_SIZE;
+        int row = PAGE_SIZE;
+//        int pageCount = count / PAGE_SIZE;
+        int pageCount;
+        if (count % PAGE_SIZE == 0) {
+            pageCount = count / PAGE_SIZE;
+        } else {
+            pageCount = count / PAGE_SIZE + 1;
+        }
+        ArrayList<Orders> AllOrderList = dao.findAllOrder(account.getUserId(), offset, row);
+        for (Orders sp : AllOrderList) {
+            sp.setTotalString(Validate.doubleToMoney(sp.getTotal()));
+            sp.setOrderCreatedAtString(Validate.convertDateFormat(sp.getOrderCreatedAt()));
+        }
+        request.setAttribute("AllOrderList", AllOrderList);
+        request.setAttribute("count", count);
+        request.setAttribute("currentPage", page);
+        request.setAttribute("pageCount", pageCount);
+        request.getRequestDispatcher("/customer/orderHistory.jsp").forward(request, response);
     }
 
     /**
@@ -78,43 +105,36 @@ public class DashboardController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //- Lấy giá trị action về
-        String action = request.getParameter("action") == null ? "" : request.getParameter("action");
-        //- switch case cac action
-        switch (action) {
-            case "login":
-                handleLogin(request, response);
-                break;
-            case "logout":
-                handleLogout(request, response);
-                break;
-            case "listInfo":
-                handleShow(request, response);
-                break;
-            default:
-                throw new AssertionError();
-        }
+//        processRequest(request, response);
 
-    }
-
-    private void handleShow(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         DashboardDAO dao = new DashboardDAO();
         HttpSession session = request.getSession();
 
         //Lấy về userID từ account trong sesion khi đăng nhập
         Users account = (Users) session.getAttribute("account");
-        //lấy thông tin user
-        Users listInfo = dao.findAllInfo(account.getUserId());
-        request.setAttribute("listInfo", listInfo);
-        //hiện thông tin order của user
-        ArrayList<Orders> listOrder = dao.findAllRecentOrder(account.getUserId());
-        //chuyển thành dạng tiền việt
-        for (Orders sp : listOrder) {
+        int page = 1;
+        if (request.getParameter("page") != null) {
+            page = Integer.parseInt(request.getParameter("page"));
+        }
+        int count = dao.CountOrder(account.getUserId());
+        int offset = (page - 1) * PAGE_SIZE;
+        int row = PAGE_SIZE;
+        int pageCount;
+        if (count % PAGE_SIZE == 0) {
+            pageCount = count / PAGE_SIZE;
+        } else {
+            pageCount = count / PAGE_SIZE + 1;
+        }
+        ArrayList<Orders> AllOrderList = dao.findAllOrder(account.getUserId(), offset, row);
+        for (Orders sp : AllOrderList) {
             sp.setTotalString(Validate.doubleToMoney(sp.getTotal()));
             sp.setOrderCreatedAtString(Validate.convertDateFormat(sp.getOrderCreatedAt()));
         }
-        request.setAttribute("listOrder", listOrder);
-        request.getRequestDispatcher("/customer/CustomerDashboard.jsp").forward(request, response);
+        request.setAttribute("AllOrderList", AllOrderList);
+        request.setAttribute("count", count);
+        request.setAttribute("currentPage", page);
+        request.setAttribute("pageCount", pageCount);
+        request.getRequestDispatcher("/customer/orderHistory.jsp").forward(request, response);
     }
 
     /**
@@ -126,17 +146,5 @@ public class DashboardController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-    private void handleLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String targetURL = request.getContextPath() + "/auth?action=login";
-        String encodedURL = response.encodeRedirectURL(targetURL);
-        response.sendRedirect(encodedURL);
-    }
-
-    private void handleLogout(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String targetURL = request.getContextPath() + "/auth?action=logout";
-        String encodedURL = response.encodeRedirectURL(targetURL);
-        response.sendRedirect(encodedURL);
-    }
 
 }

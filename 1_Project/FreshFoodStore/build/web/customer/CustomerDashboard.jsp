@@ -16,6 +16,11 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
         <script src="https://kit.fontawesome.com/54f0cb7e4a.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        <style>
+            .edit-btn button{
+                padding: 10px 20px;
+            }
+        </style>
     </head>
     <body>
         <%@include file="HeaderLogin1.jsp" %>
@@ -42,22 +47,28 @@
                                 </form>
                             </li>
                             <li>
-                                <a href="#" class="nav-link">
-                                    <i class="fas fa-sync-alt me-2"></i>
-                                    Lịch sử đơn hàng
-                                </a>
+                                <form id="infoForm2" action="OrderHistory" method="POST"> <%--đổi đường dẫn--%>
+                                    <a class="nav-link" onclick="document.getElementById('infoForm2').submit();" style="cursor: pointer;">
+                                        <i class="fas fa-sync-alt me-2"></i>
+                                        Lịch sử đơn hàng
+                                    </a>
+                                </form>
                             </li>
                             <li>
-                                <a href="#" class="nav-link">
-                                    <i class="far fa-heart me-2"></i>
-                                    Danh sách yêu thích
-                                </a>
+                                <form id="infoForm3" action="" method="POST"> <%--đổi đường dẫn--%>
+                                    <a class="nav-link" onclick="document.getElementById('infoForm3').submit();" style="cursor: pointer;">
+                                        <i class="far fa-heart me-2"></i>
+                                        Danh sách yêu thích
+                                    </a>
+                                </form>
                             </li>
                             <li>
-                                <a href="ShoppingCart.jsp" class="nav-link"><!--để tạm-->
-                                    <i class="bi bi-bag me-2"></i>
-                                    Giỏ hàng
-                                </a>
+                                <form id="infoForm4" action="" method="POST"> <%--đổi đường dẫn--%>
+                                    <a class="nav-link" onclick="document.getElementById('infoForm4').submit();" style="cursor: pointer;">
+                                        <i class="bi bi-bag me-2"></i>
+                                        Giỏ hàng
+                                    </a>
+                                </form>
                             </li>
                             <li>
                                 <form id="infoForm5" action="AccountSetting?action=showData" method="POST"> <%--đổi đường dẫn--%>
@@ -68,10 +79,12 @@
                                 </form>
                             </li>
                             <li>
-                                <a href="#" class="nav-link">
-                                    <i class="fas fa-sign-out-alt me-2"></i>
-                                    Đăng xuất
-                                </a>
+                                <form id="infoForm6" action="" method="POST"> <%--đổi đường dẫn--%>
+                                    <a class="nav-link" onclick="document.getElementById('infoForm6').submit();" style="cursor: pointer;">
+                                        <i class="fas fa-sign-out-alt me-2"></i>
+                                        Đăng xuất
+                                    </a>
+                                </form>
                             </li>
                         </ul>
                     </div>
@@ -81,26 +94,30 @@
                         <!-- Profile Info -->
                         <div class="col-md-6 mb-3">
                             <div class="card shadow-sm edit-btn">
-                                <div class="card-body text-center">
-                                    <img src="../images/${listInfo.avatar}" alt="Profile Image" class="profile-picture">
-                                    <h5 class="card-title">${listInfo.fullName}</h5>
-                                    <p class="text-muted">Customer</p> <%--tạm để cứng ở đây--%>
-                                    <a href="#" class="btn btn-outline-success btn-sm">Edit Profile</a>
-                                </div>
+                                <form action="AccountSetting?action=showData" method="POST">
+                                    <div class="card-body text-center">
+                                        <img src="../images/${listInfo.avatar}" alt="Profile Image" class="profile-picture">
+                                        <h5 class="card-title">${listInfo.fullName}</h5>
+                                        <p class="text-muted">Customer</p> <%--tạm để cứng ở đây--%>
+                                        <button type="submit" class="btn btn-outline-success btn-sm">Edit Profile</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
 
                         <!-- Billing Info -->
                         <div class="col-md-6 mb-3">
                             <div class="card shadow-sm edit-btn">
-                                <div class="card-body">
-                                    <h5 class="card-title text-muted">Billing Address</h5>
-                                    <p class="h4 fw-bold">${listInfo.fullName}</p>
-                                    <p>${listInfo.address}</p>
-                                    <p>${listInfo.email}</p>
-                                    <p>${listInfo.phone}</p>
-                                    <a href="#" class="btn btn-outline-success btn-sm">Edit Address</a>
-                                </div>
+                                <form action="AccountSetting?action=showData" method="POST">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-muted">Billing Address</h5>
+                                        <p class="h4 fw-bold">${listInfo.fullName}</p>
+                                        <p>${listInfo.address}</p>
+                                        <p>${listInfo.email}</p>
+                                        <p>${listInfo.phone}</p>
+                                        <button type="submit" class="btn btn-outline-success btn-sm">Edit Address</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -173,10 +190,10 @@
         <%@include file="Footer.jsp" %>
         <script src="../js/bootstrap.bundle.min.js"></script>
         <script>
-            //hiện thanh sidebar mobile
-            document.querySelector('.menu-toggle').addEventListener('click', function () {
-                document.getElementById('sidebar').classList.toggle('show');
-            });
+                                        //hiện thanh sidebar mobile
+                                        document.querySelector('.menu-toggle').addEventListener('click', function () {
+                                            document.getElementById('sidebar').classList.toggle('show');
+                                        });
         </script>
     </body>
 </html>

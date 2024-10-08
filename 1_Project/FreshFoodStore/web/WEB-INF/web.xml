@@ -16,6 +16,10 @@
         <servlet-name>AccountSettingController</servlet-name>
         <servlet-class>controller.AccountSettingController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>OrderHistoryController</servlet-name>
+        <servlet-class>controller.OrderHistoryController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CustomerDashboard</servlet-name>
         <url-pattern>/customer/Dashboard</url-pattern>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>AccountSettingController</servlet-name>
         <url-pattern>/customer/AccountSetting</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderHistoryController</servlet-name>
+        <url-pattern>/customer/OrderHistory</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>SignIn.jsp</welcome-file>
