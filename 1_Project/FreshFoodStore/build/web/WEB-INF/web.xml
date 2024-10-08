@@ -6,7 +6,7 @@
     </servlet>
     <servlet>
         <servlet-name>HomepageController</servlet-name>
-        <servlet-class>controller.HomepageController</servlet-class>
+        <servlet-class>controller.HomePageController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CustomerDashboard</servlet-name>

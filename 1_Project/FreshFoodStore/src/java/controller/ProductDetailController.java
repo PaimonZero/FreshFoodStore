@@ -4,7 +4,7 @@
  */
 package controller;
 
-import dal.HomePageDAO;
+import dal.CategoryDAO;
 import dal.ProductDAO;
 import dto.ProductDTO;
 import jakarta.servlet.ServletException;
@@ -12,20 +12,17 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import model.Products;
-import model.Users;
 
 /**
  *
  * @author nguye
  */
-@WebServlet(name = "HomePageController", urlPatterns = "/customer/home")
-public class HomePageController extends HttpServlet {
+@WebServlet(name = "ProductDetailController", urlPatterns = "/customer/productDetail")
+public class ProductDetailController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,24 +36,14 @@ public class HomePageController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
-
-        //Lấy về userID từ account trong sesion khi đăng nhập
-        Users account = (Users) session.getAttribute("account");
-        HomePageDAO h = new HomePageDAO();
-        ProductDAO pd = new ProductDAO();
-        List<Products> banChay = h.getProductBanChay();
-        List<Products> khuyenMai = h.getProductKhuyenMai();
-        List<Products> danhGiaTot = h.getProductDanhGiaTot();
-        List<ProductDTO> noibat = pd.top4ProductNoiBat();
-
-        request.setAttribute("noibat", noibat);
-        request.setAttribute("khuyenMai", khuyenMai);
-        request.setAttribute("banChay", banChay);
-        request.setAttribute("danhGiaTot", danhGiaTot);
-
-        request.getRequestDispatcher("/customer/homePageTest.jsp").forward(request, response);
-
+        ProductDAO p = new ProductDAO();
+        int productId = Integer.parseInt(request.getParameter("id"));
+        ProductDTO pdto = p.findProductById(productId);
+        List<Products> lienquan = p.findProductByCategory(productId);
+       
+        request.setAttribute("lienquan", lienquan);
+        request.setAttribute("product", pdto);
+        request.getRequestDispatcher("productDetail.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -72,7 +59,6 @@ public class HomePageController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-
     }
 
     /**
