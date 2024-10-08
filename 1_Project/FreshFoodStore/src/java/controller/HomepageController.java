@@ -61,7 +61,7 @@ public class HomepageController extends HttpServlet {
 
         //Lấy về userID từ account trong sesion khi đăng nhập
         Users account = (Users) session.getAttribute("account");
-        request.getRequestDispatcher("/customer/HomePageTest.jsp").forward(request, response);
+        request.getRequestDispatcher("/customer/homePageTest.jsp").forward(request, response);
     }
 
     /**

@@ -2,6 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+
 package controller;
 
 import dal.DashboardDAO;
@@ -12,48 +13,41 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
-import model.Orders;
 import model.Users;
-import util.Validate;
 
 /**
  *
  * @author DELL
  */
-//url pattern: Dashboard
-public class DashboardController extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
+public class AccountSettingController extends HttpServlet {
+   
+    /** 
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CustomerDashboard</title>");
+            out.println("<title>Servlet AccountSettingController</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CustomerDashboard at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AccountSettingController at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    }
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+    /** 
      * Handles the HTTP <code>GET</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -61,15 +55,12 @@ public class DashboardController extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
 //        processRequest(request, response);
-        request.getRequestDispatcher("/customer/CustomerDashboard.jsp").forward(request, response);
-        
-    }
+    } 
 
-    /**
+    /** 
      * Handles the HTTP <code>POST</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -77,27 +68,26 @@ public class DashboardController extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        //- Lấy giá trị action về
+    throws ServletException, IOException {
+//        processRequest(request, response);
         String action = request.getParameter("action") == null ? "" : request.getParameter("action");
         //- switch case cac action
         switch (action) {
-            case "login":
-                handleLogin(request, response);
+            //hiển thị data
+            case "showData":
+                handleShowData(request, response);
                 break;
-            case "logout":
-                handleLogout(request, response);
+            //edit data
+            case "editData":
+//                handleShow(request, response);
                 break;
-            case "listInfo":
-                handleShow(request, response);
+            case "changePassword":
                 break;
             default:
                 throw new AssertionError();
         }
-
     }
-
-    private void handleShow(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void handleShowData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         DashboardDAO dao = new DashboardDAO();
         HttpSession session = request.getSession();
 
@@ -107,36 +97,24 @@ public class DashboardController extends HttpServlet {
         Users listInfo = dao.findAllInfo(account.getUserId());
         request.setAttribute("listInfo", listInfo);
         //hiện thông tin order của user
-        ArrayList<Orders> listOrder = dao.findAllReccentOrder(account.getUserId());
+//        ArrayList<Orders> listOrder = dao.findAllReccentOrder(account.getUserId());
         //chuyển thành dạng tiền việt
-        for (Orders sp : listOrder) {
-            sp.setTotalString(Validate.doubleToMoney(sp.getTotal()));
-            sp.setOrderCreatedAtString(Validate.convertDateFormat(sp.getOrderCreatedAt()));
-        }
-        request.setAttribute("listOrder", listOrder);
-        request.getRequestDispatcher("/customer/CustomerDashboard.jsp").forward(request, response);
+//        for (Orders sp : listOrder) {
+//            sp.setTotalString(Validate.doubleToMoney(sp.getTotal()));
+//            sp.setOrderCreatedAtString(Validate.convertDateFormat(sp.getOrderCreatedAt()));
+//        }
+//        request.setAttribute("listOrder", listOrder);
+        //hiện thông tin billing address đẻ hỏi lại
+        
+        request.getRequestDispatcher("/customer/AccountSetting.jsp").forward(request, response);
     }
-
-    /**
+    /** 
      * Returns a short description of the servlet.
-     *
      * @return a String containing servlet description
      */
     @Override
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-    private void handleLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String targetURL = request.getContextPath() + "/auth?action=login";
-        String encodedURL = response.encodeRedirectURL(targetURL);
-        response.sendRedirect(encodedURL);
-    }
-
-    private void handleLogout(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String targetURL = request.getContextPath() + "/auth?action=logout";
-        String encodedURL = response.encodeRedirectURL(targetURL);
-        response.sendRedirect(encodedURL);
-    }
 
 }

@@ -34,10 +34,12 @@
                         <span class="fs-4 p-3" style="font-weight: 500;">Menu</span>
                         <ul class="nav nav-pills flex-column mb-auto">
                             <li class="nav-item">
-                                <a href="#" class="nav-link active" aria-current="page">
-                                    <i class="fas fa-th-large me-2"></i>
-                                    Bảng điều khiển
-                                </a>
+                                <form id="infoForm1" action="Dashboard?action=listInfo" method="POST">
+                                    <a class="nav-link active" aria-current="page" onclick="document.getElementById('infoForm1').submit();" style="cursor: pointer;">
+                                        <i class="fas fa-th-large me-2"></i>
+                                        Bảng điều khiển
+                                    </a>
+                                </form>
                             </li>
                             <li>
                                 <a href="#" class="nav-link">
@@ -58,10 +60,12 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#" class="nav-link">
-                                    <i class="bi bi-gear me-2"></i>
-                                    Cài đặt
-                                </a>
+                                <form id="infoForm5" action="AccountSetting?action=showData" method="POST"> <%--đổi đường dẫn--%>
+                                    <a class="nav-link" onclick="document.getElementById('infoForm5').submit();" style="cursor: pointer;">
+                                        <i class="bi bi-gear me-2"></i>
+                                        Cài đặt
+                                    </a>
+                                </form>
                             </li>
                             <li>
                                 <a href="#" class="nav-link">
@@ -78,9 +82,9 @@
                         <div class="col-md-6 mb-3">
                             <div class="card shadow-sm edit-btn">
                                 <div class="card-body text-center">
-                                    <img src="../images/z5881231576618_adb311bd5db037f90e283bec9afa8e0f.jpg" alt="Profile Image" class="profile-picture">
-                                    <h5 class="card-title">Dianne Russell</h5>
-                                    <p class="text-muted">Customer</p>
+                                    <img src="../images/${listInfo.avatar}" alt="Profile Image" class="profile-picture">
+                                    <h5 class="card-title">${listInfo.fullName}</h5>
+                                    <p class="text-muted">Customer</p> <%--tạm để cứng ở đây--%>
                                     <a href="#" class="btn btn-outline-success btn-sm">Edit Profile</a>
                                 </div>
                             </div>
@@ -91,10 +95,10 @@
                             <div class="card shadow-sm edit-btn">
                                 <div class="card-body">
                                     <h5 class="card-title text-muted">Billing Address</h5>
-                                    <p class="h4 fw-bold">Dianne Russell</p>
-                                    <p>4140 Parker Rd. Allentown, New Mexico 31134</p>
-                                    <p>diannerussell@gmail.com</p>
-                                    <p>(671) 555-0110</p>
+                                    <p class="h4 fw-bold">${listInfo.fullName}</p>
+                                    <p>${listInfo.address}</p>
+                                    <p>${listInfo.email}</p>
+                                    <p>${listInfo.phone}</p>
                                     <a href="#" class="btn btn-outline-success btn-sm">Edit Address</a>
                                 </div>
                             </div>
@@ -120,48 +124,41 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>#738</td>
-                                            <td>8 Sep, 2020</td>
-                                            <td>$135.00 (5 Products)</td>
-                                            <td><span class="badge bg-warning text-dark">Processing</span></td>
-                                            <td><a href="#" class="text-success">View Details</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>#703</td>
-                                            <td>24 May, 2020</td>
-                                            <td>$25.00 (1 Product)</td>
-                                            <td><span class="badge bg-info">On the way</span></td>
-                                            <td><a href="#" class="text-success">View Details</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>#130</td>
-                                            <td>22 Oct, 2020</td>
-                                            <td>$250.00 (4 Products)</td>
-                                            <td><span class="badge bg-success">Completed</span></td>
-                                            <td><a href="#" class="text-success">View Details</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>#561</td>
-                                            <td>1 Feb, 2020</td>
-                                            <td>$35.00 (1 Product)</td>
-                                            <td><span class="badge bg-success">Completed</span></td>
-                                            <td><a href="#" class="text-success">View Details</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>#538</td>
-                                            <td>21 Sep, 2020</td>
-                                            <td>$578.00 (13 Products)</td>
-                                            <td><span class="badge bg-success">Completed</span></td>
-                                            <td><a href="#" class="text-success">View Details</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>#492</td>
-                                            <td>22 Oct, 2020</td>
-                                            <td>$345.00 (7 Products)</td>
-                                            <td><span class="badge bg-success">Completed</span></td>
-                                            <td><a href="#" class="text-success">View Details</a></td>
-                                        </tr>
+                                        <c:if test="${empty listOrder}">
+                                            <tr>
+                                                <td colspan="5" class="text-center text-danger fw-bold">Lịch sử giỏ hàng đang trống.</td>
+                                            </tr>
+                                        </c:if>
+
+                                        <c:if test="${!empty listOrder}">
+                                            <c:forEach var="order" items="${listOrder}" begin="0" end ="5">
+                                                <tr>
+                                                    <td>${order.orderId}</td>
+                                                    <td>${order.orderCreatedAtString}</td>
+                                                    <!--<td>$135.00 (5 Products)</td>-->
+                                                    <td>${order.totalString}₫ (${order.quantity} Product)</td><%--đã validate về dạng tiền VN--%>
+                                                    <td><span class="badge 
+                                                              <c:choose>
+                                                                  <c:when test="${order.deliveryStatus == 'Pending'}">bg-warning text-dark</c:when>
+                                                                  <c:when test="${order.deliveryStatus == 'Shipped'}">bg-info text-dark</c:when>
+                                                                  <c:when test="${order.deliveryStatus == 'Delivered'}">bg-success</c:when>
+                                                              </c:choose>">
+                                                            ${order.deliveryStatus}
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <!--                                                        <a href="orderDetail" class="text-success">
+                                                                                                                    <input type="hidden" name="orderID" value="${order.orderId}">
+                                                                                                                    View Details
+                                                                                                                </a>-->
+                                                        <form action="orderDetail" method="POST">
+                                                            <input type="hidden" name="orderID" value="${order.orderId}">
+                                                            <button type="submit" class="btn p-0 px-2 btn-danger">Xem chi tiết</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
+                                        </c:if>
                                     </tbody>
                                 </table>
                             </div>
@@ -170,9 +167,9 @@
                 </div>
             </div>
         </div>
-<!--        <form action="Dashboard">
-            <button type="submit">submit</button>
-        </form>-->
+        <!--        <form action="Dashboard">
+                    <button type="submit">submit</button>
+                </form>-->
         <%@include file="Footer.jsp" %>
         <script src="../js/bootstrap.bundle.min.js"></script>
         <script>
