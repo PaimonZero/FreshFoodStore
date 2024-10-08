@@ -7,16 +7,15 @@
             <file>file:/D:/workspace_netbean/FreshFoodStore/1_Project/FreshFoodStore/web/customer/homePageTest.jsp</file>
             <file>file:/D:/workspace_netbean/FreshFoodStore/1_Project/FreshFoodStore/src/java/feature/loginGoogle/Constants.java</file>
             <file>file:/D:/workspace_netbean/FreshFoodStore/1_Project/FreshFoodStore/src/java/controller/CategoryController.java</file>
-            <file>file:/D:/workspace_netbean/FreshFoodStore/1_Project/FreshFoodStore/src/java/controller/ProductDetailController.java</file>
-            <file>file:/D:/workspace_netbean/FreshFoodStore/1_Project/FreshFoodStore/src/java/model/Category.java</file>
+            <file>file:/D:/workspace_netbean/FreshFoodStore/1_Project/FreshFoodStore/web/WEB-INF/web.xml</file>
             <file>file:/D:/workspace_netbean/FreshFoodStore/1_Project/FreshFoodStore/web/customer/Category.jsp</file>
+            <file>file:/D:/workspace_netbean/FreshFoodStore/1_Project/FreshFoodStore/src/java/dal/DatabaseInfo.java</file>
             <file>file:/D:/workspace_netbean/FreshFoodStore/1_Project/FreshFoodStore/src/java/dal/ProductDAO.java</file>
             <file>file:/D:/workspace_netbean/FreshFoodStore/1_Project/FreshFoodStore/src/java/feature/loginGoogle/LoginGoogleController.java</file>
             <file>file:/D:/workspace_netbean/FreshFoodStore/1_Project/FreshFoodStore/src/java/controller/HomePageController.java</file>
             <file>file:/D:/workspace_netbean/FreshFoodStore/1_Project/FreshFoodStore/src/java/dal/HomePageDAO.java</file>
-            <file>file:/D:/workspace_netbean/FreshFoodStore/1_Project/FreshFoodStore/src/java/dal/CategoryDAO.java</file>
-            <file>file:/D:/workspace_netbean/FreshFoodStore/1_Project/FreshFoodStore/src/java/model/Products.java</file>
-            <file>file:/D:/workspace_netbean/FreshFoodStore/1_Project/FreshFoodStore/src/java/model/Promos.java</file>
+            <file>file:/D:/workspace_netbean/FreshFoodStore/1_Project/FreshFoodStore/src/java/controller/DashboardController.java</file>
+            <file>file:/D:/workspace_netbean/FreshFoodStore/1_Project/FreshFoodStore/src/java/dal/DBContext.java</file>
         </group>
     </open-files>
 </project-private>

@@ -64,7 +64,12 @@ public class CategoryController extends HttpServlet {
         int productCount = getProductCount(food);
         List<ProductDTO> products = getProductByType(food, offset, row, sortOrder);
 
-        int pageCount = productCount / PAGE_SIZE;
+        int pageCount;
+        if(productCount % PAGE_SIZE==0){
+            pageCount =productCount /PAGE_SIZE;
+        } else {
+            pageCount =productCount /PAGE_SIZE +1;
+        }
 
         List<ProductDTO> sale = c.listProductSale();
 
