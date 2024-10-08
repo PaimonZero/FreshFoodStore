@@ -1,5 +1,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.util.List"%>
+<%@page import="dao.ProductInfoDao"%>
+<%@page import="model.ProductInfo"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -8,7 +13,6 @@
     <link rel="stylesheet" href="../css/adminCss/ProductInfo.css">
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../admin/HeadSidebar/header-sidebar.css">
-
     <title>Product Information</title>
 </head>
 
@@ -27,11 +31,22 @@
                     <div class="row mt-4">
                         <div class="col-md-12">
                             <div class="card text-dark bg-light d-flex mb-3">
+
+                                <%
+                                    // Lấy productId từ query string
+                                    String productIdParam = request.getParameter("productId");
+                                    int productId = Integer.parseInt(productIdParam); // Chuyển đổi sang int
+                                    
+                                    // Tạo ProductInfoDao và lấy thông tin sản phẩm
+                                    ProductInfoDao productInfoDao = new ProductInfoDao();
+                                    ProductInfo productInfo = productInfoDao.getProductInfoById(productId); // Thêm phương thức này vào ProductInfoDao
+                                %>
+
                                 <div class="card-header bg-light d-flex align-items-center justify-content-between">
-                                    <h4 class="mb-0" style="font-weight: bold;">Product</h4> <!--chỗ này thế bằng tên sản phẩm-->
+                                    <h4 class="mb-0" style="font-weight: bold;"><%= productInfo.getProductName() %></h4>
                                     <div>
-                                        <button class="btn btn-sm btn-outline-success"style="width: 105px;">Edit Product</button>
-                                        <button class="btn btn-sm btn-outline-secondary"style="width: 105px;">Download All</button>
+                                        <button class="btn btn-sm btn-outline-success" style="width: 105px;">Edit Product</button>
+                                        <button class="btn btn-sm btn-outline-danger" style="width: 105px;">Delete</button>
                                     </div>
                                 </div>
 
@@ -49,23 +64,23 @@
                                                         <tbody>
                                                             <tr>
                                                                 <td style="padding: 10px 10px;"><strong>Tên sản phẩm:</strong></td>
-                                                                <td style="padding: 10px 10px;">Thịt heo ba chỉ</td>
+                                                                <td style="padding: 10px 10px;"><%= productInfo.getProductName() %></td>
                                                             </tr>
                                                             <tr>
                                                                 <td style="padding: 10px 10px;"><strong>Mã sản phẩm:</strong></td>
-                                                                <td style="padding: 10px 10px;">456567</td>
+                                                                <td style="padding: 10px 10px;"><%= productInfo.getProductId() %></td>
                                                             </tr>
                                                             <tr>
                                                                 <td style="padding: 10px 10px;"><strong>Danh mục sản phẩm:</strong></td>
-                                                                <td style="padding: 10px 10px;">Thịt</td>
+                                                                <td style="padding: 10px 10px;"><%= productInfo.getCategoryName() %></td>
                                                             </tr>
                                                             <tr>
                                                                 <td style="padding: 10px 10px;"><strong>Đơn vị tính:</strong></td>
-                                                                <td style="padding: 10px 10px;">Kg</td>
+                                                                <td style="padding: 10px 10px;"><%= productInfo.getUnitMeasure() %></td>
                                                             </tr>
                                                             <tr>
                                                                 <td style="padding: 10px 10px;"><strong>Giá bán ra:</strong></td>
-                                                                <td style="padding: 10px 10px;">200.000 vnd</td>
+                                                                <td style="padding: 10px 10px;"><%= productInfo.getUnitPrice() %> VND</td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -79,18 +94,18 @@
                                                         <tbody>
                                                             <tr>
                                                                 <td style="padding: 10px 10px;"><strong>Tên Nhà Cung Cấp</strong></td>
-                                                                <td style="padding: 10px 10px;">Ronald Martin</td>
+                                                                <td style="padding: 10px 10px;"><%= productInfo.getSupplierName() %></td>
                                                             </tr>
                                                             <tr>
                                                                 <td style="padding: 10px 10px;"><strong>Số điện thoại</strong></td>
-                                                                <td style="padding: 10px 10px;">0123456789</td>
+                                                                <td style="padding: 10px 10px;"><%= productInfo.getSupplierPhone() %></td>
                                                             </tr>
-
                                                         </tbody>
                                                     </table>
                                                 </div>
                                             </div>
 
+                                            <!-- Các phần thông tin khác có thể được thêm sau -->
                                             <div class="batch-info mb-4">
                                                 <h2 class="h5">Các lô hàng hiện có</h2>
                                                 <table class="table table-bordered text-center">
@@ -103,18 +118,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr>
-                                                            <td>5</td>
-                                                            <td>₹430</td>
-                                                            <td>11/12/24</td>
-                                                            <td>15</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>25</td>
-                                                            <td>₹257</td>
-                                                            <td>21/12/24</td>
-                                                            <td>19</td>
-                                                        </tr>
+                                                        <!-- Dữ liệu lô hàng sẽ được lấy từ database -->
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -132,24 +136,12 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr>
-                                                            <td>3</td>
-                                                            <td>11/12/24</td>
-                                                            <td>12/12/24</td>
-                                                            <td class="no-border-right">35 </td>
-                                                            <td class="no-border-left">
-                                                                <button class="btn btn-sm btn-outline-secondary" >
-                                                                    <ion-icon name="pencil-outline" ></ion-icon>
-                                                                </button>
-                                                            </td>
-                                                        </tr>
+                                                        <!-- Dữ liệu khuyến mãi sẽ được lấy từ database -->
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
-                                        <div class = "col-md-1">
-
-                                        </div>
+                                        <div class="col-md-1"></div>
                                         <!-- Column for Product Image -->
                                         <div class="col-md-4">
                                             <div class="d-flex flex-column align-items-center">
@@ -170,35 +162,16 @@
                     </div>
 
                 </div>
-
-
             </div>
-
         </div>
     </div>
 
-    <!--    <script>
-            // Load sidebar
-            fetch('./HeadSidebar/sidebar.html')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('sidebar-container').innerHTML = data;
-                });
-    
-            // Load header
-            fetch('./HeadSidebar/header.html')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('header-container').innerHTML = data;
-                });
-        </script>-->
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js">
-    </script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/bootstrap.js"></script>
-    <!--<script src="../Style/js/Product.js"></script>-->
     <script src="../admin/HeadSidebar/MenuButton.js"></script>
+    <script src="../admin/HeadSidebar/SideBar.js"></script>
 
 </body>
 

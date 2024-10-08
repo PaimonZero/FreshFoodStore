@@ -94,11 +94,10 @@
                             <form action="forgot" method="POST">
                                 <input type="hidden" name="otpRight" value="${otp}"/>
                                 <input type="hidden" name="userID" value="${userID}"/>
-                                <input type="hidden" name="emailUser" value="${emailUser}"/>
                                 <!-- OTP Input -->
                                 <div class="form-group">
                                     <label for="otp" class="sr-only">Enter OTP</label>
-                                    <input type="number" name="OTP" required class="form-control input-form" id="otp" placeholder="Enter OTP">
+                                    <input type="text" name="OTP" required class="form-control input-form" id="otp" placeholder="Enter OTP">
                                 </div>
                                 <!-- Resend OTP Link -->
                                 <div class="text-right mb-3 mt-3">

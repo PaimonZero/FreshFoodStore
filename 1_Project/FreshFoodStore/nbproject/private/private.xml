@@ -3,20 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/workspace_netbean/FreshFoodStore/1_Project/FreshFoodStore/web/customer/productDetail.jsp</file>
-            <file>file:/D:/workspace_netbean/FreshFoodStore/1_Project/FreshFoodStore/web/customer/homePageTest.jsp</file>
-            <file>file:/D:/workspace_netbean/FreshFoodStore/1_Project/FreshFoodStore/src/java/feature/loginGoogle/Constants.java</file>
-            <file>file:/D:/workspace_netbean/FreshFoodStore/1_Project/FreshFoodStore/src/java/controller/CategoryController.java</file>
-            <file>file:/D:/workspace_netbean/FreshFoodStore/1_Project/FreshFoodStore/src/java/controller/ProductDetailController.java</file>
-            <file>file:/D:/workspace_netbean/FreshFoodStore/1_Project/FreshFoodStore/src/java/model/Category.java</file>
-            <file>file:/D:/workspace_netbean/FreshFoodStore/1_Project/FreshFoodStore/web/customer/Category.jsp</file>
-            <file>file:/D:/workspace_netbean/FreshFoodStore/1_Project/FreshFoodStore/src/java/dal/ProductDAO.java</file>
-            <file>file:/D:/workspace_netbean/FreshFoodStore/1_Project/FreshFoodStore/src/java/feature/loginGoogle/LoginGoogleController.java</file>
-            <file>file:/D:/workspace_netbean/FreshFoodStore/1_Project/FreshFoodStore/src/java/controller/HomePageController.java</file>
-            <file>file:/D:/workspace_netbean/FreshFoodStore/1_Project/FreshFoodStore/src/java/dal/HomePageDAO.java</file>
-            <file>file:/D:/workspace_netbean/FreshFoodStore/1_Project/FreshFoodStore/src/java/dal/CategoryDAO.java</file>
-            <file>file:/D:/workspace_netbean/FreshFoodStore/1_Project/FreshFoodStore/src/java/model/Products.java</file>
-            <file>file:/D:/workspace_netbean/FreshFoodStore/1_Project/FreshFoodStore/src/java/model/Promos.java</file>
+            <file>file:/D:/University/KI5%202024%20FALL/SWP391/Project/FreshFoodStore/web/admin/ProductInfo.jsp</file>
+            <file>file:/D:/University/KI5%202024%20FALL/SWP391/Project/FreshFoodStore/web/css/adminCss/Product.css</file>
+            <file>file:/D:/University/KI5%202024%20FALL/SWP391/Project/FreshFoodStore/src/java/model/Product.java</file>
+            <file>file:/D:/University/KI5%202024%20FALL/SWP391/Project/FreshFoodStore/web/admin/Product.jsp</file>
+            <file>file:/D:/University/KI5%202024%20FALL/SWP391/Project/FreshFoodStore/src/java/dao/ProductDao.java</file>
+            <file>file:/D:/University/KI5%202024%20FALL/SWP391/Project/FreshFoodStore/src/java/model/Supplier.java</file>
+            <file>file:/D:/University/KI5%202024%20FALL/SWP391/Project/FreshFoodStore/src/java/controller/AddProductServlet.java</file>
         </group>
     </open-files>
 </project-private>

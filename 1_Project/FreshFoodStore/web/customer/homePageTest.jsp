@@ -3,7 +3,6 @@
     Created on : Sep 27, 2024, 3:22:47 PM
     Author     : DELL
 --%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -59,8 +58,8 @@
                     <div class="pro-img2">
                         <h6>80% FAT FREE</h6>
                         <h1>Thịt ít chất béo</h1>
-                        <h5>Chỉ từ <strong>200.000đ</strong></h5>
-                        <a href="category?food=Meat" class="shop-now-btn">
+                        <h5>Chỉ từ <strong>$79.99</strong></h5>
+                        <a href="" class="shop-now-btn">
                             <button class="mt-5 btn btn-light text-success position-relative fw-bold">Shop now
                                 <i class="fas fa-arrow-right position-absolute"></i>
                             </button>
@@ -71,14 +70,14 @@
                     <div class="pro-img3 text-dark">
                         <h6>SUMMER SALE</h6>
                         <h1>100% Trái cây tươi</h1>
-                        <h5>Lên tới</h5>
-                        <div class="highlight">
-                            <div class="badge">
-                                64% OFF
+                        <h5>Lên tới
+                            <div class="highlight">
+                                <div class="badge">
+                                    64% OFF
+                                </div>
                             </div>
-                        </div>
-
-                        <a href="category?food=Fruits" class="shop-now-btn">
+                        </h5>
+                        <a href="" class="shop-now-btn">
                             <button class="mt-5 btn btn-light text-success position-relative fw-bold">Shop now
                                 <i class="fas fa-arrow-right position-absolute"></i>
                             </button>
@@ -93,7 +92,7 @@
                 <h3 style="text-transform: uppercase; text-align: center; font-weight: bold;">DANH MỤC SẢN PHẢM</h3>
                 <div class="row cate">
                     <div class="col-md-2 mb-3">
-                        <a href="category?food=Fruits">
+                        <a href="">
                             <div class="card cate-img">
                                 <img src="../images/cate001.png" class="card-img-top" alt="...">
                                 <div class="card-body">
@@ -103,37 +102,37 @@
                         </a>
                     </div>
                     <div class="col-md-2 mb-3">
-                        <a href="category?food=Vegetables">
+                        <a href="">
                             <div class="card cate-img">
                                 <img src="../images/cate2.png" class="card-img-top" alt="...">
                                 <div class="card-body">
-                                    <h5 class="card-title text-center fw-bold" ">Rau củ</h5>
+                                    <h5 class="card-title text-center fw-bold">Rau củ</h5>
                                 </div>
                             </div>
                         </a>
                     </div>
                     <div class="col-md-2 mb-3">
-                        <a href="category?food=Seafood">
+                        <a href="">
                             <div class="card cate-img">
                                 <img src="../images/cate3.png" class="card-img-top" alt="...">
                                 <div class="card-body">
-                                    <h5 class="card-title text-center fw-bold">Cá,Hải sản</h5>
+                                    <h5 class="card-title text-center fw-bold">Thịt & Cá</h5>
                                 </div>
                             </div>
                         </a>
                     </div>
                     <div class="col-md-2 mb-3">
-                        <a href="category?food=Meat">
+                        <a href="">
                             <div class="card cate-img">
                                 <img src="../images/cate4.png" class="card-img-top" alt="...">
                                 <div class="card-body">
-                                    <h5 class="card-title text-center fw-bold">Thịt</h5>
+                                    <h5 class="card-title text-center fw-bold">Đồ Đông Lạnh</h5>
                                 </div>
                             </div>
                         </a>
                     </div>
                     <div class="col-md-2 mb-3">
-                        <a href="category?food=Egg">
+                        <a href="">
                             <div class="card cate-img">
                                 <img src="../images/pngtree-eggs-in-the-basket-png-image_11517687.png" class="card-img-top" alt="...">
                                 <div class="card-body">
@@ -143,7 +142,7 @@
                         </a>
                     </div>
                     <div class="col-md-2 mb-3">
-                        <a href="category?food=Beverages">
+                        <a href="">
                             <div class="card cate-img">
                                 <img src="../images/cate6.png" class="card-img-top" alt="...">
                                 <div class="card-body">
@@ -153,7 +152,7 @@
                         </a>
                     </div>
                     <div class="col-md-2 mb-3">
-                        <a href="category?food=Seafood">
+                        <a href="">
                             <div class="card cate-img">
                                 <img src="../images/cate7.png" class="card-img-top" alt="...">
                                 <div class="card-body">
@@ -163,7 +162,7 @@
                         </a>
                     </div>
                     <div class="col-md-2 mb-3">
-                        <a href="category?food=Mushroom">
+                        <a href="">
                             <div class="card cate-img">
                                 <img src="../images/Nam-rom-Cac-loai-nam-an-duoc.jpg" class="card-img-top" alt="...">
                                 <div class="card-body">
@@ -173,7 +172,7 @@
                         </a>
                     </div>
                     <div class="col-md-2 mb-3">
-                        <a href="category?food=Spices">
+                        <a href="">
                             <div class="card cate-img">
                                 <img src="../images/cate9.png" class="card-img-top" alt="...">
                                 <div class="card-body">
@@ -183,7 +182,7 @@
                         </a>
                     </div>
                     <div class="col-md-2 mb-3">
-                        <a href="category?food=Protein">
+                        <a href="">
                             <div class="card cate-img">
                                 <img src="../images/cate10.png" class="card-img-top" alt="...">
                                 <div class="card-body">
@@ -193,8 +192,8 @@
                         </a>
                     </div>
                     <div class="col-md-2 mb-3">
-                        <a href="category?food=Snacks">
-                            <div class="">
+                        <a href="">
+                            <div class="card cate-img">
                                 <img src="../images/cate11.png" class="card-img-top" alt="...">
                                 <div class="card-body">
                                     <h5 class="card-title text-center fw-bold">Snacks</h5>
@@ -203,7 +202,7 @@
                         </a>
                     </div>
                     <div class="col-md-2 mb-3">
-                        <a href="category?food=VegetableOil">
+                        <a href="">
                             <div class="card cate-img">
                                 <img src="../images/cate12.png" class="card-img-top" alt="...">
                                 <div class="card-body">
@@ -222,7 +221,7 @@
                     <div class="col-md-3 list-img mt-3">
                         <h6 style="text-transform: uppercase; font-weight: bold;">Mùa đông sale sập sàn</h6>
                         <h1 style="text-transform: uppercase; color: #3f923f;">sale 75%</h1>
-                        <a href="category?food=Vegetables" class="shop-now-btn">
+                        <a href="" class="shop-now-btn">
                             <button
                                 class="mt-3 btn btn-light text-success position-relative fw-bold border border-success px-5">Mua
                                 ngay
@@ -232,24 +231,20 @@
                     </div>
                     <div class="col-md-9 mt-3">
                         <div class="row g-2">
-                            <c:forEach var="p" items="${noibat}"> 
                             <div class="col-lg-3 col-md-4 col-sm-6 col-4">
-                                
                                 <div class="card outstand">
-                                    <a href="productDetail?id=${p.productId}"> 
-                                    <img src="../images/${p.image}" class="card-img-top" alt="...">
-                                    </a>
+                                    <img src="../images/list2.png" class="card-img-top" alt="...">
                                     <div class="icons">
                                         <i class="fas fa-heart"></i>
                                         <i class="fas fa-eye"></i>
                                     </div>
                                     <div class="card-body">
-                                        <h5 class="card-title fw-bold">${p.name}</h5>
+                                        <h5 class="card-title fw-bold">Cải thảo</h5>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <h6 class="fw-bold" style="margin-bottom: 0;">${p.unitPrice*(100-p.discount)/100}₫</h6>
+                                                <h6 class="fw-bold" style="margin-bottom: 0;">150.000₫</h6>
                                                 <span class=""
-                                                      style="text-decoration: line-through; color: gray;font-size: 14px;">${p.unitPrice}₫
+                                                      style="text-decoration: line-through; color: gray;font-size: 14px;">200.000₫
                                                 </span>
                                                 <div>
                                                     <span class="fa fa-star checked"></span>
@@ -268,109 +263,347 @@
                                         </div>
                                     </div>
                                 </div>
-                              
                             </div>
-                            </c:forEach>
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-4">
+                                <div class="card outstand">
+                                    <img src="../images/list3.png" class="card-img-top" alt="...">
+                                    <div class="icons">
+                                        <i class="fas fa-heart"></i>
+                                        <i class="fas fa-eye"></i>
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title fw-bold">Xà lách</h5>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <h6 class="fw-bold" style="margin-bottom: 0;">150.000₫</h6>
+                                                <span class=""
+                                                      style="text-decoration: line-through; color: gray;font-size: 14px;">200.000đ
+                                                </span>
+                                                <div>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 d-flex align-items-center buy-btn">
+                                                <button class="fas fa-shopping-bag openCartBtn"></button>
+                                            </div>
+                                        </div>
+                                        <div class="buy-mobile">
+                                            <button class="btn btn-primary w-100">Mua</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-4">
+                                <div class="card outstand">
+                                    <img src="../images/list4.png" class="card-img-top" alt="...">
+                                    <div class="icons">
+                                        <i class="fas fa-heart"></i>
+                                        <i class="fas fa-eye"></i>
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title fw-bold">Ớt xanh</h5>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <h6 class="fw-bold" style="margin-bottom: 0;">150.000₫</h6>
+                                                <span class=""
+                                                      style="text-decoration: line-through; color: gray;font-size: 14px;">200.000₫
+                                                </span>
+                                                <div>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 d-flex align-items-center buy-btn">
+                                                <button class="fas fa-shopping-bag openCartBtn"></button>
+                                            </div>
+                                        </div>
+                                        <div class="buy-mobile">
+                                            <button class="btn btn-primary w-100">Mua</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-4">
+                                <div class="card outstand">
+                                    <img src="../images/list5.png" class="card-img-top" alt="...">
+                                    <div class="icons">
+                                        <i class="fas fa-heart"></i>
+                                        <i class="fas fa-eye"></i>
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title fw-bold">Bắp</h5>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <h6 class="fw-bold" style="margin-bottom: 0;">150.000₫</h6>
+                                                <span class=""
+                                                      style="text-decoration: line-through; color: gray;font-size: 14px;">200.000₫
+                                                </span>
+                                                <div>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 d-flex align-items-center buy-btn">
+                                                <button class="fas fa-shopping-bag openCartBtn"></button>
+                                            </div>
+                                        </div>
+                                        <div class="buy-mobile">
+                                            <button class="btn btn-primary w-100">Mua</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="row mt-5">
                     <div class="col-md-3">
                         <h5 class="fw-bold">Khuyến mãi hấp dẫn</h5>
-                        <c:forEach var="p" items="${khuyenMai}">
-                            <div class="col-md-4 w-100">
-                                <a href="productDetail?id=${p.productId}" style="text-decoration: none; color: unset;">
-                                    <div class="card mb-3">
-                                        <div class="row g-0">
-                                            <div class="col-4">
-                                                    <img src="../images/${p.image}" class="img-fluid rounded-start" alt="...">
-                                               
-                                            </div>
-                                            <div class="col-8">
-                                                <div class="card-body">
-                                                    <h6 class="card-title text-muted">${p.name}</h6>
-                                                    <p class="card-text fw-bold" style="margin: 0;">${p.unitPrice}đ</p>
-                                                    <div>
-                                                        <span class="fa fa-star checked"></span>
-                                                        <span class="fa fa-star checked"></span>
-                                                        <span class="fa fa-star checked"></span>
-                                                        <span class="fa fa-star checked"></span>
-                                                        <span class="fa fa-star"></span>
-                                                    </div>
+                        <div class="col-md-4 w-100">
+                            <a href="" style="text-decoration: none; color: unset;">
+                                <div class="card mb-3">
+                                    <div class="row g-0">
+                                        <div class="col-4">
+                                            <img src="../images/sale1.png" class="img-fluid rounded-start" alt="...">
+                                        </div>
+                                        <div class="col-8">
+                                            <div class="card-body">
+                                                <h6 class="card-title text-muted">Táo xanh</h6>
+                                                <p class="card-text fw-bold" style="margin: 0;">35.000đ</p>
+                                                <div>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star"></span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </a>
-                            </div>
-                        </c:forEach>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-4 w-100">
+                            <a href="" style="text-decoration: none; color: unset;">
+                                <div class="card mb-3">
+                                    <div class="row g-0">
+                                        <div class="col-4">
+                                            <img src="../images/sale2.png" class="img-fluid rounded-start" alt="...">
+                                        </div>
+                                        <div class="col-8">
+                                            <div class="card-body">
+                                                <h6 class="card-title text-muted">Cam</h6>
+                                                <p class="card-text fw-bold" style="margin: 0;">35.000đ</p>
+                                                <div>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-4 w-100">
+                            <a href="" style="text-decoration: none; color: unset;">
+                                <div class="card mb-3">
+                                    <div class="row g-0">
+                                        <div class="col-4">
+                                            <img src="../images/sale3.png" class="img-fluid rounded-start" alt="...">
+                                        </div>
+                                        <div class="col-8">
+                                            <div class="card-body">
+                                                <h6 class="card-title text-muted">Xà lách</h6>
+                                                <p class="card-text fw-bold" style="margin: 0;">200.000đ</p>
+                                                <div>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
                     </div>
                     <div class="col-md-3">
                         <h5 class="fw-bold">Bán chạy nhất</h5>
-                        <c:forEach var="p" items="${banChay}">
-                            <div class="col-md-4 w-100">
-                                <a href="" style="text-decoration: none; color: unset;">
-                                    <div class="card mb-3">
-                                        <div class="row g-0">
-                                            <div class="col-4">
-                                                <a href="productDetail?id=${p.productId}">
-                                                    <img src="../images/${p.image}" class="img-fluid rounded-start" alt="...">
-                                                </a>
-                                            </div>
-                                            <div class="col-8">
-                                                <div class="card-body">
-                                                    <h6 class="card-title text-muted">${p.name}</h6>
-                                                    <p class="card-text fw-bold" style="margin: 0;">${p.unitPrice}đ</p>
-                                                    <div>
-                                                        <span class="fa fa-star checked"></span>
-                                                        <span class="fa fa-star checked"></span>
-                                                        <span class="fa fa-star checked"></span>
-                                                        <span class="fa fa-star checked"></span>
-                                                        <span class="fa fa-star"></span>
-                                                    </div>
+                        <div class="col-md-4 w-100">
+                            <a href="" style="text-decoration: none; color: unset;">
+                                <div class="card mb-3">
+                                    <div class="row g-0">
+                                        <div class="col-4">
+                                            <img src="../images/sale4.png" class="img-fluid rounded-start" alt="...">
+                                        </div>
+                                        <div class="col-8">
+                                            <div class="card-body">
+                                                <h6 class="card-title text-muted">Cà tím</h6>
+                                                <p class="card-text fw-bold" style="margin: 0;">120.000đ</p>
+                                                <div>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star"></span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </a>
-                            </div>
-                        </c:forEach>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-4 w-100">
+                            <a href="" style="text-decoration: none; color: unset;">
+                                <div class="card mb-3">
+                                    <div class="row g-0">
+                                        <div class="col-4">
+                                            <img src="../images/sale5.png" class="img-fluid rounded-start" alt="...">
+                                        </div>
+                                        <div class="col-8">
+                                            <div class="card-body">
+                                                <h6 class="card-title text-muted">Đậu bắp</h6>
+                                                <!-- &emsp; là tạo 4 khoảng cách trắng -->
+                                                <p class="card-text fw-bold" style="margin: 0;">100.000đ &emsp;&emsp;<span
+                                                        class=""
+                                                        style="text-decoration: line-through; color: gray;font-size: 14px;">200.000₫
+                                                    </span> </p>
+                                                <div>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-4 w-100">
+                            <a href="" style="text-decoration: none; color: unset;">
+                                <div class="card mb-3">
+                                    <div class="row g-0">
+                                        <div class="col-4">
+                                            <img src="../images/sale6.png" class="img-fluid rounded-start" alt="...">
+                                        </div>
+                                        <div class="col-8">
+                                            <div class="card-body">
+                                                <h6 class="card-title text-muted">Cà chua</h6>
+                                                <p class="card-text fw-bold" style="margin: 0;">60.000đ</p>
+                                                <div>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
                     </div>
                     <div class="col-md-3">
                         <h5 class="fw-bold">Đánh giá tốt nhất</h5>
-                        <c:forEach var="p" items="${danhGiaTot}">
-                            <div class="col-md-4 w-100">
-                                <a href="" style="text-decoration: none; color: unset;">
-                                    <div class="card mb-3">
-                                        <div class="row g-0">
-                                            <div class="col-4">
-                                                <a href="productDetail?id=${p.productId}">
-                                                    <img src="../images/${p.image}" class="img-fluid rounded-start" alt="...">
-                                                </a>
-                                            </div>
-                                            <div class="col-8">
-                                                <div class="card-body">
-                                                    <h6 class="card-title text-muted">${p.name}</h6>
-                                                    <p class="card-text fw-bold" style="margin: 0;">${p.unitPrice}đ</p>
-                                                    <div>
-                                                        <span class="fa fa-star checked"></span>
-                                                        <span class="fa fa-star checked"></span>
-                                                        <span class="fa fa-star checked"></span>
-                                                        <span class="fa fa-star checked"></span>
-                                                        <span class="fa fa-star"></span>
-                                                    </div>
+                        <div class="col-md-4 w-100">
+                            <a href="" style="text-decoration: none; color: unset;">
+                                <div class="card mb-3">
+                                    <div class="row g-0">
+                                        <div class="col-4">
+                                            <img src="../images/sale7.png" class="img-fluid rounded-start" alt="...">
+                                        </div>
+                                        <div class="col-8">
+                                            <div class="card-body">
+                                                <h6 class="card-title text-muted">Khoai tây</h6>
+                                                <p class="card-text fw-bold" style="margin: 0;">50.000đ</p>
+                                                <div>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star"></span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </a>
-                            </div>
-                        </c:forEach>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-4 w-100">
+                            <a href="" style="text-decoration: none; color: unset;">
+                                <div class="card mb-3">
+                                    <div class="row g-0">
+                                        <div class="col-4">
+                                            <img src="../images/sale8.png" class="img-fluid rounded-start" alt="...">
+                                        </div>
+                                        <div class="col-8">
+                                            <div class="card-body">
+                                                <h6 class="card-title text-muted">Bắp</h6>
+                                                <p class="card-text fw-bold" style="margin: 0;">80.000đ &emsp;&emsp; <span
+                                                        class=""
+                                                        style="text-decoration: line-through; color: gray;font-size: 14px;">100.000₫
+                                                    </span></p>
+                                                <div>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-4 w-100">
+                            <a href="" style="text-decoration: none; color: unset;">
+                                <div class="card mb-3">
+                                    <div class="row g-0">
+                                        <div class="col-4">
+                                            <img src="../images/sale9.png" class="img-fluid rounded-start" alt="...">
+                                        </div>
+                                        <div class="col-8">
+                                            <div class="card-body">
+                                                <h6 class="card-title text-muted">Súp lơ</h6>
+                                                <p class="card-text fw-bold" style="margin: 0;">220.000đ</p>
+                                                <div>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star"></span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
                     </div>
                     <div class="col-md-3 sale text-center">
                         <h6>HOT SALE</h6>
                         <h1><strong>Giảm 37%</strong> trên mỗi hóa đơn</h1>
-                        <a href="category?food=Fruits" class="shop-now-btn">
+                        <a href="" class="shop-now-btn">
                             <button
                                 class="btn btn-light text-success position-relative fw-bold border border-success px-5">Mua
                                 ngay
@@ -381,289 +614,286 @@
                 </div>
                 <h3 style="font-weight: bold; text-align: center;margin-top: 30px;">Cửa Hàng Thực Phẩm Tươi Sống Tốt Nhất
                     Việt Nam</h3>
-                <div class="video-container w-100 mb-5">
-                    <video id="myVideo" src="../images/992601-hd_1920_1080_25fps.mp4" loop autoplay muted controls>
-                        Your browser does not support the video tag.
-                    </video>
+                <div class="video-container w-100 mb-5" loop>
+                    <video id="myVideo" src="../images/992601-hd_1920_1080_25fps.mp4" type="video/mp4"></video>
+                    <button class="play-pause-button play-icon" id="playPauseButton"></button>
                 </div>
-                <button class="play-pause-button play-icon" id="playPauseButton"></button>
-            </div>
-            <!-- đánh giá của client -->
-            <div class="feedback">
-                <h6 style="text-transform: uppercase; text-align: center; color: green; font-weight: bold; ">
-                    Client Testiomial</h6>
-                <h2 style="text-align: center; font-weight: bold; margin-bottom: 30px;">What our Client Says</h2>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="card">
-                                <i class="fas fa-quote-right px-3 pt-3"
-                                   style="color: rgb(149, 228, 149); font-size: 30px;"></i>
-                                <div class="card-body">
-                                    <p class="">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Natus tempora
-                                        voluptate vel quia autem laboriosam ut dolores illo voluptatum harum odio
-                                        delectus
-                                        reiciendis earum cum dolorem fugiat doloribus, numquam laborum!</p>
-                                    <div class="row">
-                                        <div class="col-2">
-                                            <img src="../images/user1.png" width="50" alt="#">
-                                        </div>
-                                        <div class="col-6 px-4">
-                                            <h6 class="text-dark fw-bold">John Doe</h6>
-                                            <p class="text-muted">Customer Service</p>
-                                        </div>
-                                        <div class="col-4">
-                                            <i class="fas fa-star checked"></i>
-                                            <i class="fas fa-star checked"></i>
-                                            <i class="fas fa-star checked"></i>
-                                            <i class="fas fa-star checked"></i>
-                                            <i class="fas fa-star checked"></i>
+                <!-- đánh giá của client -->
+                <div class="feedback">
+                    <h6 style="text-transform: uppercase; text-align: center; color: green; font-weight: bold; ">
+                        Client Testiomial</h6>
+                    <h2 style="text-align: center; font-weight: bold; margin-bottom: 30px;">What our Client Says</h2>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <i class="fas fa-quote-right px-3 pt-3"
+                                       style="color: rgb(149, 228, 149); font-size: 30px;"></i>
+                                    <div class="card-body">
+                                        <p class="">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Natus tempora
+                                            voluptate vel quia autem laboriosam ut dolores illo voluptatum harum odio
+                                            delectus
+                                            reiciendis earum cum dolorem fugiat doloribus, numquam laborum!</p>
+                                        <div class="row">
+                                            <div class="col-2">
+                                                <img src="../images/user1.png" width="50" alt="#">
+                                            </div>
+                                            <div class="col-6 px-4">
+                                                <h6 class="text-dark fw-bold">John Doe</h6>
+                                                <p class="text-muted">Customer Service</p>
+                                            </div>
+                                            <div class="col-4">
+                                                <i class="fas fa-star checked"></i>
+                                                <i class="fas fa-star checked"></i>
+                                                <i class="fas fa-star checked"></i>
+                                                <i class="fas fa-star checked"></i>
+                                                <i class="fas fa-star checked"></i>
 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 feedback-mobile">
+                                <div class="card">
+                                    <i class="fas fa-quote-right px-3 pt-3"
+                                       style="color: rgb(149, 228, 149); font-size: 30px;"></i>
+                                    <div class="card-body">
+                                        <p class="">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Natus tempora
+                                            voluptate vel quia autem laboriosam ut dolores illo voluptatum harum odio
+                                            delectus
+                                            reiciendis earum cum dolorem fugiat doloribus, numquam laborum!</p>
+                                        <div class="row">
+                                            <div class="col-2">
+                                                <img src="../images/user1.png" width="50" alt="#">
+                                            </div>
+                                            <div class="col-6">
+                                                <h6 class="text-dark fw-bold">John Doe</h6>
+                                                <p class="text-muted">Customer Service</p>
+                                            </div>
+                                            <div class="col-4">
+                                                <i class="fas fa-star checked"></i>
+                                                <i class="fas fa-star checked"></i>
+                                                <i class="fas fa-star checked"></i>
+                                                <i class="fas fa-star checked"></i>
+                                                <i class="fas fa-star checked"></i>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 feedback-mobile">
+                                <div class="card">
+                                    <i class="fas fa-quote-right px-3 pt-3"
+                                       style="color: rgb(149, 228, 149); font-size: 30px;"></i>
+                                    <div class="card-body">
+                                        <p class="">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Natus tempora
+                                            voluptate vel quia autem laboriosam ut dolores illo voluptatum harum odio
+                                            delectus
+                                            reiciendis earum cum dolorem fugiat doloribus, numquam laborum!</p>
+                                        <div class="row">
+                                            <div class="col-2">
+                                                <img src="../images/user1.png" width="50" alt="#">
+                                            </div>
+                                            <div class="col-6">
+                                                <h6 class="text-dark fw-bold">John Doe</h6>
+                                                <p class="text-muted">Customer Service</p>
+                                            </div>
+                                            <div class="col-4">
+                                                <i class="fas fa-star checked"></i>
+                                                <i class="fas fa-star checked"></i>
+                                                <i class="fas fa-star checked"></i>
+                                                <i class="fas fa-star checked"></i>
+                                                <i class="fas fa-star checked"></i>
+
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4 feedback-mobile">
-                            <div class="card">
-                                <i class="fas fa-quote-right px-3 pt-3"
-                                   style="color: rgb(149, 228, 149); font-size: 30px;"></i>
-                                <div class="card-body">
-                                    <p class="">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Natus tempora
-                                        voluptate vel quia autem laboriosam ut dolores illo voluptatum harum odio
-                                        delectus
-                                        reiciendis earum cum dolorem fugiat doloribus, numquam laborum!</p>
-                                    <div class="row">
-                                        <div class="col-2">
-                                            <img src="../images/user1.png" width="50" alt="#">
-                                        </div>
-                                        <div class="col-6">
-                                            <h6 class="text-dark fw-bold">John Doe</h6>
-                                            <p class="text-muted">Customer Service</p>
-                                        </div>
-                                        <div class="col-4">
-                                            <i class="fas fa-star checked"></i>
-                                            <i class="fas fa-star checked"></i>
-                                            <i class="fas fa-star checked"></i>
-                                            <i class="fas fa-star checked"></i>
-                                            <i class="fas fa-star checked"></i>
-
-                                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Giỏ hàng popup -->
+                <div id="cartSidebar">
+                    <div class="cart-header">
+                        <span>Giỏ Hàng (2)</span>
+                        <button class="btn-close fas fa-times" id="closeCartBtn"></button>
+                    </div>
+                    <div class="cart-items">
+                        <div class="cart-item d-flex align-items-center">
+                            <img src="https://via.placeholder.com/50" alt="Product 1">
+                            <div class="item-details">
+                                <h6>Sản phẩm 1</h6>
+                                <div class="item-price">Giá: $10</div>
+                                <div class="item-quantity d-flex align-items-center">
+                                    <span class="me-2">Số lượng:</span>
+                                    <div class="qty-container">
+                                        <button class="qty-btn-minus btn-light" type="button"><i
+                                                class="fa fa-minus"></i></button>
+                                        <input type="text" name="qty" value="2" class="input-qty" />
+                                        <button class="qty-btn-plus btn-light" type="button"><i
+                                                class="fa fa-plus"></i></button>
                                     </div>
                                 </div>
                             </div>
+                            <div class="item-total-price">Tổng: $20</div>
+                            <button class="btn ms-3 fas fa-trash-alt text-danger"></button>
                         </div>
-                        <div class="col-md-4 feedback-mobile">
-                            <div class="card">
-                                <i class="fas fa-quote-right px-3 pt-3"
-                                   style="color: rgb(149, 228, 149); font-size: 30px;"></i>
-                                <div class="card-body">
-                                    <p class="">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Natus tempora
-                                        voluptate vel quia autem laboriosam ut dolores illo voluptatum harum odio
-                                        delectus
-                                        reiciendis earum cum dolorem fugiat doloribus, numquam laborum!</p>
-                                    <div class="row">
-                                        <div class="col-2">
-                                            <img src="../images/user1.png" width="50" alt="#">
-                                        </div>
-                                        <div class="col-6">
-                                            <h6 class="text-dark fw-bold">John Doe</h6>
-                                            <p class="text-muted">Customer Service</p>
-                                        </div>
-                                        <div class="col-4">
-                                            <i class="fas fa-star checked"></i>
-                                            <i class="fas fa-star checked"></i>
-                                            <i class="fas fa-star checked"></i>
-                                            <i class="fas fa-star checked"></i>
-                                            <i class="fas fa-star checked"></i>
 
-                                        </div>
+                        <div class="cart-item d-flex align-items-center">
+                            <img src="https://via.placeholder.com/50" alt="Product 2">
+                            <div class="item-details">
+                                <h6>Sản phẩm 2</h6>
+                                <div class="item-price">Giá: $25</div>
+                                <div class="item-quantity d-flex align-items-center">
+                                    <span class="me-2">Số lượng:</span>
+                                    <div class="qty-container">
+                                        <button class="qty-btn-minus btn-light" type="button"><i
+                                                class="fa fa-minus"></i></button>
+                                        <input type="text" name="qty" value="2" class="input-qty" />
+                                        <button class="qty-btn-plus btn-light" type="button"><i
+                                                class="fa fa-plus"></i></button>
                                     </div>
                                 </div>
                             </div>
+                            <div class="item-total-price">Tổng: $25</div>
+                            <button class="btn ms-3 fas fa-trash-alt text-danger"></button>
+                        </div>
+                        <div class="cart-item d-flex align-items-center">
+                            <img src="https://via.placeholder.com/50" alt="Product 2">
+                            <div class="item-details">
+                                <h6>Sản phẩm 2</h6>
+                                <div class="item-price">Giá: $25</div>
+                                <div class="item-quantity d-flex align-items-center">
+                                    <span class="me-2">Số lượng:</span>
+                                    <div class="qty-container">
+                                        <button class="qty-btn-minus btn-light" type="button"><i
+                                                class="fa fa-minus"></i></button>
+                                        <input type="text" name="qty" value="2" class="input-qty" />
+                                        <button class="qty-btn-plus btn-light" type="button"><i
+                                                class="fa fa-plus"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-total-price">Tổng: $25</div>
+                            <button class="btn ms-3 fas fa-trash-alt text-danger"></button>
+                        </div>
+                        <div class="cart-item d-flex align-items-center">
+                            <img src="https://via.placeholder.com/50" alt="Product 2">
+                            <div class="item-details">
+                                <h6>Sản phẩm 2</h6>
+                                <div class="item-price">Giá: $25</div>
+                                <div class="item-quantity d-flex align-items-center">
+                                    <span class="me-2">Số lượng:</span>
+                                    <div class="qty-container">
+                                        <button class="qty-btn-minus btn-light" type="button"><i
+                                                class="fa fa-minus"></i></button>
+                                        <input type="text" name="qty" value="2" class="input-qty" />
+                                        <button class="qty-btn-plus btn-light" type="button"><i
+                                                class="fa fa-plus"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-total-price">Tổng: $25</div>
+                            <button class="btn ms-3 fas fa-trash-alt text-danger"></button>
+                        </div>
+                        <div class="cart-item d-flex align-items-center">
+                            <img src="https://via.placeholder.com/50" alt="Product 2">
+                            <div class="item-details">
+                                <h6>Sản phẩm 2</h6>
+                                <div class="item-price">Giá: $25</div>
+                                <div class="item-quantity d-flex align-items-center">
+                                    <span class="me-2">Số lượng:</span>
+                                    <div class="qty-container">
+                                        <button class="qty-btn-minus btn-light" type="button"><i
+                                                class="fa fa-minus"></i></button>
+                                        <input type="text" name="qty" value="2" class="input-qty" />
+                                        <button class="qty-btn-plus btn-light" type="button"><i
+                                                class="fa fa-plus"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-total-price">Tổng: $25</div>
+                            <button class="btn ms-3 fas fa-trash-alt text-danger"></button>
+                        </div>
+                        <div class="cart-item d-flex align-items-center">
+                            <img src="https://via.placeholder.com/50" alt="Product 2">
+                            <div class="item-details">
+                                <h6>Sản phẩm 2</h6>
+                                <div class="item-price">Giá: $25</div>
+                                <div class="item-quantity d-flex align-items-center">
+                                    <span class="me-2">Số lượng:</span>
+                                    <div class="qty-container">
+                                        <button class="qty-btn-minus btn-light" type="button"><i
+                                                class="fa fa-minus"></i></button>
+                                        <input type="text" name="qty" value="2" class="input-qty" />
+                                        <button class="qty-btn-plus btn-light" type="button"><i
+                                                class="fa fa-plus"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-total-price">Tổng: $25</div>
+                            <button class="btn ms-3 fas fa-trash-alt text-danger"></button>
+                        </div>
+                        <div class="cart-item d-flex align-items-center">
+                            <img src="https://via.placeholder.com/50" alt="Product 2">
+                            <div class="item-details">
+                                <h6>Sản phẩm 2</h6>
+                                <div class="item-price">Giá: $25</div>
+                                <div class="item-quantity d-flex align-items-center">
+                                    <span class="me-2">Số lượng:</span>
+                                    <div class="qty-container">
+                                        <button class="qty-btn-minus btn-light" type="button"><i
+                                                class="fa fa-minus"></i></button>
+                                        <input type="text" name="qty" value="2" class="input-qty" />
+                                        <button class="qty-btn-plus btn-light" type="button"><i
+                                                class="fa fa-plus"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-total-price">Tổng: $25</div>
+                            <button class="btn ms-3 fas fa-trash-alt text-danger"></button>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Giỏ hàng popup -->
-    <div id="cartSidebar">
-        <div class="cart-header">
-            <span>Giỏ Hàng (2)</span>
-            <button class="btn-close fas fa-times" id="closeCartBtn"></button>
-        </div>
-        <div class="cart-items">
-            <div class="cart-item d-flex align-items-center">
-                <img src="https://via.placeholder.com/50" alt="Product 1">
-                <div class="item-details">
-                    <h6>Sản phẩm 1</h6>
-                    <div class="item-price">Giá: $10</div>
-                    <div class="item-quantity d-flex align-items-center">
-                        <span class="me-2">Số lượng:</span>
-                        <div class="qty-container">
-                            <button class="qty-btn-minus btn-light" type="button"><i
-                                    class="fa fa-minus"></i></button>
-                            <input type="text" name="qty" value="2" class="input-qty" />
-                            <button class="qty-btn-plus btn-light" type="button"><i
-                                    class="fa fa-plus"></i></button>
-                        </div>
+                    <div class="cart-footer">
+                        <span class="total-price fw-bold">Tổng cộng: $45</span>
+                        <br>
+                        <button type="button" class="w-100 mt-2 checkout-btn">Thanh Toán</button>
+                        <button type="button" class="w-100 mt-2 goto-cart">Đến trang giỏ hàng</button>
                     </div>
                 </div>
-                <div class="item-total-price">Tổng: $20</div>
-                <button class="btn ms-3 fas fa-trash-alt text-danger"></button>
-            </div>
-
-            <div class="cart-item d-flex align-items-center">
-                <img src="https://via.placeholder.com/50" alt="Product 2">
-                <div class="item-details">
-                    <h6>Sản phẩm 2</h6>
-                    <div class="item-price">Giá: $25</div>
-                    <div class="item-quantity d-flex align-items-center">
-                        <span class="me-2">Số lượng:</span>
-                        <div class="qty-container">
-                            <button class="qty-btn-minus btn-light" type="button"><i
-                                    class="fa fa-minus"></i></button>
-                            <input type="text" name="qty" value="2" class="input-qty" />
-                            <button class="qty-btn-plus btn-light" type="button"><i
-                                    class="fa fa-plus"></i></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="item-total-price">Tổng: $25</div>
-                <button class="btn ms-3 fas fa-trash-alt text-danger"></button>
-            </div>
-            <div class="cart-item d-flex align-items-center">
-                <img src="https://via.placeholder.com/50" alt="Product 2">
-                <div class="item-details">
-                    <h6>Sản phẩm 2</h6>
-                    <div class="item-price">Giá: $25</div>
-                    <div class="item-quantity d-flex align-items-center">
-                        <span class="me-2">Số lượng:</span>
-                        <div class="qty-container">
-                            <button class="qty-btn-minus btn-light" type="button"><i
-                                    class="fa fa-minus"></i></button>
-                            <input type="text" name="qty" value="2" class="input-qty" />
-                            <button class="qty-btn-plus btn-light" type="button"><i
-                                    class="fa fa-plus"></i></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="item-total-price">Tổng: $25</div>
-                <button class="btn ms-3 fas fa-trash-alt text-danger"></button>
-            </div>
-            <div class="cart-item d-flex align-items-center">
-                <img src="https://via.placeholder.com/50" alt="Product 2">
-                <div class="item-details">
-                    <h6>Sản phẩm 2</h6>
-                    <div class="item-price">Giá: $25</div>
-                    <div class="item-quantity d-flex align-items-center">
-                        <span class="me-2">Số lượng:</span>
-                        <div class="qty-container">
-                            <button class="qty-btn-minus btn-light" type="button"><i
-                                    class="fa fa-minus"></i></button>
-                            <input type="text" name="qty" value="2" class="input-qty" />
-                            <button class="qty-btn-plus btn-light" type="button"><i
-                                    class="fa fa-plus"></i></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="item-total-price">Tổng: $25</div>
-                <button class="btn ms-3 fas fa-trash-alt text-danger"></button>
-            </div>
-            <div class="cart-item d-flex align-items-center">
-                <img src="https://via.placeholder.com/50" alt="Product 2">
-                <div class="item-details">
-                    <h6>Sản phẩm 2</h6>
-                    <div class="item-price">Giá: $25</div>
-                    <div class="item-quantity d-flex align-items-center">
-                        <span class="me-2">Số lượng:</span>
-                        <div class="qty-container">
-                            <button class="qty-btn-minus btn-light" type="button"><i
-                                    class="fa fa-minus"></i></button>
-                            <input type="text" name="qty" value="2" class="input-qty" />
-                            <button class="qty-btn-plus btn-light" type="button"><i
-                                    class="fa fa-plus"></i></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="item-total-price">Tổng: $25</div>
-                <button class="btn ms-3 fas fa-trash-alt text-danger"></button>
-            </div>
-            <div class="cart-item d-flex align-items-center">
-                <img src="https://via.placeholder.com/50" alt="Product 2">
-                <div class="item-details">
-                    <h6>Sản phẩm 2</h6>
-                    <div class="item-price">Giá: $25</div>
-                    <div class="item-quantity d-flex align-items-center">
-                        <span class="me-2">Số lượng:</span>
-                        <div class="qty-container">
-                            <button class="qty-btn-minus btn-light" type="button"><i
-                                    class="fa fa-minus"></i></button>
-                            <input type="text" name="qty" value="2" class="input-qty" />
-                            <button class="qty-btn-plus btn-light" type="button"><i
-                                    class="fa fa-plus"></i></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="item-total-price">Tổng: $25</div>
-                <button class="btn ms-3 fas fa-trash-alt text-danger"></button>
-            </div>
-            <div class="cart-item d-flex align-items-center">
-                <img src="https://via.placeholder.com/50" alt="Product 2">
-                <div class="item-details">
-                    <h6>Sản phẩm 2</h6>
-                    <div class="item-price">Giá: $25</div>
-                    <div class="item-quantity d-flex align-items-center">
-                        <span class="me-2">Số lượng:</span>
-                        <div class="qty-container">
-                            <button class="qty-btn-minus btn-light" type="button"><i
-                                    class="fa fa-minus"></i></button>
-                            <input type="text" name="qty" value="2" class="input-qty" />
-                            <button class="qty-btn-plus btn-light" type="button"><i
-                                    class="fa fa-plus"></i></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="item-total-price">Tổng: $25</div>
-                <button class="btn ms-3 fas fa-trash-alt text-danger"></button>
-            </div>
-        </div>
-        <div class="cart-footer">
-            <span class="total-price fw-bold">Tổng cộng: $45</span>
-            <br>
-            <button type="button" class="w-100 mt-2 checkout-btn">Thanh Toán</button>
-            <button type="button" class="w-100 mt-2 goto-cart">Đến trang giỏ hàng</button>
-        </div>
-    </div>
-    <button onclick="topFunction()" id="myBtn" title="Go to top">
-        <i class="fas fa-arrow-up"></i>
-    </button>
-    <%@ include file="./Footer.jsp" %>
-    <script src="../js/bootstrap.bundle.min.js"></script>
-    <script src="../js/authJs/homePageTest.js"></script>
-    <script>
-        //btn go to top
-        let mybutton = document.getElementById("myBtn");
+        <button onclick="topFunction()" id="myBtn" title="Go to top">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        <%@ include file="./Footer.jsp" %>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script src="../js/authJs/homePageTest.js"></script>
+        <script>
+            //btn go to top
+            let mybutton = document.getElementById("myBtn");
 // When the user scrolls down 20px from the top of the document, show the button
-        window.onscroll = function () {
-            scrollFunction();
-        };
+            window.onscroll = function () {
+                scrollFunction();
+            };
 
-        function scrollFunction() {
-            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                mybutton.style.display = "block";
-            } else {
-                mybutton.style.display = "none";
+            function scrollFunction() {
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    mybutton.style.display = "block";
+                } else {
+                    mybutton.style.display = "none";
+                }
             }
-        }
 
 // When the user clicks on the button, scroll to the top of the document
-        function topFunction() {
-            document.body.scrollTop = 0;
-            document.documentElement.scrollTop = 0;
-        }
-    </script>
-</body>
+            function topFunction() {
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+            }
+        </script>
+    </body>
 
 </html>
