@@ -6,16 +6,18 @@ package controller;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
  *
  * @author HoangNam
  */
-@WebServlet(name = "authCustomerController", urlPatterns = {"/customer/auth"})
+@WebServlet(name = "authCustomerController", urlPatterns = {"/customer/authC"})
 public class authCustomerController extends HttpServlet {
 
     @Override
@@ -49,7 +51,32 @@ public class authCustomerController extends HttpServlet {
     }
 
     private void handleLogout(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String targetURL = request.getContextPath() + "/auth?action=logout";
+        Cookie loginCookie = null;
+        //Lấy cookies cho account muốn logout
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("emailCookie")) {
+                    loginCookie = cookie;
+                    break;
+                }
+            }
+        }
+
+        //Nếu tồn tại cookie đó thì destroy nó
+        if (loginCookie != null) {
+            loginCookie.setMaxAge(0);
+            response.addCookie(loginCookie);
+        }
+
+        //Lấy session hiện tại, (false) có ý nghĩa là nếu lấy session ra null thì ko tạo lại sesion
+        HttpSession session = request.getSession(false);
+        //vô hiệu hóa session hiện tại
+        if (session != null) {
+            session.invalidate();
+        }
+
+        String targetURL = request.getContextPath() + "/SignIn.jsp";
         String encodedURL = response.encodeRedirectURL(targetURL);
         response.sendRedirect(encodedURL);
     }

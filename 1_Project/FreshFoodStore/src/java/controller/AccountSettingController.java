@@ -15,19 +15,21 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.File;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.List;
+import java.nio.file.StandardCopyOption;
 import model.Users;
-import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.tomcat.util.http.fileupload.FileItem;
-import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
 
 /**
  *
  * @author DELL
  */
-@MultipartConfig
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024 * 1, // 1MB
+        maxFileSize = 1024 * 1024 * 10, // 10MB
+        maxRequestSize = 1024 * 1024 * 50 // 50MB
+)
 public class AccountSettingController extends HttpServlet {
 
     private static final String UPLOAD_DIRECTORY = "images";
@@ -98,6 +100,8 @@ public class AccountSettingController extends HttpServlet {
         // Get the user information from the session
         Users account = (Users) session.getAttribute("account");
 
+        String avatar = handleFile(request, response); // Xử lý file upload
+
         // Retrieve other form data using request.getParameter()
         String fullName = request.getParameter("fullName");
         String email = request.getParameter("email");
@@ -105,18 +109,59 @@ public class AccountSettingController extends HttpServlet {
         String address = request.getParameter("address");
 
         // Update the user information in the database
-        int userId = dao.updateUserInfo(account.getUserId(), fullName, email, phone, address);
-
+        Users newAccInfo = dao.updateUserInfo(account.getUserId(), fullName, email, phone, address, avatar);
+        
         // Check if the update was successful
-        if (userId == -1) {
+        if (newAccInfo == null) {
             System.out.println("Error: HandleEdit update failed!");
         }
+        
+        // Cập nhật lại giá trị trong session
+        session.setAttribute("account", newAccInfo);
 
         // Redirect to the account settings page after update
+        //lấy thông tin user
+        Users listInfo = dao.findAllInfo(account.getUserId());
+        request.setAttribute("listInfo", listInfo);
+        //hiện thông tin order của user        
         request.getRequestDispatcher("/customer/AccountSetting.jsp").forward(request, response);
     }
 
+    private String handleFile(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Sử dụng getServletContext().getRealPath("") để lấy đường dẫn gốc của dự án
+        String uploadPath = getServletContext().getRealPath("") + File.separator + "images";
 
+        // Tạo thư mục lưu file nếu chưa có
+        File uploadDir = new File(uploadPath);
+        if (!uploadDir.exists()) {
+            boolean created = uploadDir.mkdirs();
+            if (!created) {
+                throw new ServletException("Failed to create upload directory.");
+            }
+        }
+
+        // Lấy phần file từ form với tên là "avatar"
+        Part filePart = request.getPart("file");
+        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+        if (fileName == null || fileName.isEmpty()) {
+            return null;
+        }
+
+        // Đường dẫn đầy đủ của file sẽ được lưu
+        String filePath = uploadPath + File.separator + fileName;
+
+        // Ghi file vào thư mục đích
+        try (InputStream fileContent = filePart.getInputStream()) {
+            File fileToSave = new File(filePath);
+            Files.copy(fileContent, fileToSave.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        }
+        
+        System.out.println("Upload Path: " + uploadPath);
+        System.out.println("File Path: " + filePath);
+
+        // Trả về tên file đã lưu
+        return fileName;
+    }
 
     /**
      * Returns a short description of the servlet.

@@ -316,7 +316,8 @@ public class DashboardDAO extends DBContext {
         return null;
     }
 
-    public int updateUserInfo(int userId, String name, String email, String phone, String address) {
+    public Users updateUserInfo(int userId, String name, String email, String phone, String address, String avatar) {
+        Users current = new Users(userId, name, email, phone, address);
         //- connect w/Database
         connection = getConnection();
         //- Chuan bi cau lenh sql
@@ -326,6 +327,7 @@ public class DashboardDAO extends DBContext {
                            ,[email] = ?
                            ,[phone] = ?
                            ,[address] = ?
+                           ,[avatar] = ?
                       WHERE [userId] = ?""";
         try {
             //- Tao doi tuong prepareStatement (thêm generated key vao tham so thu 2)
@@ -335,20 +337,22 @@ public class DashboardDAO extends DBContext {
             preStatement.setObject(2, email);
             preStatement.setObject(3, phone);
             preStatement.setObject(4, address);
-            preStatement.setObject(5, userId);
+            preStatement.setObject(5, avatar);
+            preStatement.setObject(6, userId);
 
             //- thuc thi cau lenh
             preStatement.executeUpdate();
             //- tra ve ket qua mới thêm
             resultSet = preStatement.getGeneratedKeys();
             if(resultSet.next()){
-                userId = resultSet.getInt(1);
+                userId = resultSet.getInt(1);       //lấy id user mới cập nhật (chưa sử dụng)
+                current.setAvatar(avatar);
             }
-            return userId;
+            return current;
         } catch (SQLException e) {
             System.out.println("??updateUserInfo: " + e.getMessage());
         }
-        return -1;
+        return null;
     }
     
 

@@ -97,7 +97,7 @@
                                         <span class="d-lg-flex flex-column gap-1 d-none"></span>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated profile-dropdown">
-                                        <form action="auth?action=logout" method="POST">
+                                        <form action="authC?action=logout" method="POST">
                                             <button style="background-color: transparent; border: none; color: inherit; cursor: pointer; padding: 0;">
                                                 <img class="d-none d-lg-inline-block" src="../images/png/box-arrow-in-right.svg" alt="box-arrow">
                                                 Logout

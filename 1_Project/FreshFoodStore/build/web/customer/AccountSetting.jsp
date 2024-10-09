@@ -68,7 +68,7 @@
                                 </form>
                             </li>
                             <li>
-                                <form id="infoForm6" action="" method="POST"> <%--đổi đường dẫn--%>
+                                <form id="infoForm6" action="Dashboard?action=logout" method="POST"> <%--đổi đường dẫn--%>
                                     <a class="nav-link" onclick="document.getElementById('infoForm6').submit();" style="cursor: pointer;">
                                         <i class="fas fa-sign-out-alt me-2"></i>
                                         Đăng xuất
@@ -86,9 +86,9 @@
                         <div class="card-body">
 
                             <div class="row">
+
                                 <form action="AccountSetting?action=editData" method="POST" enctype="multipart/form-data">
                                     <div class="row">
-
                                         <div class="col-md-6 px-3 desktop-view"><%--lưu ý cái này cho máy tính--%>
                                             <div class="mb-3">
                                                 <label for="exampleFormControlInput1" class="form-label">Họ và tên</label>
@@ -117,11 +117,12 @@
                                         </div>
                                         <div class="col-md-6 desktop-view ">
                                             <img src="../images/${listInfo.avatar}"
-                                                 alt="Uploaded Image" class="user-img" id="uploaded-image2">
+                                                 alt="Uploaded Image" class="user-img" id="uploaded-image">
                                             <div class="panel">
                                                 <div class="button_outer">
                                                     <div class="btn_upload">
-                                                        <input type="file" id="upload-file2" name="userImg">
+                                                        <%--id="upload-file"--%>
+                                                        <input type="file" id="upload-avatar" name="file" accept="image/*">       
                                                         Upload Image
                                                     </div>
                                                     <div class="processing_bar"></div>
@@ -129,8 +130,7 @@
                                                 </div>
                                                 <div class="error_msg"></div>
                                             </div>
-                                        </div> 
-
+                                        </div>
                                     </div>
                                 </form>
                                 <form action="">
@@ -140,7 +140,7 @@
                                         <div class="panel">
                                             <div class="button_outer">
                                                 <div class="btn_upload">
-                                                    <input type="file" id="upload-file2" name="userImg">
+                                                    <input type="file" id="upload-file2" name="userImg" accept="image/*">
                                                     Upload Image
                                                 </div>
                                                 <div class="processing_bar"></div>
@@ -239,6 +239,18 @@
         <!--có thể bị lỗi do dùng jquery 3.3.1-->
         <script src="../js/authJs/accountSetting.js"></script>
         <script>
+            document.getElementById('upload-avatar').addEventListener('change', function (event) {
+                const file = event.target.files[0]; // Lấy file từ input
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        // Đặt src của ảnh thành nội dung của file được đọc
+                        document.getElementById('uploaded-image').src = e.target.result;
+                    };
+                    reader.readAsDataURL(file); // Đọc file và trả kết quả dưới dạng URL base64
+                }
+            });
+
             document.addEventListener('DOMContentLoaded', function () {
                 // Lấy tất cả các input fields và nút lưu
                 const inputs = document.querySelectorAll('.input');

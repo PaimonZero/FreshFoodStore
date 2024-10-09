@@ -5,7 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Category</title>
-        
+
         <!--bootstrap 5.3.3-->
         <link rel="stylesheet" href="../css/bootstrap.min.css"> 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
@@ -36,19 +36,27 @@
                             <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne">
                                 <div class="accordion-body">
                                     <ul class="list-unstyled list-unstyled-cate ">
-                                        <li><input type="radio" name="food" checked />Trái cây tươi (25)<span
-                                                class="lighter-text">(134)</span></li>
-                                        <li><input type="radio" name="food" />Rau củ <span class="lighter-text">(150)</span>
+                                        <li><input type="radio" name="food" value="Fruits" checked />Trái cây tươi<span
+                                                class="lighter-text">(${traicay})</span></li>
+                                        <li><input type="radio" name="food" value="Vegetables" />Rau củ <span class="lighter-text">(${raucu})</span>
                                         </li>
-                                        <li><input type="radio" name="food" />Cá, hải sản <span
-                                                class="lighter-text">(54)</span></li>
-                                        <li><input type="radio" name="food" />Thịt <span class="lighter-text">(47)</span>
+                                        <li><input type="radio" name="food" value="Seafood" />Cá, hải sản <span
+                                                class="lighter-text">(${haisan})</span></li>
+                                        <li><input type="radio" name="food" value="Meat" />Thịt <span class="lighter-text">(${thit})</span>
                                         </li>
-                                        <li><input type="radio" name="food" />Nấm <span class="lighter-text">(43)</span>
+                                        <li><input type="radio" name="food" value="Beverages" />Đồ uống <span class="lighter-text">(${douong})</span>
                                         </li>
-                                        <li><input type="radio" name="food" />Thực phẩm đông lạnh <span
-                                                class="lighter-text">(38)</span></li>
-                                        <li><input type="radio" name="food" />Gia vị <span class="lighter-text">(15)</span>
+                                        <li><input type="radio" name="food" value="Snacks" />Snack <span
+                                                class="lighter-text">(${snack})</span></li>
+                                        <li><input type="radio" name="food" value="Spices" />Gia vị <span class="lighter-text">(${giavi})</span>
+                                        </li>
+                                        <li><input type="radio" name="food" value="VegetableOil" />Dầu thực vật <span class="lighter-text">(${dauthucvat})</span>
+                                        </li>
+                                        <li><input type="radio" name="food" value="Egg" />Trứng <span class="lighter-text">(${trung})</span>
+                                        </li>
+                                        <li><input type="radio" name="food" value="Mushroom" />Nấm <span class="lighter-text">(${nam})</span>
+                                        </li>
+                                        <li><input type="radio" name="food" value="Protein" />Protein <span class="lighter-text">(${protein})</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -102,19 +110,22 @@
                             </div>
                             <div class="mt-4">
                                 <h5>Sản phẩm sales</h5>
-                                <a href="#" style="text-decoration: none; color: unset;">
+                                <c:forEach var="p" items="${sale}">
+                                <a href="productDetail?id=${p.productId}" style="text-decoration: none; color: unset;">
                                     <div class="card mb-3">
                                         <div class="row g-0">
                                             <div class="col-md-4">
-                                                <img src="../images/fil2.png" class="img-fluid rounded-start" alt="...">
+                                                <img src="../images/${p.image}" class="img-fluid rounded-start" alt="...">
                                             </div>
                                             <div class="col-md-8">
                                                 <div class="card-body sale-card">
-                                                    <h6 class="card-title">Ớt chuông</h6>
-                                                    <p class="card-text fw-bold" style="margin: 0;">80.000đ &emsp;&emsp;
+                                                    <h6 class="card-title">${p.name}</h6>
+                                                    <p class="card-text fw-bold" style="margin: 0;">${p.unitPrice*(100-p.discount)/100}đ &emsp;&emsp;
+                                                      
                                                         <span class="fw-lighter"
-                                                              style="text-decoration: line-through; color: gray;font-size: 14px;">100.000₫
+                                                              style="text-decoration: line-through; color: gray;font-size: 14px;">${p.unitPrice}₫
                                                         </span>
+                                                      
                                                     </p>
                                                     <div>
                                                         <span class="fa fa-star checked"></span>
@@ -128,401 +139,91 @@
                                         </div>
                                     </div>
                                 </a>
-                                <a href="#" style="text-decoration: none; color: unset;">
-                                    <div class="card mb-3">
-                                        <div class="row g-0">
-                                            <div class="col-md-4">
-                                                <img src="../images/fil3.png" class="img-fluid rounded-start" alt="...">
-                                            </div>
-                                            <div class="col-md-8">
-                                                <div class="card-body sale-card">
-                                                    <h6 class="card-title">Xoài</h6>
-                                                    <p class="card-text fw-bold" style="margin: 0;">80.000đ &emsp;&emsp;
-                                                        <span class="fw-lighter"
-                                                              style="text-decoration: line-through; color: gray;font-size: 14px;">100.000₫
-                                                        </span>
-                                                    </p>
-                                                    <div>
-                                                        <span class="fa fa-star checked"></span>
-                                                        <span class="fa fa-star checked"></span>
-                                                        <span class="fa fa-star checked"></span>
-                                                        <span class="fa fa-star checked"></span>
-                                                        <span class="fa fa-star"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a href="#" style="text-decoration: none; color: unset;">
-                                    <div class="card mb-3">
-                                        <div class="row g-0">
-                                            <div class="col-md-4">
-                                                <img src="../images/fil4.png" class="img-fluid rounded-start" alt="...">
-                                            </div>
-                                            <div class="col-md-8">
-                                                <div class="card-body sale-card">
-                                                    <h6 class="card-title">Ớt chuông xanh</h6>
-                                                    <p class="card-text fw-bold" style="margin: 0;">80.000đ &emsp;&emsp;
-                                                        <span class="fw-lighter"
-                                                              style="text-decoration: line-through; color: gray;font-size: 14px;">100.000₫
-                                                        </span>
-                                                    </p>
-                                                    <div>
-                                                        <span class="fa fa-star checked"></span>
-                                                        <span class="fa fa-star checked"></span>
-                                                        <span class="fa fa-star checked"></span>
-                                                        <span class="fa fa-star checked"></span>
-                                                        <span class="fa fa-star"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
+                                 </c:forEach>
                             </div>
 
                         </div>
                     </form>
                 </div>
                 <div class="col-md-9">
-                    <div class="content-right-top d-flex">
-                        <h6>Sắp xếp: </h6>
-                        <select>
-                            <option value="">Latest</option>
-                            <option value="">Giá tăng dần</option>
-                            <option value="">Giá giảm dần</option>
-                            <option value="">Sản phẩm mới nhất</option>
-                            <option value="">Sản phẩm bán chạy nhất</option>
-                        </select>
-                        <div style="margin-left: auto;">
-                            <span><strong>52</strong> Kết quả tìm thấy</span>
+                    <form action="category" method="get">
+                        <div class="content-right-top d-flex">
+
+                            <input type="hidden" name="food" value="${param.food}" />
+
+                            <h6>Sắp xếp: </h6>
+                            <select name="sortProduct">
+                                <option value="tang">Giá tăng dần</option>
+                                <option value="giam">Giá giảm dần</option>
+                                <option value="moi">Sản phẩm mới nhất</option>
+
+                            </select>
+                            <button type="submit">Lọc</button>
+
                         </div>
+                    </form>
+                    <div style="margin-left: auto;">
+                        <span><strong>${productCount}</strong> Kết quả tìm thấy</span>
                     </div>
                     <div class="row g-2 mt-2">
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-4">
-                            <div class="card outstand">
-                                <img src="../images/list2.png" class="card-img-top" alt="...">
-                                <div class="btn btn-dark out-stock-btn">Out of stock</div>
-                                <div class="icons">
-                                    <i class="fas fa-heart"></i>
-                                    <i class="fas fa-eye"></i>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title fw-bold">Cải thảo</h5>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <h6 class="fw-bold" style="margin-bottom: 0;">150.000₫</h6>
-                                            <span class=""
-                                                  style="text-decoration: line-through; color: gray;font-size: 14px;">200.000₫
-                                            </span>
-                                            <div>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star"></span>
+                        <c:forEach var="p" items="${products}"> 
+                            <div class="col-lg-4 col-md-4 col-sm-6 col-4">
+                                <div class="card outstand">
+                                    <a href="productDetail?id=${p.productId}">
+                                        <img src="../images/${p.image}" class="card-img-top" alt="...">
+                                    </a>
+                                    <div class="btn ${p.status == 'In Stock'? 'btn-success' : 'btn-dark'} out-stock-btn">
+                                        ${p.status == 'In Stock' ? 'Còn Hàng' : 'Hết hàng'}
+                                    </div>
+                                    <div class="icons">
+                                        <i class="fas fa-heart"></i>
+                                        <i class="fas fa-eye"></i>
+                                    </div>
+                                    <div class="card-body">
+                                        
+                                            <h5 class="card-title fw-bold">${p.name}</h5>
+                                        
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <h6 class="fw-bold" style="margin-bottom: 0;">${p.unitPrice*(100-p.discount)/100}₫</h6>
+                                                <span class=""
+                                                      style="text-decoration: line-through; color: gray;font-size: 14px;">${p.unitPrice}₫
+                                                </span>
+                                                <div>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 d-flex align-items-center buy-btn">
+                                                <button class="fas fa-shopping-bag openCartBtn"></button>
                                             </div>
                                         </div>
-                                        <div class="col-md-6 d-flex align-items-center buy-btn">
-                                            <button class="fas fa-shopping-bag openCartBtn"></button>
+                                        <div class="buy-mobile">
+                                            <button class="btn btn-primary w-100">Mua</button>
                                         </div>
-                                    </div>
-                                    <div class="buy-mobile">
-                                        <button class="btn btn-primary w-100">Mua</button>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-4">
-                            <div class="card outstand">
-                                <img src="../images/list2.png" class="card-img-top" alt="...">
-                                <div class="icons">
-                                    <i class="fas fa-heart"></i>
-                                    <i class="fas fa-eye"></i>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title fw-bold">Cải thảo</h5>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <h6 class="fw-bold" style="margin-bottom: 0;">150.000₫</h6>
-                                            <span class=""
-                                                  style="text-decoration: line-through; color: gray;font-size: 14px;">200.000₫
-                                            </span>
-                                            <div>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star"></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 d-flex align-items-center buy-btn">
-                                            <button class="fas fa-shopping-bag openCartBtn"></button>
-                                        </div>
-                                    </div>
-                                    <div class="buy-mobile">
-                                        <button class="btn btn-primary w-100">Mua</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-4">
-                            <div class="card outstand">
-                                <img src="../images/list2.png" class="card-img-top" alt="...">
-                                <div class="icons">
-                                    <i class="fas fa-heart"></i>
-                                    <i class="fas fa-eye"></i>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title fw-bold">Cải thảo</h5>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <h6 class="fw-bold" style="margin-bottom: 0;">150.000₫</h6>
-                                            <span class=""
-                                                  style="text-decoration: line-through; color: gray;font-size: 14px;">200.000₫
-                                            </span>
-                                            <div>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star"></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 d-flex align-items-center buy-btn">
-                                            <button class="fas fa-shopping-bag openCartBtn"></button>
-                                        </div>
-                                    </div>
-                                    <div class="buy-mobile">
-                                        <button class="btn btn-primary w-100">Mua</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-4">
-                            <div class="card outstand">
-                                <img src="../images/list2.png" class="card-img-top" alt="...">
-                                <div class="icons">
-                                    <i class="fas fa-heart"></i>
-                                    <i class="fas fa-eye"></i>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title fw-bold">Cải thảo</h5>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <h6 class="fw-bold" style="margin-bottom: 0;">150.000₫</h6>
-                                            <span class=""
-                                                  style="text-decoration: line-through; color: gray;font-size: 14px;">200.000₫
-                                            </span>
-                                            <div>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star"></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 d-flex align-items-center buy-btn">
-                                            <button class="fas fa-shopping-bag openCartBtn"></button>
-                                        </div>
-                                    </div>
-                                    <div class="buy-mobile">
-                                        <button class="btn btn-primary w-100">Mua</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-4">
-                            <div class="card outstand">
-                                <img src="../images/list2.png" class="card-img-top" alt="...">
-                                <div class="icons">
-                                    <i class="fas fa-heart"></i>
-                                    <i class="fas fa-eye"></i>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title fw-bold">Cải thảo</h5>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <h6 class="fw-bold" style="margin-bottom: 0;">150.000₫</h6>
-                                            <span class=""
-                                                  style="text-decoration: line-through; color: gray;font-size: 14px;">200.000₫
-                                            </span>
-                                            <div>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star"></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 d-flex align-items-center buy-btn">
-                                            <button class="fas fa-shopping-bag openCartBtn"></button>
-                                        </div>
-                                    </div>
-                                    <div class="buy-mobile">
-                                        <button class="btn btn-primary w-100">Mua</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-4">
-                            <div class="card outstand">
-                                <img src="../images/list2.png" class="card-img-top" alt="...">
-                                <div class="icons">
-                                    <i class="fas fa-heart"></i>
-                                    <i class="fas fa-eye"></i>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title fw-bold">Cải thảo</h5>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <h6 class="fw-bold" style="margin-bottom: 0;">150.000₫</h6>
-                                            <span class=""
-                                                  style="text-decoration: line-through; color: gray;font-size: 14px;">200.000₫
-                                            </span>
-                                            <div>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star"></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 d-flex align-items-center buy-btn">
-                                            <button class="fas fa-shopping-bag openCartBtn"></button>
-                                        </div>
-                                    </div>
-                                    <div class="buy-mobile">
-                                        <button class="btn btn-primary w-100">Mua</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- cấm xóa cáy này dùng để trỏ tới product detail -->
-                        <!-- <form action=""> -->
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-4">
-                            <div class="card outstand">
-                                <img src="../images/list2.png" class="card-img-top" style="cursor: pointer;" alt="..."
-                                     onclick="redirectToHref(event)">
-                                <div class="icons">
-                                    <i class="fas fa-heart"></i>
-                                    <i class="fas fa-eye"></i>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title fw-bold" style="cursor: pointer;" onclick="redirectToHref(event)">
-                                        Cải thảo</h5>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <h6 class="fw-bold" style="margin-bottom: 0;">150.000₫</h6>
-                                            <span class=""
-                                                  style="text-decoration: line-through; color: gray;font-size: 14px;">200.000₫
-                                            </span>
-                                            <div>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star"></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 d-flex align-items-center buy-btn">
-                                            <button class="fas fa-shopping-bag openCartBtn"></button>
-                                        </div>
-                                    </div>
-                                    <div class="buy-mobile">
-                                        <button class="btn btn-primary w-100">Mua</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- </form> -->
-                        <!-- <form action=""> -->
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-4">
-                            <div class="card outstand">
-                                <img src="../images/list2.png" class="card-img-top" style="cursor: pointer;" alt="..."
-                                     onclick="redirectToHref(event)">
-                                <div class="icons">
-                                    <i class="fas fa-heart"></i>
-                                    <i class="fas fa-eye"></i>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title fw-bold" style="cursor: pointer;" onclick="redirectToHref(event)">
-                                        Cải thảo</h5>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <h6 class="fw-bold" style="margin-bottom: 0;">150.000₫</h6>
-                                            <span class=""
-                                                  style="text-decoration: line-through; color: gray;font-size: 14px;">200.000₫
-                                            </span>
-                                            <div>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star"></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 d-flex align-items-center buy-btn">
-                                            <button class="fas fa-shopping-bag openCartBtn"></button>
-                                        </div>
-                                    </div>
-                                    <div class="buy-mobile">
-                                        <button class="btn btn-primary w-100">Mua</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- </form> -->
-                        <!-- <form action=""> -->
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-4">
-                            <div class="card outstand">
-                                <img src="../images/list2.png" class="card-img-top" style="cursor: pointer;" alt="..."
-                                     onclick="redirectToHref(event)">
-                                <div class="icons">
-                                    <i class="fas fa-heart"></i>
-                                    <i class="fas fa-eye"></i>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title fw-bold" style="cursor: pointer;" onclick="redirectToHref(event)">
-                                        Cải thảo</h5>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <h6 class="fw-bold" style="margin-bottom: 0;">150.000₫</h6>
-                                            <span class=""
-                                                  style="text-decoration: line-through; color: gray;font-size: 14px;">200.000₫
-                                            </span>
-                                            <div>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star"></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 d-flex align-items-center buy-btn">
-                                            <button class="fas fa-shopping-bag openCartBtn"></button>
-                                        </div>
-                                    </div>
-                                    <div class="buy-mobile">
-                                        <button class="btn btn-primary w-100">Mua</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
+                        </c:forEach>
+
                         <!-- </form> -->
                     </div>
+                    <c:set var="categoryProduct" value="${param.food}" />
+
+
                     <!-- đánh số trang chú ý: tạm thời fix cứng-->
                     <div class="pagination">
-                        <a class="fas fa-angle-left arrow" href="#"></a>
-                        <a class="current" href="#">1</a>
-                        <a href="#">2</a>
-                        <a href="#">3</a>
-                        <a href="#">4</a>
-                        <a href="#">5</a>
-                        <span class="dots">...</span>
-                        <a href="#">21</a>
-                        <a class="fas fa-angle-right arrow" href="#"></a>
+                        <ul class="pagination pagination-sm">
+                            <c:forEach begin="1" end="${pageCount}" var="i">
+                                <li class="page-item ${i == currentPage ? 'active' : ''}">
+                                    <a class="page-link" href="category?food=${categoryProduct}&sortProduct=${param.sortProduct}&page=${i}">${i}</a>
+                                </li>
+                            </ul>
+                        </c:forEach>
                     </div>
                 </div>
                 <!-- Giỏ hàng popup -->
