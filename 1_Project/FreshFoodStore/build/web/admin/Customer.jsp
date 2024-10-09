@@ -1,10 +1,10 @@
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--<link rel="stylesheet" href="../css/bootstrap.css">-->
+    <link rel="stylesheet" href="../css/bootstrap.css">
     <link rel="stylesheet" href="../css/adminCss/Customer.css">
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../admin/HeadSidebar/header-sidebar.css">
@@ -14,7 +14,7 @@
 <body>
     <%@include file="HeadSidebar/sidebar.jsp" %> 
     <%@include file="HeadSidebar/header.jsp" %>
-    
+
     <div class="scale-container">
         <div class="container-fluid">
             <div class="row">
@@ -30,11 +30,11 @@
                                     <h4 class="mb-0" style="font-weight: bold;">Customer</h4>
                                     <div>
                                         <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal"
-                                            data-bs-target="#addProductModal" style="width: 105px;">Edit
+                                                data-bs-target="#addProductModal" style="width: 105px;">Edit
                                             Customer</button>
 
                                         <button class="btn btn-sm btn-outline-secondary"
-                                            style="width: 105px;">Filter</button>
+                                                style="width: 105px;">Filter</button>
                                         <button class="btn btn-sm btn-outline-secondary" style="width: 105px;">Dowload
                                             All</button>
                                     </div>
@@ -43,263 +43,143 @@
                                     <table class="table ">
                                         <thead>
                                             <tr>
-                                                <th scope="col">IdCustomer</th>
-                                                <th scope="col">Customer Name</th>
-                                                <th scope="col">Customer Number</th>
+                                                <th scope="col">Customer ID</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Number</th>
                                                 <th scope="col">Email</th>
                                                 <th scope="col">Address</th>
                                                 <th scope="col">Status</th>
-                                                <th scope="col"></th>
+                                                <th scope="col">Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Product A</td>
-                                                <td>100</td>
-                                                <td>10</td>
-                                                <td>In progress</td>
-                                                <td>In Stock</td>
-                                                <td>
-                                                    <ion-icon name="pencil-outline"></ion-icon>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Product B</td>
-                                                <td>50</td>
-                                                <td>5</td>
-                                                <td>In progress</td>
-                                                <td>In Stock</td>
-                                                <td>
-                                                    <ion-icon name="pencil-outline"></ion-icon>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>Product C</td>
-                                                <td>0</td>
-                                                <td>2</td>
-                                                <td>None</td>
-
-                                                <td>Out of Stock</td>
-                                                <td>
-                                                    <ion-icon name="pencil-outline"></ion-icon>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>4</td>
-                                                <td>Product D</td>
-                                                <td>10</td>
-                                                <td>1</td>
-                                                <td>None</td>
-
-                                                <td>In Stock</td>
-                                                <td>
-                                                    <ion-icon name="pencil-outline"></ion-icon>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>5</td>
-                                                <td>Product E</td>
-                                                <td>20</td>
-                                                <td>3</td>
-                                                <td>None</td>
-
-                                                <td>In Stock</td>
-                                                <td>
-                                                    <ion-icon name="pencil-outline"></ion-icon>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>6</td>
-                                                <td>Product F</td>
-                                                <td>0</td>
-                                                <td>2</td>
-                                                <td>None</td>
-
-                                                <td>Out of Stock</td>
-                                                <td>
-                                                    <ion-icon name="pencil-outline"></ion-icon>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>7</td>
-                                                <td>Product G</td>
-                                                <td>10</td>
-                                                <td>1</td>
-                                                <td>None</td>
-
-                                                <td>In Stock</td>
-                                                <td>
-                                                    <ion-icon name="pencil-outline"></ion-icon>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>8</td>
-                                                <td>Product H</td>
-                                                <td>20</td>
-                                                <td>3</td>
-                                                <td>None</td>
-
-                                                <td>In Stock</td>
-                                                <td>
-                                                    <ion-icon name="pencil-outline"></ion-icon>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>9</td>
-                                                <td>Product I</td>
-                                                <td>0</td>
-                                                <td>2</td>
-                                                <td>None</td>
-
-                                                <td>Out of Stock</td>
-                                                <td>
-                                                    <ion-icon name="pencil-outline"></ion-icon>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>10</td>
-                                                <td>Product J</td>
-                                                <td>10</td>
-                                                <td>1</td>
-                                                <td>None</td>
-
-                                                <td>In Stock</td>
-                                                <td>
-                                                    <ion-icon name="pencil-outline"></ion-icon>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>10</td>
-                                                <td>Product J</td>
-                                                <td>10</td>
-                                                <td>1</td>
-                                                <td>None</td>
-
-                                                <td>In Stock</td>
-                                                <td>
-                                                    <ion-icon name="pencil-outline"></ion-icon>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>10</td>
-                                                <td>Product J</td>
-                                                <td>10</td>
-                                                <td>1</td>
-                                                <td>None</td>
-
-                                                <td>In Stock</td>
-                                                <td>
-                                                    <ion-icon name="pencil-outline"></ion-icon>
-                                                </td>
-                                            </tr>
+                                            <c:forEach var="customer" items="${customers}">
+                                                <tr>
+                                                    <td>${customer.customerId}</td>
+                                                    <td>${customer.fullName}</td>
+                                                    <td>${customer.phone}</td>
+                                                    <td>${customer.email}</td>
+                                                    <td>${customer.address}</td>
+                                                    <td>${customer.status}</td>
+                                                    <td>
+                                                        <!-- Edit Customer Button with data attributes -->
+                                                        <button class="btn btn-primary btn-sm" 
+                                                                data-customer-id="${customer.customerId}"
+                                                                data-customer-name="${customer.fullName}"
+                                                                data-customer-number="${customer.phone}"
+                                                                data-customer-email="${customer.email}"
+                                                                data-customer-address="${customer.address}"
+                                                                data-customer-status="${customer.status}" 
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#addProductModal"
+                                                                onclick="populateModal(this)">Edit</button>
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
                                         </tbody>
                                     </table>
 
                                 </div>
-                                <div class="card-footer d-flex justify-content-between"
-                                    style="bottom: 0; background-color: white;">
-                                    <button class="btn btn-outline-secondary" style="width: 100px;">Previous</button>
-                                    <span class="mx-3">Page 1 of 10</span>
-                                    <button class="btn btn-outline-secondary" style="width: 100px;">Next</button>
+                                <div class="card-footer d-flex justify-content-between" style="bottom: 0; background-color: white;">
+                                    <!-- Previous Button -->
+                                    <c:if test="${currentPage > 1}">
+                                        <button class="btn btn-outline-secondary" style="width: 100px;"
+                                                onclick="window.location.href = '?page=${currentPage - 1}'">Previous</button>
+                                    </c:if>
+                                    <c:if test="${currentPage == 1}">
+                                        <button class="btn btn-outline-secondary" style="width: 100px;" disabled>Previous</button>
+                                    </c:if>
+
+                                    <!-- Page Counter -->
+                                    <span class="mx-3">Page ${currentPage} of ${totalPages}</span>
+
+                                    <!-- Next Button -->
+                                    <c:if test="${currentPage < totalPages}">
+                                        <button class="btn btn-outline-secondary" style="width: 100px;"
+                                                onclick="window.location.href = '?page=${currentPage + 1}'">Next</button>
+                                    </c:if>
+                                    <c:if test="${currentPage == totalPages}">
+                                        <button class="btn btn-outline-secondary" style="width: 100px;" disabled>Next</button>
+                                    </c:if>
                                 </div>
+
                             </div>
 
                         </div>
                     </div>
 
                 </div>
-                <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel"
-                    aria-hidden="true">
+                <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
                     <div class="modal-dialog" style="margin-top: 70px;">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="addProductModalLabel">Edit Customer</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
+                                <form id="editCustomerForm" action="${pageContext.request.contextPath}/admin/customers" method="POST">
+                                    <input type="hidden" name="action" value="edit">
+                                    <input type="hidden" name="customerId" id="customerId">
 
-                                <form>
                                     <div class="form-group">
-                                        <div class="form-row">
-                                            <label for="productName">Tên khách hàng</label>
-                                            <input type="text" class="form-control" id="productName"
-                                                placeholder="Enter customer name">
-                                        </div>
+                                        <label for="customerName">Tên khách hàng</label>
+                                        <input type="text" class="form-control" id="customerName" name="customerName" placeholder="Enter customer name">
                                     </div>
                                     <div class="form-group">
-                                        <div class="form-row">
-                                            <label for="productCategory">Email</label>
-                                            <input type="text" class="form-control" id="productCategory"
-                                                placeholder="Enter email">
+                                        <label for="customerEmail">Email</label>
+                                        <input type="email" class="form-control" id="customerEmail" name="customerEmail" placeholder="Enter email">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="customerAddress">Địa chỉ</label>
+                                        <input type="text" class="form-control" id="customerAddress" name="customerAddress" placeholder="Enter Address">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="customerPhone">Số điện thoại</label>
+                                        <input type="text" class="form-control" id="customerPhone" name="customerPhone" placeholder="Enter Phone Number">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="customerStatus">Trạng thái</label>
+                                        <select class="form-control" id="customerStatus" name="customerStatus">
+                                            <option value="Block" ${customerStatus == 'Block' ? 'selected' : ''}>Block</option>
+                                            <option value="Normal" ${customerStatus == 'Normal' ? 'selected' : ''}>Normal</option>
+                                        </select>
+                                    </div>
 
-                                            </input>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="form-row">
-                                            <label for="productPrice">Địa chỉ</label>
-                                            <input type="number" class="form-control" id="productPrice"
-                                                placeholder="Enter Address">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="form-row">
-                                            <label for="productSupplier">Số điện thoại</label>
-                                            <input type="text" class="form-control" id="productSupplier"
-                                                placeholder="Enter Phone Number">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="form-row">
-                                            <label for="productUnit">Trạng thái</label>
-                                            <select class="form-control" id="productUnit">
-                                                <option>Normal</option>
-                                                <option>Block</option>
-                                            </select>
-                                        </div>
-                                    </div>
                                 </form>
-
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                                    style="width: 70px;">Cancel</button>
-                                <button type="button" class="btn btn-success" data-dismiss="modal"
-                                    style="width: 70px;">Save</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="width: 70px;">Cancel</button>
+                                <button type="submit" class="btn btn-success" form="editCustomerForm" style="width: 70px;">Save</button>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
 
-<!--    <script>
-        // Load sidebar
-        fetch('./HeadSidebar/sidebar.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('sidebar-container').innerHTML = data;
-            });
 
-        // Load header
-        fetch('./HeadSidebar/header.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('header-container').innerHTML = data;
-            });
-    </script>-->
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js">
-    </script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <!--<script src="../BootstrapJS/bootstrap.min.js"></script>-->
-    <script src="../js/bootstrap.bundle.min.js"></script>
-    <script src="../js/bootstrap.js"></script>
-    <script src="../admin/HeadSidebar/MenuButton.js"></script>
-    
+                <script>
+                    function populateModal(button) {
+                        document.getElementById('customerId').value = button.getAttribute('data-customer-id');
+                        document.getElementById('customerName').value = button.getAttribute('data-customer-name');
+                        document.getElementById('customerEmail').value = button.getAttribute('data-customer-email');
+                        document.getElementById('customerAddress').value = button.getAttribute('data-customer-address');
+                        document.getElementById('customerPhone').value = button.getAttribute('data-customer-number');
+                        document.getElementById('customerStatus').value = button.getAttribute('data-customer-status');
+                    }
 
-</body>
+                </script>
 
-</html>
+                <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+                <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+                <script src="../js/bootstrap.bundle.min.js"></script>
+                <script src="../js/adminJs/Customer.js"></script>
+                <script src="../js/bootstrap.min.js"></script>
+                <script src="../js/jquery-3.6.0.min.js"></script>
+                <script src="../js/jquery.dataTables.min.js"></script>
+                <script src="../js/dataTables.bootstrap5.min.js"></script>
+                <script>
+                    $(document).ready(function () {
+                        $('#table_id').DataTable();
+                    });
+                </script>
+                </body>
+                </html>

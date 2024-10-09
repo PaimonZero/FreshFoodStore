@@ -69,6 +69,17 @@
         <servlet-name>DeleteProductServlet</servlet-name>
         <url-pattern>/admin/DeleteProductServlet</url-pattern>
     </servlet-mapping>
+
+        <!-- Quan -->
+    <servlet>
+        <servlet-name>OrdersController</servlet-name>
+        <servlet-class>controller.OrdersController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>OrdersController</servlet-name>
+        <url-pattern>/admin/OrdersController</url-pattern>
+    </servlet-mapping>
+        <!-- Quan end -->
     
     <!-- Admin end -->
     
