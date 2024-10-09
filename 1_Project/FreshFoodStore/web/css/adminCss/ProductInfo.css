@@ -114,6 +114,72 @@ html {
     }
 }
 
+.modal-dialog.modal-lg {
+    max-width: 900px; /* Chiều rộng lớn hơn cho modal */
+    width: 100%;
+}
+
+.modal-header {
+    text-align: center;
+    border-bottom: 1px solid #dee2e6;
+    padding: 10px 20px;
+}
+
+.modal-title {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.mb-3.text-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.image-upload {
+    width: 250px;
+    height: 250px;
+    border: 2px dashed #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.image-text {
+    font-size: 14px;
+    color: #777;
+    text-align: center;
+}
+
+.image-upload input[type="file"] {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.modal-footer {
+    padding: 10px;
+    text-align: center;
+}
+
+
+
+
 @media (max-width: 576px) {
     .sidebar {
         display: none;

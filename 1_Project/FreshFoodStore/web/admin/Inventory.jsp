@@ -231,8 +231,9 @@
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/bootstrap.js"></script>
-    <!--<script src="../js/adminJs/Product.js"></script> -->  <!--????-->
     <script src="../admin/HeadSidebar/MenuButton.js"></script>
+    <script src="../admin/HeadSidebar/SideBar.js"></script>
+
 </body>
 
 </html>

@@ -6,6 +6,9 @@ package dto;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
+import model.BatchProduct;
+import model.Promos;
 
 /**
  *
@@ -19,7 +22,7 @@ public class ProductDTO {
     private int categoryId;
     private String description;
     private String image;
-    private BigDecimal   unitPrice;
+    private BigDecimal unitPrice;
     private String status;
     private Date createdAt;
     private Date updateAt;
@@ -30,7 +33,30 @@ public class ProductDTO {
     private Double discount;
     private Date startDate;
     private Date endDate;
+    //Huy thêm
+    private String productName;
+    private String categoryName;
+    private String supplierName;
+    private String supplierPhone;
+    private List<BatchProduct> batchProducts;
+    private List<Promos> promosList;
 
+    public ProductDTO() {
+    }
+    
+    public ProductDTO(int productId, String productName, String unitMeasure, String description, BigDecimal unitPrice, String categoryName, String supplierName, String supplierPhone, List<BatchProduct> batchProducts, List<Promos> promosList) {
+        this.productId = productId;
+        this.productName = productName;
+        this.unitMeasure = unitMeasure;
+        this.description = description;
+        this.unitPrice = unitPrice;
+        this.categoryName = categoryName;
+        this.supplierName = supplierName;
+        this.supplierPhone = supplierPhone;
+        this.batchProducts = batchProducts;
+        this.promosList = promosList;
+    }
+    
     public ProductDTO(int productId, String name, String unitMeasure, int supplierId, int categoryId, String description, String image, BigDecimal unitPrice, String status, Date createdAt, Date updatedAt, int promotionId, int quantitySale, double discount, Date startDate, Date endDate) {
         this.productId = productId;
     this.name = name;
@@ -102,6 +128,55 @@ public class ProductDTO {
         this.createdAt = createdAt;
         this.updateAt = updateAt;
     }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public List<BatchProduct> getBatchProducts() {
+        return batchProducts;
+    }
+
+    public void setBatchProducts(List<BatchProduct> batchProducts) {
+        this.batchProducts = batchProducts;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getSupplierName() {
+        return supplierName;
+    }
+
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
+    }
+
+    public String getSupplierPhone() {
+        return supplierPhone;
+    }
+
+    public void setSupplierPhone(String supplierPhone) {
+        this.supplierPhone = supplierPhone;
+    }
+
+    public List<Promos> getPromosList() {
+        return promosList;
+    }
+
+    public void setPromosList(List<Promos> promosList) {
+        this.promosList = promosList;
+    }
+       
     public int getProductId() {
         return productId;
     }
@@ -214,11 +289,11 @@ public class ProductDTO {
         this.quantitySale = quantitySale;
     }
 
-    public double getDiscount() {
+    public Double getDiscount() {
         return discount;
     }
 
-    public void setDiscount(double discount) {
+    public void setDiscount(Double discount) {
         this.discount = discount;
     }
 

@@ -1,4 +1,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="dal.ProductDAO"%>
+<%@page import="model.Products"%>
+<%@page import="model.Supplier"%>
+<%@page import="model.Category"%>
+<%@page import="java.util.List"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 
 <head>
@@ -81,20 +87,20 @@
                                     <h4 class="mb-0" style="font-weight: bold;">Product</h4>
                                     <div>
                                         <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal"
-                                            data-bs-target="#addProductModal"style="width: 96px;">Add Product</button>
+                                                data-bs-target="#addProductModal"style="width: 96px;">Add Product</button>
 
                                         <button class="btn btn-sm btn-outline-secondary"style="width: 70px;">Filter</button>
                                         <button class="btn btn-sm btn-outline-secondary"style="width: 96px;">Dowload All</button>
                                     </div>
                                 </div>
-                                <div class="card-body" style="height: 340px;">
-                                    <table class="table ">
+                                <div class="card-body" style="height: auto; ">
+                                    <table class="table table-hover">
                                         <thead>
                                             <tr>
                                                 <th scope="col">IdProduct</th>
                                                 <th scope="col">Products</th>
                                                 <th scope="col">Quantity</th>
-                                                <th scope="col">Threshold Value</th>
+                                                <th scope="col">Unit Measue</th>
                                                 <th scope="col">Promotion</th>
                                                 <th scope="col">Selling Price</th>
                                                 <th scope="col">Availability</th>
@@ -102,97 +108,38 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Product A</td>
-                                                <td>100</td>
-                                                <td>10</td>
-                                                <td>In progress</td>
-                                                <td>$50</td>
-                                                <td>In Stock</td>
+                                            <%
+                                                ProductDAO productDao = new ProductDAO();
+                                                List<Products> productList = productDao.getAllProducts();
+                                                for (Products product : productList) {
+                                            %>
+                                            <tr style="cursor: pointer;" onclick="window.location.href = 'ProductInfo.jsp?productId=<%= product.getProductId() %>'">
+                                        <input type="hidden" value="<%= product.getProductId()%>">
+                                                <td><%= product.getProductId() %></td>
+                                                <td><%= product.getName() %></td>
+                                                <td><%= product.getQuantity() %></td>
+                                                <td><%= product.getUnitMeasure() %></td>
                                                 <td>
-                                                    <ion-icon name="pencil-outline"></ion-icon>
+                                                    <%= (product.getDiscount() != 0) ? "In progress" : "None" %>
+                                                </td>
+                                                <td>$<%= product.getUnitPrice() %></td>
+                                                <td><%= product.getStatus() %></td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
+                                                            data-bs-target="#editProductModal">
+                                                        <ion-icon name="pencil-outline"></ion-icon>
+                                                    </button>
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Product B</td>
-                                                <td>50</td>
-                                                <td>5</td>
-                                                <td>In progress</td>
-                                                <td>$30</td>
-                                                <td>In Stock</td>
-                                                <td>
-                                                    <ion-icon name="pencil-outline"></ion-icon>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>Product C</td>
-                                                <td>0</td>
-                                                <td>2</td>
-                                                <td>None</td>
-                                                <td>$20</td>
-                                                <td>Out of Stock</td>
-                                                <td>
-                                                    <ion-icon name="pencil-outline"></ion-icon>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>4</td>
-                                                <td>Product D</td>
-                                                <td>10</td>
-                                                <td>1</td>
-                                                <td>None</td>
-                                                <td>$10</td>
-                                                <td>In Stock</td>
-                                                <td>
-                                                    <ion-icon name="pencil-outline"></ion-icon>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>5</td>
-                                                <td>Product E</td>
-                                                <td>20</td>
-                                                <td>3</td>
-                                                <td>None</td>
-                                                <td>$15</td>
-                                                <td>In Stock</td>
-                                                <td>
-                                                    <ion-icon name="pencil-outline"></ion-icon>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>6</td>
-                                                <td>Product F</td>
-                                                <td>0</td>
-                                                <td>2</td>
-                                                <td>None</td>
-                                                <td>$20</td>
-                                                <td>Out of Stock</td>
-                                                <td>
-                                                    <ion-icon name="pencil-outline"></ion-icon>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>7</td>
-                                                <td>Product G</td>
-                                                <td>10</td>
-                                                <td>1</td>
-                                                <td>None</td>
-                                                <td>$10</td>
-                                                <td>In Stock</td>
-                                                <td>
-                                                    <ion-icon name="pencil-outline"></ion-icon>
-                                                </td>
-                                            </tr>
-                                            
+                                            <%
+                                                }
+                                            %>
                                         </tbody>
                                     </table>
 
                                 </div>
                                 <div class="card-footer d-flex justify-content-between"
-                                    style="bottom: 0; background-color: white;">
+                                     style="bottom: 0; background-color: white;">
                                     <button class="btn btn-outline-secondary"style="width: 100px;">Previous</button>
                                     <span class="mx-3">Page 1 of 10</span>
                                     <button class="btn btn-outline-secondary"style="width: 100px;">Next</button>
@@ -203,97 +150,101 @@
                     </div>
 
                 </div>
-                <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog" style="margin-top: 70px;">
+                <!-- Modal -->
+                <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="addProductModalLabel">Sản phẩm mới</h5>
+                                <h5 class="modal-title text-center w-100" id="exampleModalLabel">Add Product</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <div class="image-upload d-flex align-items-center">
-                                    <div class="image-placeholder"></div>
-                                    <div class="image-text ml-3">
-                                        <span><a href="#">Browse image</a></span>
-                                    </div>
-                                    <input type="file" accept="image/*">
-                                </div>
-                                <form>
-                                    <div class="form-group">
-                                        <div class="form-row">
-                                            <label for="productName">Tên sản phẩm</label>
-                                            <input type="text" class="form-control" id="productName"
-                                                placeholder="Nhập tên sản phẩm">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="form-row">
-                                            <label for="productCategory">Loại sản phẩm</label>
-                                            <select class="form-control" id="productCategory">
-                                                <option>Select product category</option>
-                                                <!-- Add options here -->
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="form-row">
-                                            <label for="productPrice">Giá bán ra</label>
-                                            <input type="number" class="form-control" id="productPrice"
-                                                placeholder="Enter buying price">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="form-row">
-                                            <label for="productSupplier">Nhà cung cấp</label>
-                                            <input type="text" class="form-control" id="productSupplier"
-                                                placeholder="Enter product quantity">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="form-row">
-                                            <label for="productUnit">Đơn vị tính</label>
-                                            <input type="text" class="form-control" id="productUnit"
-                                                placeholder="Enter product unit">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="form-row">
-                                            <label for="thresholdValue">Tồn kho tối thiểu</label>
-                                            <input type="number" class="form-control" id="thresholdValue"
-                                                placeholder="Enter threshold value">
-                                        </div>
-                                    </div>
-                                </form>
+                                <form action="AddProductServlet" method="post">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <!-- Left Column -->
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="productName" class="form-label">Product Name</label>
+                                                    <input type="text" class="form-control" id="productName" name="name" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="unitMeasure" class="form-label">Unit Measure</label>
+                                                    <input type="text" class="form-control" id="unitMeasure" name="unitMeasure" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="supplierSelect" class="form-label">Supplier</label>
+                                                    <select class="form-select" id="supplierSelect" name="supplierId" required>
+                                                        <option selected disabled value="">Choose a Supplier</option>
+                                                        <%-- Loop through suppliers --%>
+                                                        <% List<Supplier> suppliers = productDao.getAllSuppliers();
+                        for (Supplier supplier : suppliers) { %>
+                                                        <option value="<%= supplier.getSupplierId() %>"><%= supplier.getName() %></option>
+                                                        <% } %>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="categorySelect" class="form-label">Category</label>
+                                                    <select class="form-select" id="categorySelect" name="categoryId" required>
+                                                        <option selected disabled value="">Choose a Category</option>
+                                                        <%-- Loop through categories --%>
+                                                        <% List<Category> categories = productDao.getAllCategories();
+                        for (Category category : categories) { %>
+                                                        <option value="<%= category.getCategoryId() %>"><%= category.getName() %></option>
+                                                        <% } %>
+                                                    </select>
+                                                </div>
+                                            </div>
 
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                                <button type="button" class="btn " style="background-color:#00BA1E; color:#F0F1F3;">Thêm sản phẩm</button>
+                                            <!-- Right Column -->
+                                            <div class="col-md-6">
+                                                <div class="mb-3 text-center">
+                                                    <label for="imageUpload" class="form-label">Upload Image</label>
+                                                    <div class="image-upload">
+                                                        <label for="imageFile" class="image-text">Click to upload image</label>
+                                                        <input type="file" class="form-control" id="imageFile" name="image">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="mb-3">
+                                                    <label for="description" class="form-label">Description</label>
+                                                    <textarea class="form-control" id="description" name="description" required></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="unitPrice" class="form-label">Unit Price</label>
+                                                    <input type="number" class="form-control" id="unitPrice" name="unitPrice" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="status" class="form-label">Status</label>
+                                                    <select class="form-select" id="status" name="status" required>
+                                                        <option value="Available">Available</option>
+                                                        <option value="Unavailable">Unavailable</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">Add Product</button>
+                                        </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
 
         </div>
     </div>
 
-<!--    <script>
-        // Load sidebar
-        fetch('./HeadSidebar/sidebar.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('sidebar-container').innerHTML = data;
-            });
-
-        // Load header
-        fetch('./HeadSidebar/header.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('header-container').innerHTML = data;
-            });
-    </script>-->
+   
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js">
     </script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
@@ -301,6 +252,7 @@
     <script src="../js/bootstrap.js"></script>
     <!--<script src="../Style/js/Product.js"></script>-->
     <script src="../admin/HeadSidebar/MenuButton.js"></script>
+    <script src="../admin/HeadSidebar/SideBar.js"></script>
 
 </body>
 
