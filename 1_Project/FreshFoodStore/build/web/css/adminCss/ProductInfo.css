@@ -1,0 +1,204 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+
+.mx-3 {
+    align-items: center;
+    display: flex;
+}
+
+
+.form-control {
+    margin-bottom: 10px;
+}
+
+
+.product-image {
+    border: 1px dashed #6c757d;
+    padding: 10px;
+    text-align: center;
+    height: 170px;
+    width: 170px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-image img {
+    max-width: 100%;
+    height: auto;
+}
+
+.product-quantity {
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.table th {
+    background-color: #f8f9fa;
+}
+
+
+
+.no-border-right {
+    border-right: none;
+}
+
+.no-border-left {
+    border-left: none;
+}
+
+@media (max-width: 1200px) {
+    .sidebar {
+        width: 200px;
+    }
+
+    .search-bar {
+        width: 300px;
+    }
+
+    .table {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .sidebar {
+        width: 180px;
+    }
+
+    .search-bar {
+        width: 250px;
+    }
+
+    .table th,
+    .table td {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .menu-item {
+        font-size: 0.9rem;
+    }
+
+    .header {
+        display: block;
+    }
+
+    .search-bar {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .table-responsive {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .table {
+        width: 100%;
+        font-size: 0.8rem;
+    }
+}
+
+.modal-dialog.modal-lg {
+    max-width: 900px; /* Chiều rộng lớn hơn cho modal */
+    width: 100%;
+}
+
+.modal-header {
+    text-align: center;
+    border-bottom: 1px solid #dee2e6;
+    padding: 10px 20px;
+}
+
+.modal-title {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.mb-3.text-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.image-upload {
+    width: 250px;
+    height: 250px;
+    border: 2px dashed #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.image-text {
+    font-size: 14px;
+    color: #777;
+    text-align: center;
+}
+
+.image-upload input[type="file"] {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.modal-footer {
+    padding: 10px;
+    text-align: center;
+}
+
+
+
+
+@media (max-width: 576px) {
+    .sidebar {
+        display: none;
+    }
+
+    .search-bar {
+        width: 100%;
+    }
+
+    .card {
+        margin: 10px 0;
+    }
+
+    .table th,
+    .table td {
+        padding: 5px;
+    }
+
+    .modal-dialog {
+        max-width: 95%;
+    }
+}

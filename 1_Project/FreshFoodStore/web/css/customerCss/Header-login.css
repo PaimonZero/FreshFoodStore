@@ -1,0 +1,240 @@
+/*css cho header mới*/
+.pacifico-regular {
+    font-family: 'Pacifico', cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.content--padding {
+    padding-top: 105px;
+}
+
+.hight--header {
+    height: 105px;
+    z-index: 99;
+}
+
+@media screen and (max-width: 992px) and (min-width: 762px) {
+    /* Đây là các quy tắc CSS sẽ áp dụng cho các màn hình có độ rộng từ 762px đến 992px */
+    .content--padding {
+        padding-top: 144px;
+    }
+
+    .hight--header {
+        height: 144px;
+        z-index: 99;
+    }
+}
+
+/* Css phần thanh quảng cáo trên nav-bar */
+.bannerTopHead {
+    padding: 0 10rem 0 10rem;
+    width: 100%;
+    text-align: center;
+    background-color: #e9efff;
+}
+
+.imgTopHead {
+    width: 20rem;
+}
+
+/* css phần nav-bar */
+
+.textColor {
+    color: #2a5a94;
+}
+
+#verticalbar {
+    height: 40px;
+    width: 1px;
+    background: #97a2b0;
+}
+
+.searchInput {
+    width: 320px;
+    border-radius: 10px;
+    border: none;
+    padding-top: 14px;
+    padding-bottom: 4px;
+    border: 1px solid #d5d6d6;
+}
+
+.searchInput:focus-visible {
+    outline: none;
+}
+
+input.searchInput::placeholder {
+    color: #2468bb;
+    vertical-align: middle;
+}
+
+.searchImg {
+    top: 13px;
+    right: 290px;
+}
+
+.changeWidth {
+    width: 36px;
+}
+
+.iconChange:after {
+    content: '';
+    display: block;
+    margin: auto;
+    height: 3px;
+    width: 0px;
+    background: transparent;
+    transition: all 0.5s ease;
+}
+
+.iconChange:hover::after {
+    width: 100%;
+    background: #0d6efd;
+}
+
+.iconHeight {
+    height: 22px;
+    width: 22px;
+}
+
+.iconHeight--delivery {
+    height: 26px;
+    width: 26px;
+    padding-top: 0;
+}
+
+.iconChange:hover a {
+    color: #0d6efd;
+}
+
+.iconChange img {
+    transition: all 500ms;
+}
+
+.iconChange:hover img {
+    transform: translateX(-180%);
+    transform-origin: right;
+    transition: transform 500ms ease-in-out;
+}
+
+.smallFont {
+    font-size: 15px;
+}
+
+#hostBtn {
+    background: #163a66;
+    background: linear-gradient(to left, #1c4980 50%, #163a66 50%) right;
+    background-size: 200%;
+    transition: 0.5s ease-out;
+}
+
+#hostBtn:hover {
+    background-position: left;
+}
+
+/*#loginBtn {
+    background: #0d6efd;
+    background: linear-gradient(to left, #0073e6 50%, #005cb8 50%) right;
+    background-size: 200%;
+    transition: 0.5s ease-out;
+}
+
+#loginBtn:hover {
+    background-position: left;
+}*/
+
+#iconContainer {
+    height: 35px;
+    width: 35px;
+}
+
+.extraSmallFont {
+    font-size: 12px;
+    border-bottom: 2px solid transparent;
+}
+
+#secondNav {
+    background: #ffffffd4;
+}
+
+@media screen and (max-width: 1400px) {
+    .brand {
+        font-size: 18px;
+    }
+
+    .brandSubHeading {
+        font-size: 12px;
+    }
+
+    .searchInput {
+        width: 280px;
+    }
+
+    .iconHeight {
+        height: 20px;
+        width: 20px;
+    }
+
+    .searchImg {
+        top: 12px;
+        right: 250px;
+    }
+}
+
+/* Css cho search button ở mobile */
+.search-box {
+    display: none; /* Mặc định ẩn nó đi */
+}
+
+@media (max-width: 992px) {
+    .search-box {
+        display: flex; /* Hiển thị nó lại khi màn hình nhỏ hơn hoặc bằng 576px */
+        align-items: center;
+        justify-content: end;
+        margin-right: 10px; /* Điều chỉnh margin phù hợp với thiết kế */
+    }
+
+    .search-input {
+        margin-left: 20px;
+        width: 0;
+        height: 30px;
+        padding: 0;
+        border: none;
+        transition: width 0.3s ease-out; /* Hiệu ứng dịch chuyển cho input */
+    }
+
+    .search-box.open .search-input {
+        width: 100%; /* Điều chỉnh chiều rộng khi mở */
+        padding: 0.5rem; /* Điều chỉnh padding cho input */
+        border: 1px solid #ccc; /* Điều chỉnh border cho input */
+
+    }
+
+    .search-btn {
+        height: 30px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        margin-left: 0.5rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.1s ease;
+    }
+
+    .search-btn:hover {
+        background-color: #0056b3;
+    }
+
+    .search-btn:focus {
+        outline: none;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+}
+
+/* body */
+body {
+    font-family: 'Inter', sans-serif;
+}
+.dropdown{
+    list-style: none;
+}

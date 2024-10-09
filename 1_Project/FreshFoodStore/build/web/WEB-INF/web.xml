@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+    <servlet>
+        <servlet-name>CustomerDashboard</servlet-name>
+        <servlet-class>controller.DashboardController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>HomepageController</servlet-name>
+        <servlet-class>controller.HomepageController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>orderDetailController</servlet-name>
+        <servlet-class>controller.orderDetailController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AccountSettingController</servlet-name>
+        <servlet-class>controller.AccountSettingController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OrderHistoryController</servlet-name>
+        <servlet-class>controller.OrderHistoryController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CustomerDashboard</servlet-name>
+        <url-pattern>/customer/Dashboard</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HomepageController</servlet-name>
+        <url-pattern>/customer/Homepage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>orderDetailController</servlet-name>
+        <url-pattern>/customer/orderDetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccountSettingController</servlet-name>
+        <url-pattern>/customer/AccountSetting</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderHistoryController</servlet-name>
+        <url-pattern>/customer/OrderHistory</url-pattern>
+    </servlet-mapping>
+    
+    <!-- Admin -->
+    
+    <servlet>
+        <servlet-name>AddProductServlet</servlet-name>
+        <servlet-class>controller.AddProductServlet</servlet-class> 
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddProductServlet</servlet-name>
+        <url-pattern>/admin/AddProductServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UpdateProductServlet</servlet-name>
+        <servlet-class>controller.UpdateProductServlet</servlet-class> 
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateProductServlet</servlet-name>
+        <url-pattern>/admin/UpdateProductServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DeleteProductServlet</servlet-name>
+        <servlet-class>controller.DeleteProductServlet</servlet-class> 
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteProductServlet</servlet-name>
+        <url-pattern>/admin/DeleteProductServlet</url-pattern>
+    </servlet-mapping>
+
+        <!-- Quan -->
+    <servlet>
+        <servlet-name>OrdersController</servlet-name>
+        <servlet-class>controller.OrdersController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>OrdersController</servlet-name>
+        <url-pattern>/admin/OrdersController</url-pattern>
+    </servlet-mapping>
+        <!-- Quan end -->
+    
+    <!-- Admin end -->
+    
+    <welcome-file-list>
+        <welcome-file>SignIn.jsp</welcome-file>
+    </welcome-file-list>
+</web-app>

@@ -1,0 +1,248 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.create-account-section {
+    background-color: #f8f9fa;
+}
+
+.card {
+    border-radius: 10px;
+}
+
+.card-body {
+    padding: 30px;
+}
+
+/* Sidebar Navigation */
+.nav-link {
+    color: #333;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.nav-link.active {
+    background-color: #e9f7ef;
+    color: #28a745;
+}
+
+.nav-link:hover {
+    background-color: #f0f0f0;
+    color: #28a745;
+}
+
+.card-title {
+    font-size: 1.25rem;
+}
+
+.table-borderless th, .table-borderless td {
+    border: none;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+.badge {
+    padding: 5px 10px;
+}
+
+.badge.bg-warning {
+    background-color: #ffc107;
+}
+
+.badge.bg-info {
+    background-color: #17a2b8;
+}
+
+.badge.bg-success {
+    background-color: #28a745;
+}
+
+/* Profile Picture Section */
+.profile-picture {
+    width: 100px; /* Set the width of the profile picture */
+    height: 100px; /* Set the height of the profile picture */
+    border-radius: 50%; /* Makes the image round */
+    object-fit: cover; /* Ensures the image covers the area without stretching */
+    margin-bottom: 15px; /* Adds space below the picture */
+    border: 2px solid #28a745; /* Adds a green border around the picture */
+}
+
+/* Centering the image */
+.card-body.text-center img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+/* lưu ý có thể trùng */
+/* có thể trùng */
+
+.sidebar li a {
+    padding: 15px 19px;
+
+}
+
+.sidebar li a:hover {
+    color: #1DBD3A;
+    background-color: #ddd;
+}
+
+.sidebar a , .content a{
+    text-decoration: none;
+    position: relative;
+}
+
+.sidebar a::after, .content a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0.1em;
+    background-color: #28a745;
+    opacity: 0;
+    transition: opacity 300ms, transform 300ms;
+}
+
+.sidebar a:hover::after,
+.sidebar a:focus::after, 
+.content a:focus::after,
+.content a:hover::after{
+    opacity: 1;
+    transform: translate3d(0, 0.2em, 0);
+}
+
+.sidebar a::after, .content a::after {
+    opacity: 1;
+    transform: scale(0);
+    transform-origin: center;
+}
+
+.sidebar a:hover::after,
+.sidebar a:focus::after,
+.content a:hover::after,
+.content a:focus::after{
+    transform: scale(1);
+}
+
+.nav-pills a.nav-link {
+    color: grey;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+    color: black;
+    background-color: #b3f3a9;
+    border-radius: 0px;
+    border-left: 3px solid #1DBD3A;
+}
+
+/* Ensure image scales properly on smaller screens */
+@media (max-width: 768px) {
+    .profile-picture {
+        width: 80px;
+        height: 80px;
+    }
+}
+
+
+
+/* Hidden sidebar in mobile view by default */
+.sidebar {
+    position: fixed;
+    left: -250px;
+    /* Hide sidebar outside of the viewport */
+    top: 100px;
+    width: 250px;
+    height: 100%;
+    background-color: #f8f9fa;
+    transition: left 0.3s ease;
+    z-index: 90;
+}
+
+.mobile-view {
+    display: none;
+}
+
+/* Show the sidebar when toggled */
+.sidebar.show {
+    left: 0;
+}
+
+.mobile-header {
+    display: none;
+    margin-left: 85%;
+    /*margin-top: -60px;*/
+    position: sticky;
+    top: 105px;
+    z-index: 99;
+}
+
+.error_msg {
+    text-align: center;
+    color: red;
+}
+
+/*btn go to top*/
+#myBtn {
+    display: none;
+    position: fixed;
+    bottom: 65px;
+    right: 30px;
+    width: 3%;
+    z-index: 99;
+    font-size: 18px;
+    border: none;
+    outline: none;
+    background-color: red;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+@media (min-width: 768px) {
+    .sidebar {
+        position: sticky;
+        left: 0;
+        top: 150px;
+        height: auto;
+        width: 100%;
+        transition: none;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .mobile-content {
+        padding-top: 130px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .mobile-view {
+        display: block;
+    }
+
+    .desktop-view {
+        display: none;
+    }
+
+    .sidebar-mobile {
+        display: none;
+    }
+
+    .sidebar-mobile.show {
+        display: flex;
+    }
+
+    .mobile-header {
+        display: flex;
+    }
+
+    .mobile-content {
+        padding-top: 50px;
+    }
+}
