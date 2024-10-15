@@ -4,7 +4,6 @@
  */
 package controller;
 
-import dal.CategoryDAO;
 import dal.ProductDAO;
 import dto.ProductDTO;
 import jakarta.servlet.ServletException;
@@ -13,9 +12,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import model.Products;
+import util.Validate;
 
 /**
  *
@@ -40,7 +40,12 @@ public class ProductDetailController extends HttpServlet {
         int productId = Integer.parseInt(request.getParameter("id"));
         ProductDTO pdto = p.findProductById(productId);
         List<Products> lienquan = p.findProductByCategory(productId);
-       
+        for(Products x:lienquan){
+            x.setUnitPriceString(Validate.BigDecimalToMoney(x.getUnitPrice()));
+        }
+        ArrayList<ProductDTO> listImage = p.findProductGalleryById(productId);
+        pdto.setUnitPriceString(Validate.BigDecimalToMoney(pdto.getUnitPrice()));
+        request.setAttribute("listImage", listImage);
         request.setAttribute("lienquan", lienquan);
         request.setAttribute("product", pdto);
         request.getRequestDispatcher("productDetail.jsp").forward(request, response);

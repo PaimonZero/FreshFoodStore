@@ -20,6 +20,14 @@
         <servlet-name>OrderHistoryController</servlet-name>
         <servlet-class>controller.OrderHistoryController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>checkOutController</servlet-name>
+        <servlet-class>controller.checkOutController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShoppingCartController</servlet-name>
+        <servlet-class>controller.ShoppingCartController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CustomerDashboard</servlet-name>
         <url-pattern>/customer/Dashboard</url-pattern>
@@ -40,37 +48,32 @@
         <servlet-name>OrderHistoryController</servlet-name>
         <url-pattern>/customer/OrderHistory</url-pattern>
     </servlet-mapping>
-    
     <!-- Admin -->
-    
     <servlet>
         <servlet-name>AddProductServlet</servlet-name>
-        <servlet-class>controller.AddProductServlet</servlet-class> 
+        <servlet-class>controller.AddProductServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AddProductServlet</servlet-name>
         <url-pattern>/admin/AddProductServlet</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>UpdateProductServlet</servlet-name>
-        <servlet-class>controller.UpdateProductServlet</servlet-class> 
+        <servlet-class>controller.UpdateProductServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UpdateProductServlet</servlet-name>
         <url-pattern>/admin/UpdateProductServlet</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>DeleteProductServlet</servlet-name>
-        <servlet-class>controller.DeleteProductServlet</servlet-class> 
+        <servlet-class>controller.DeleteProductServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>DeleteProductServlet</servlet-name>
         <url-pattern>/admin/DeleteProductServlet</url-pattern>
     </servlet-mapping>
-
-        <!-- Quan -->
+    <!-- Quan -->
     <servlet>
         <servlet-name>OrdersController</servlet-name>
         <servlet-class>controller.OrdersController</servlet-class>
@@ -79,10 +82,16 @@
         <servlet-name>OrdersController</servlet-name>
         <url-pattern>/admin/OrdersController</url-pattern>
     </servlet-mapping>
-        <!-- Quan end -->
-    
+    <!-- Quan end -->
     <!-- Admin end -->
-    
+    <servlet-mapping>
+        <servlet-name>checkOutController</servlet-name>
+        <url-pattern>/customer/checkOut</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShoppingCartController</servlet-name>
+        <url-pattern>/customer/shoppingcart</url-pattern>
+    </servlet-mapping>
     <welcome-file-list>
         <welcome-file>SignIn.jsp</welcome-file>
     </welcome-file-list>

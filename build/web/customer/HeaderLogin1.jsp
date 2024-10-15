@@ -17,11 +17,11 @@
             <nav class="navbar align-items-center border-bottom bg-light flex-grow-1">
                 <div class="container-fluid">
                     <div class="d-flex align-items-center ">
-                        <a href="homePage.jsp" class="navbar-brand m-0 textColor fw-bold brand pacifico-regular">HexTech</a><!--để tạm là homePage.jsp-->
+                        <a href="Homepage" class="navbar-brand m-0 textColor fw-bold brand pacifico-regular">FreshFoodStore</a>
                         <div id="verticalbar" class="mx-xxl-2 mx-1 d-none d-lg-inline-block"></div>
-                        <a href="homePage.jsp" class="nav-link textColor fw-lighter lh-sm brandSubHeading d-none d-lg-inline-block pacifico-regular">Công Nghệ
+                        <a href="Homepage" class="nav-link textColor fw-lighter lh-sm brandSubHeading d-none d-lg-inline-block pacifico-regular">Thực phẩm
                             <br>
-                            <span class="fw-medium brandSubHeading d-none d-lg-inline-block pacifico-regular">Thay Đổi Cuộc Sống</span>
+                            <span class="fw-medium brandSubHeading d-none d-lg-inline-block pacifico-regular">sạch, tươi mỗi ngày</span>
                         </a>
                         <div class="position-relative ms-4 d-none d-xl-inline-block">
                             <input class="searchInput bg-body-tertiary iconCursor ps-md-5 p-1 p-md-2 " type="search"
@@ -34,7 +34,7 @@
                         <div class="d-none d-lg-block">
                             <ul class="d-flex m-0 list-unstyled ">
                                 <li class="nav-item iconChange  me-4 pt-2">
-                                    <a href="#" class="nav-link text-center  p-0">
+                                    <a href="contact.jsp" class="nav-link text-center  p-0">
                                         <div class=" d-flex align-items-center overflow-hidden changeWidth mx-auto">
                                             <img class="one iconHeight mx-2" src="../images/svg/telephone.png" alt="book">
                                             <img class="two iconHeight mx-2" src="../images/svg/telephone-tran.png"
@@ -43,8 +43,8 @@
                                         <div class="smallFont textColor">Gọi điện</div>
                                     </a>
                                 </li>
-                                <li class="nav-item iconChange   me-4 pt-2">
-                                    <a href="#" class="nav-link text-center p-0">
+                                <li class="nav-item iconChange me-4 pt-2">
+                                    <a href="contact.jsp" class="nav-link text-center p-0">
                                         <div class=" d-flex align-items-center overflow-hidden changeWidth mx-auto">
                                             <img class="iconHeight mx-2" src="../images/svg/placeholder.png" alt="dpad">
                                             <img class=" iconHeight mx-2" src="../images/svg/placehoder-tran.png" alt="dpad">
@@ -53,7 +53,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item iconChange  me-4 pt-1">
-                                    <a href="#" class="nav-link text-center p-0">
+                                    <a href="OrderHistory" class="nav-link text-center p-0">
                                         <div class=" d-flex align-items-center overflow-hidden changeWidth mx-auto">
                                             <img class="iconHeight--delivery mx-2" src="../images/svg/delivery-car.png"
                                                  alt="bar-chart">
@@ -64,7 +64,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item iconChange  me-4 pt-2">
-                                    <a href="ShoppingCart.jsp" class="nav-link text-center p-0"> <!--để tạm ShoppingCart-->
+                                    <a href="${pageContext.request.contextPath}/customer/giohang" class="nav-link text-center p-0"> <!--để tạm ShoppingCart-->
                                         <div class=" d-flex align-items-center overflow-hidden changeWidth mx-auto">
                                             <img class="iconHeight mx-2" src="../images/svg/hand-bag.png"
                                                  alt="lightbulb">
@@ -91,7 +91,6 @@
                                         <img src="../images/${account.avatar}" width="40" height="40" style="object-fit: cover; border-radius: 50%;" alt="alt"/>
                                     </div>
                                 </form>
-                                <!---->               
                                 <li class="dropdown" id="icon-drop" style="list-style: none;">
                                     <a class="nav-link dropdown-toggle arrow-none nav-user px-2 pt-0 pb-0 m-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                         <span class="d-lg-flex flex-column gap-1 d-none"></span>
@@ -105,11 +104,9 @@
                                         </form>
                                     </div>
                                 </li>
-
-
                             </c:when>
                             <c:otherwise>
-                                <form action="auth?action=login" method="POST">
+                                <form action="authC?action=login" method="POST">
                                     <a>
                                         <button id="loginBtn" class="btn btn-sm m-sm-2 m-1 bg-primary text-white rounded-5 px-sm-3 px-2">
                                             Login
@@ -125,29 +122,29 @@
             <nav id="secondNav" class="bottom-0 position-fixed end-0 start-0">
                 <div class="d-lg-none">
                     <div class="container-fluid d-flex justify-content-between shadow pt-2">
-                        <a href="#" class="text-center text-decoration-none textColor">
+                        <a href="Homepage" class="text-center text-decoration-none textColor">
                             <img class="iconHeight mb-1" src="../images/svg/logo.png" alt="book">
                             <div class="extraSmallFont active pb-1 pacifico-regular">HexTech</div>
                         </a>
-                        <a href="#" class="text-decoration-none textColor  text-center">
+                        <a href="contact.jsp" class="text-decoration-none textColor  text-center">
                             <img class="iconHeight mb-1" src="../images/svg/telephone.png" alt="book">
                             <div class="extraSmallFont pb-1">Gọi điện</div>
                         </a>
-                        <a href="#" class="text-decoration-none textColor  text-center">
+                        <a href="contact.jsp" class="text-decoration-none textColor  text-center">
                             <img class="iconHeight mb-1" src="../images/svg/placeholder.png" alt="dpad">
                             <div class="extraSmallFont pb-1">Địa chỉ</div>
                         </a>
-                        <a href="#" class="text-decoration-none textColor  text-center">
+                        <a href="OrderHistory" class="text-decoration-none textColor  text-center">
                             <img class="iconHeight mb-1" src="../images/svg/delivery-car.png" alt="bar-chart">
                             <div class="extraSmallFont pb-1">Đơn hàng</div>
                         </a>
-                        <a href="#" class="text-decoration-none textColor  text-center">
+                        <a href="${pageContext.request.contextPath}/customer/giohang" class="text-decoration-none textColor  text-center">
                             <img class="iconHeight mb-1" src="../images/svg/hand-bag.png" alt="lightbulb">
                             <div class="extraSmallFont pb-1">Giỏ hàng</div>
                         </a>
-                        <a href="#" class="text-decoration-none textColor  text-center">
+                        <a href="#" class="text-decoration-none textColor  text-center" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar" aria-controls="offcanvasSidebar">
                             <img class="iconHeight mb-1" src="../images/svg/menu.png" alt="briefcase">
-                            <div class="extraSmallFont pb-1">Danh mục</div>
+                            <div class="extraSmallFont pb-1" >Danh mục</div>
                         </a>
                     </div>
                 </div>

@@ -1,5 +1,6 @@
 package util;
 
+import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,6 +10,16 @@ import java.util.Locale;
 public class Validate {
 
     public static String doubleToMoney(double num) {
+        String result = null;
+        try {
+            NumberFormat numberFormat = NumberFormat.getInstance(new Locale("vi", "VN"));
+            result = numberFormat.format(num);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    public static String BigDecimalToMoney(BigDecimal num) {
         String result = null;
         try {
             NumberFormat numberFormat = NumberFormat.getInstance(new Locale("vi", "VN"));

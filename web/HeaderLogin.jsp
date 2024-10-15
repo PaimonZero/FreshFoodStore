@@ -17,11 +17,11 @@
             <nav class="navbar align-items-center border-bottom bg-light flex-grow-1">
                 <div class="container-fluid">
                     <div class="d-flex align-items-center ">
-                        <a href="homePage.jsp" class="navbar-brand m-0 textColor fw-bold brand pacifico-regular">HexTech</a><!--để tạm là homePage.jsp-->
+                        <a href="customer/Homepage" class="navbar-brand m-0 textColor fw-bold brand pacifico-regular">FreshFoodStore</a><!--để tạm là homePage.jsp-->
                         <div id="verticalbar" class="mx-xxl-2 mx-1 d-none d-lg-inline-block"></div>
-                        <a href="homePage.jsp" class="nav-link textColor fw-lighter lh-sm brandSubHeading d-none d-lg-inline-block pacifico-regular">Công Nghệ
+                        <a href="customer/Homepage" class="nav-link textColor fw-lighter lh-sm brandSubHeading d-none d-lg-inline-block pacifico-regular">Thực phẩm
                             <br>
-                            <span class="fw-medium brandSubHeading d-none d-lg-inline-block pacifico-regular">Thay Đổi Cuộc Sống</span>
+                            <span class="fw-medium brandSubHeading d-none d-lg-inline-block pacifico-regular">sạch, tươi mỗi ngày</span>
                         </a>
                         <div class="position-relative ms-4 d-none d-xl-inline-block">
                             <input class="searchInput bg-body-tertiary iconCursor ps-md-5 p-1 p-md-2 " type="search"
@@ -64,7 +64,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item iconChange  me-4 pt-2">
-                                    <a href="ShoppingCart.jsp" class="nav-link text-center p-0"> <!--để tạm ShoppingCart-->
+                                    <a href="auth?action=login" class="nav-link text-center p-0"> <!--để tạm ShoppingCart-->
                                         <div class=" d-flex align-items-center overflow-hidden changeWidth mx-auto">
                                             <img class="iconHeight mx-2" src="./images/svg/hand-bag.png"
                                                  alt="lightbulb">
@@ -86,26 +86,24 @@
                         </div>
                         <c:choose>
                             <c:when test="${not empty account}">
-                                <form action="auth?action=logout" method="POST">
-                                    <li class="dropdown" id="icon-drop" style="list-style: none;">
-                                        <a href="Dashboard?action=viewDashboard&account=${account}">
-                                            <div class="user-icon">
-                                                <img src="../images/${account.avatar}" width="40" height="40" style="object-fit: cover; border-radius: 50%;" alt="alt"/>
-                                            </div>
-                                        </a>
-                                        <a class="nav-link dropdown-toggle arrow-none nav-user px-2 pt-0 pb-0 m-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                                            <span class="d-lg-flex flex-column gap-1 d-none"></span>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated profile-dropdown">
-
+                                <form id="infoForm" action="Dashboard?action=listInfo" method="POST">
+                                    <div class="user-icon" onclick="document.getElementById('infoForm').submit();" style="cursor: pointer;">
+                                        <img src="../images/${account.avatar}" width="40" height="40" style="object-fit: cover; border-radius: 50%;" alt="alt"/>
+                                    </div>
+                                </form>
+                                <li class="dropdown" id="icon-drop" style="list-style: none;">
+                                    <a class="nav-link dropdown-toggle arrow-none nav-user px-2 pt-0 pb-0 m-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                        <span class="d-lg-flex flex-column gap-1 d-none"></span>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated profile-dropdown">
+                                        <form action="authC?action=logout" method="POST">
                                             <button style="background-color: transparent; border: none; color: inherit; cursor: pointer; padding: 0;">
                                                 <img class="d-none d-lg-inline-block" src="../images/png/box-arrow-in-right.svg" alt="box-arrow">
                                                 Logout
                                             </button>
-                                        </div>
-                                    </li>
-                                </form>
-
+                                        </form>
+                                    </div>
+                                </li>
                             </c:when>
                             <c:otherwise>
                                 <form action="auth?action=login" method="POST">

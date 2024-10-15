@@ -17,6 +17,7 @@ import java.io.PrintWriter;
 import java.util.List;
 import model.Products;
 import model.Users;
+import util.Validate;
 
 /**
  *
@@ -73,7 +74,18 @@ public class HomepageController extends HttpServlet {
         List<Products> khuyenMai = h.getProductKhuyenMai();
         List<Products> danhGiaTot = h.getProductDanhGiaTot();
         List<ProductDTO> noibat = pd.top4ProductNoiBat();
-
+        for(ProductDTO x:noibat){
+            x.setUnitPriceString(Validate.BigDecimalToMoney(x.getUnitPrice()));
+        }
+        for(Products y:banChay){
+            y.setUnitPriceString(Validate.BigDecimalToMoney(y.getUnitPrice()));
+        }
+        for(Products z:khuyenMai){
+            z.setUnitPriceString(Validate.BigDecimalToMoney(z.getUnitPrice()));
+        }
+        for(Products b: danhGiaTot){
+            b.setUnitPriceString(Validate.BigDecimalToMoney(b.getUnitPrice()));
+        }
         request.setAttribute("noibat", noibat);
         request.setAttribute("khuyenMai", khuyenMai);
         request.setAttribute("banChay", banChay);

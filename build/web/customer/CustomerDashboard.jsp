@@ -63,7 +63,7 @@
                                 </form>
                             </li>
                             <li>
-                                <form id="infoForm4" action="" method="POST"> <%--đổi đường dẫn--%>
+                                <form id="infoForm4" action="giohang" method="GET"> <%--đổi đường dẫn--%>
                                     <a class="nav-link" onclick="document.getElementById('infoForm4').submit();" style="cursor: pointer;">
                                         <i class="bi bi-bag me-2"></i>
                                         Giỏ hàng
@@ -79,7 +79,7 @@
                                 </form>
                             </li>
                             <li>
-                                <form id="infoForm6" action="" method="POST"> <%--đổi đường dẫn--%>
+                                <form id="infoForm6" action="authC?action=logout" method="POST"> <%--đổi đường dẫn--%>
                                     <a class="nav-link" onclick="document.getElementById('infoForm6').submit();" style="cursor: pointer;">
                                         <i class="fas fa-sign-out-alt me-2"></i>
                                         Đăng xuất
@@ -127,7 +127,11 @@
                         <div class="card-body content">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h5 class="card-title">Recent Order History</h5>
-                                <a href="#" class="text-success">View All</a>
+                                <form id="viewAll" action="OrderHistory" method="POST"> <%--đổi đường dẫn--%>
+                                    <a class="text-success" onclick="document.getElementById('viewAll').submit();" style="cursor: pointer;">
+                                        Xem thêm
+                                    </a>
+                                </form>
                             </div>
                             <div class="table-responsive">
                                 <table class="table table-borderless table-hover">
@@ -156,9 +160,10 @@
                                                     <td>${order.totalString}₫ (${order.quantity} Product)</td><%--đã validate về dạng tiền VN--%>
                                                     <td><span class="badge 
                                                               <c:choose>
-                                                                  <c:when test="${order.deliveryStatus == 'Pending'}">bg-warning text-dark</c:when>
-                                                                  <c:when test="${order.deliveryStatus == 'Shipped'}">bg-info text-dark</c:when>
+                                                                  <c:when test="${order.deliveryStatus == 'Waiting'}">bg-warning text-white</c:when>
+                                                                  <c:when test="${order.deliveryStatus == 'Shipping'}">bg-info text-white</c:when>
                                                                   <c:when test="${order.deliveryStatus == 'Delivered'}">bg-success</c:when>
+                                                                  <c:when test="${order.deliveryStatus == 'Failed'}">bg-danger</c:when>
                                                               </c:choose>">
                                                             ${order.deliveryStatus}
                                                         </span>

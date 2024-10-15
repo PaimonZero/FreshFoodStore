@@ -13,11 +13,11 @@
         <title>Create Account</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
         <script src="https://kit.fontawesome.com/54f0cb7e4a.js" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="./css/bootstrap.min.css">
-        <link rel="stylesheet" href="./css/customerCss/contact.css" />
+        <link rel="stylesheet" href="../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../css/customerCss/contact.css" />
     </head>
     <body>
-        <%@include file="HeaderLogin.jsp" %>
+        <%@include file="./HeaderLogin1.jsp" %>
         <div class="container" style="padding-top: 130px;">
             <div class="row ">
                 <div class="col-md-3">
@@ -72,6 +72,6 @@
                 referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
         <%@include file="Footer.jsp" %>
-        <script src="./js/bootstrap.bundle.min.js"></script>
+        <script src="../js/bootstrap.bundle.min.js"></script>
     </body>
 </html>

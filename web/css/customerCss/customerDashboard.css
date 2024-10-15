@@ -46,7 +46,8 @@ body {
 }
 
 .badge {
-    padding: 5px 10px;
+    padding: 6px 10px;
+    font-size: 14px;
 }
 
 .badge.bg-warning {

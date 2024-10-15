@@ -22,7 +22,8 @@ public class Products {
     private Date updateAt;
     private int quantity; 
     private double discount; 
-    
+    //trung thêm 
+    private String unitPriceString;
       public Products() {
     }
     
@@ -170,6 +171,14 @@ public class Products {
         this.discount = discount;
     }
 
+    public String getUnitPriceString() {
+        return unitPriceString;
+    }
+
+    public void setUnitPriceString(String unitPriceString) {
+        this.unitPriceString = unitPriceString;
+    }
+    
     @Override
     public String toString() {
         return "Products{" + "productId=" + productId + ", name=" + name + ", unitMeasure=" + unitMeasure + ", supplierId=" + supplierId + ", categoryId=" + categoryId + ", description=" + description + ", image=" + image + ", unitPrice=" + unitPrice + ", status=" + status + ", createdAt=" + createdAt + ", updateAt=" + updateAt + ", quantity=" + quantity + ", discount=" + discount + '}';

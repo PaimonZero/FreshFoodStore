@@ -58,52 +58,55 @@ public class DashboardDAO extends DBContext {
         //- connect w/Database
         connection = getConnection();
         //- Chuan bi cau lenhj sql
-        String sql = "SELECT \n"
-                + "    O.orderId, \n"
-                + "    O.userId, \n"
-                + "    u.fullName,\n"
-                + "    O.shippingFee,\n"
-                + "    O.isConfirmed,\n"
-                + "    O.paymentStatus, \n"
-                + "    O.deliveryStatus, \n"
-                + "    O.paymentType,\n"
-                + "    O.deliveryLocation,\n"
-                + "    O.receiverName, \n"
-                + "    O.receiverPhone, \n"
-                + "    O.shipperId, \n"
-                + "    O.orderCreatedAt,\n"
-                + "    O.orderCompletedAt,\n"
-                + "    OD.quantity,\n"
-                + "    SUM(OD.quantity * OD.unitPriceOut *(1-(pro.discount/100))+ O.shippingFee) AS totalAmount\n"
-                + "FROM \n"
-                + "    Orders O\n"
-                + "INNER JOIN \n"
-                + "    Users u ON O.userId = u.userId\n"
-                + "INNER JOIN \n"
-                + "    OrderDetails OD ON O.orderId = OD.orderId\n"
-                + "inner join BatchesProduct bp on od.batchId = bp.batchId\n"
-                + "inner join Products p on bp.productId = p.productId\n"
-                + "inner join Promos pro on p.productId = pro.productId\n"
-                + "WHERE \n"
-                + "    O.userId = ?\n"
-                + "GROUP BY \n"
-                + "    O.orderId, \n"
-                + "    O.userId, \n"
-                + "    u.fullName,\n"
-                + "    O.shippingFee,\n"
-                + "    O.isConfirmed,\n"
-                + "    O.paymentStatus, \n"
-                + "    O.deliveryStatus, \n"
-                + "    O.paymentType,\n"
-                + "    O.deliveryLocation,\n"
-                + "    O.receiverName, \n"
-                + "    O.receiverPhone, \n"
-                + "    O.shipperId, \n"
-                + "    O.orderCreatedAt,\n"
-                + "    O.orderCompletedAt,\n"
-                + "    OD.quantity\n"
-                + "ORDER BY \n"
-                + "    O.orderCreatedAt DESC;";//chỗ này chưa chắc (sắp xếp theo thứ tự giảm dần của orderCreatedAt
+        String sql = """
+                    SELECT 
+                         O.orderId, 
+                         O.userId, 
+                         u.fullName,
+                         O.shippingFee,
+                         O.isConfirmed,
+                         O.paymentStatus, 
+                         O.deliveryStatus, 
+                         O.paymentType,
+                         O.deliveryLocation,
+                         O.receiverName, 
+                         O.receiverPhone, 
+                         O.shipperId, 
+                         O.orderCreatedAt,
+                         O.orderCompletedAt,
+                     	 SUM(OD.quantity) AS totalQuantity,
+                         SUM(OD.quantity * OD.unitPriceOut * (1 - (pro.discount / 100))) + O.shippingFee AS totalAmount
+                     FROM 
+                         Orders O
+                     INNER JOIN 
+                         Users u ON O.userId = u.userId
+                     INNER JOIN 
+                         OrderDetails OD ON O.orderId = OD.orderId
+                     INNER JOIN 
+                         BatchesProduct bp ON OD.batchId = bp.batchId
+                     INNER JOIN 
+                         Products p ON bp.productId = p.productId
+                     INNER JOIN 
+                         Promos pro ON p.productId = pro.productId
+                     WHERE 
+                         O.userId = ? AND O.isConfirmed = 1
+                     GROUP BY 
+                         O.orderId, 
+                         O.userId, 
+                         u.fullName,
+                         O.shippingFee,
+                         O.isConfirmed,
+                         O.paymentStatus, 
+                         O.deliveryStatus, 
+                         O.paymentType,
+                         O.deliveryLocation,
+                         O.receiverName, 
+                         O.receiverPhone, 
+                         O.shipperId, 
+                         O.orderCreatedAt,
+                         O.orderCompletedAt
+                     ORDER BY 
+                         O.orderCreatedAt DESC;""";//chỗ này chưa chắc (sắp xếp theo thứ tự giảm dần của orderCreatedAt
 
         try {
             //- Tao doi tuong prepareStatement
@@ -128,7 +131,7 @@ public class DashboardDAO extends DBContext {
                 Date orderCreatedAt = resultSet.getDate("orderCreatedAt");
                 Date orderCompletedAt = resultSet.getDate("orderCompletedAt");
                 double total = resultSet.getDouble("totalAmount");
-                int quantity = resultSet.getInt("quantity");
+                int quantity = resultSet.getInt("totalQuantity");
                 Orders order = new Orders(orderId, userId, shippingFee, isConfirmed, paymentStatus, deliveryStatus,
                         paymentType, deliveryLocation, receiverName, receiverPhone, shipperId, orderCreatedAt, orderCompletedAt, total, quantity);
                 allOrders.add(order);
@@ -145,53 +148,56 @@ public class DashboardDAO extends DBContext {
         //- connect w/Database
         connection = getConnection();
         //- Chuan bi cau lenhj sql
-        String sql = "SELECT \n"
-                + "    O.orderId, \n"
-                + "    O.userId, \n"
-                + "    u.fullName,\n"
-                + "    O.shippingFee,\n"
-                + "    O.isConfirmed,\n"
-                + "    O.paymentStatus, \n"
-                + "    O.deliveryStatus, \n"
-                + "    O.paymentType,\n"
-                + "    O.deliveryLocation,\n"
-                + "    O.receiverName, \n"
-                + "    O.receiverPhone, \n"
-                + "    O.shipperId, \n"
-                + "    O.orderCreatedAt,\n"
-                + "    O.orderCompletedAt,\n"
-                + "    OD.quantity,\n"
-                + "    SUM(OD.quantity * OD.unitPriceOut *(1-(pro.discount/100))+ O.shippingFee) AS totalAmount\n"
-                + "FROM \n"
-                + "    Orders O\n"
-                + "INNER JOIN \n"
-                + "    Users u ON O.userId = u.userId\n"
-                + "INNER JOIN \n"
-                + "    OrderDetails OD ON O.orderId = OD.orderId\n"
-                + "inner join BatchesProduct bp on od.batchId = bp.batchId\n"
-                + "inner join Products p on bp.productId = p.productId\n"
-                + "inner join Promos pro on p.productId = pro.productId\n"
-                + "WHERE \n"
-                + "    O.userId = ?\n"
-                + "GROUP BY \n"
-                + "    O.orderId, \n"
-                + "    O.userId, \n"
-                + "    u.fullName,\n"
-                + "    O.shippingFee,\n"
-                + "    O.isConfirmed,\n"
-                + "    O.paymentStatus, \n"
-                + "    O.deliveryStatus, \n"
-                + "    O.paymentType,\n"
-                + "    O.deliveryLocation,\n"
-                + "    O.receiverName, \n"
-                + "    O.receiverPhone, \n"
-                + "    O.shipperId, \n"
-                + "    O.orderCreatedAt,\n"
-                + "    O.orderCompletedAt,\n"
-                + "    OD.quantity\n"
-                + "ORDER BY \n"
-                + "    O.orderId \n"
-                + "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        String sql = """
+                     SELECT 
+                          O.orderId, 
+                          O.userId, 
+                          u.fullName,
+                          O.shippingFee,
+                          O.isConfirmed,
+                          O.paymentStatus, 
+                          O.deliveryStatus, 
+                          O.paymentType,
+                          O.deliveryLocation,
+                          O.receiverName, 
+                          O.receiverPhone, 
+                          O.shipperId, 
+                          O.orderCreatedAt,
+                          O.orderCompletedAt,
+                          SUM(OD.quantity) AS totalQuantity,
+                          SUM(OD.quantity * OD.unitPriceOut * (1 - (pro.discount / 100))) + O.shippingFee AS totalAmount
+                      FROM 
+                          Orders O
+                      INNER JOIN 
+                          Users u ON O.userId = u.userId
+                      INNER JOIN 
+                          OrderDetails OD ON O.orderId = OD.orderId
+                      INNER JOIN 
+                          BatchesProduct bp ON OD.batchId = bp.batchId
+                      INNER JOIN 
+                          Products p ON bp.productId = p.productId
+                      INNER JOIN 
+                          Promos pro ON p.productId = pro.productId
+                      WHERE 
+                          O.userId = ? AND O.isConfirmed = 1
+                      GROUP BY 
+                          O.orderId, 
+                          O.userId, 
+                          u.fullName,
+                          O.shippingFee,
+                          O.isConfirmed,
+                          O.paymentStatus, 
+                          O.deliveryStatus, 
+                          O.paymentType,
+                          O.deliveryLocation,
+                          O.receiverName, 
+                          O.receiverPhone, 
+                          O.shipperId, 
+                          O.orderCreatedAt,
+                          O.orderCompletedAt
+                      ORDER BY 
+                          O.orderId
+                     OFFSET ? ROWS FETCH NEXT ? ROWS ONLY""";
 
         try {
             //- Tao doi tuong prepareStatement
@@ -218,7 +224,7 @@ public class DashboardDAO extends DBContext {
                 Date orderCreatedAt = resultSet.getDate("orderCreatedAt");
                 Date orderCompletedAt = resultSet.getDate("orderCompletedAt");
                 double total = resultSet.getDouble("totalAmount");
-                int quantity = resultSet.getInt("quantity");
+                int quantity = resultSet.getInt("totalQuantity");
                 Orders order = new Orders(orderId, userId, shippingFee, isConfirmed, paymentStatus, deliveryStatus,
                         paymentType, deliveryLocation, receiverName, receiverPhone, shipperId, orderCreatedAt, orderCompletedAt, total, quantity);
                 allOrders.add(order);
@@ -260,8 +266,8 @@ public class DashboardDAO extends DBContext {
     }
 
     //list ra chi tiết về order
-    public OrderDetail findOrderDetailById(int orderId) {
-//        ArrayList<OrderDetail> allOrderDetail = new ArrayList<>();
+    public ArrayList<OrderDetail> findOrderDetailById(int orderId) {
+        ArrayList<OrderDetail> allOrderDetail = new ArrayList<>();
         //- connect w/Database
         connection = getConnection();
         //- Chuan bi cau lenhj sql
@@ -284,7 +290,7 @@ public class DashboardDAO extends DBContext {
             //- thuc thi cau lenh
             resultSet = preStatement.executeQuery();
             //- tra ve ket qua
-            if (resultSet.next()) {
+            while (resultSet.next()) {
                 int orderDetailId = resultSet.getInt("orderDetailId");
                 orderId = resultSet.getInt("orderId");
                 int batchId = resultSet.getInt("batchId");
@@ -307,13 +313,14 @@ public class DashboardDAO extends DBContext {
                 double discount = resultSet.getDouble("discount");
                 OrderDetail orderDetails = new OrderDetail(orderDetailId, orderId, batchId, unitPriceOut, quantity, productImage, productName, fullName,
                         address, email, phone, receiverName, deliveryLocation, receiverPhone, shippingFee, deliveryStatus, paymentType, orderCreatedAt, discount);
-                return orderDetails;
+                allOrderDetail.add(orderDetails);
+//                return orderDetails;
 //                allOrderDetail.add(orderDetails);
             }
         } catch (SQLException e) {
             System.out.println("??(DashboardDAO)listOrderDetail" + e.getMessage());
         }
-        return null;
+        return allOrderDetail;
     }
 
     public Users updateUserInfo(int userId, String name, String email, String phone, String address, String avatar) {
@@ -344,7 +351,7 @@ public class DashboardDAO extends DBContext {
             preStatement.executeUpdate();
             //- tra ve ket qua mới thêm
             resultSet = preStatement.getGeneratedKeys();
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 userId = resultSet.getInt(1);       //lấy id user mới cập nhật (chưa sử dụng)
                 current.setAvatar(avatar);
             }
@@ -354,17 +361,16 @@ public class DashboardDAO extends DBContext {
         }
         return null;
     }
-    
 
     public static void main(String[] args) {
         DashboardDAO test1 = new DashboardDAO();
-        ArrayList<Orders> list1 = test1.findAllOrder(1, 0, 2);
+        ArrayList<Orders> list1 = test1.findAllOrder(2, 0, 2);
         for (Orders item : list1) {
             System.out.println(item.toString());
         }
-//        ArrayList<Orders> list2 = test1.findAllRecentOrder(1);
-//        for (Orders item : list2) {
-//            System.out.println(item.toString());
+//        ArrayList<OrderDetail> list2 = test1.findOrderDetailById(2);
+//        for (OrderDetail item1 : list2) {
+//            System.out.println(item1.toString());
 //        }
     }
 }

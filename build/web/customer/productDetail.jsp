@@ -1,5 +1,5 @@
 <%-- Document : productDetail Created on : Oct 4, 2024, 7:29:26 PM Author : DELL --%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -19,20 +19,42 @@
     <body>
         <%@include file="HeaderLogin1.jsp" %>
         <section class="container" style="padding-top: 130px;">
-           <c:if test="${requestScope.product != null}">
-    <p>Product Name: ${requestScope.product.name}</p>
-</c:if>
-<c:if test="${requestScope.product == null}">
-    <p>Product data is null!</p>
-</c:if>
-            
             <div class="row">   
                 <!-- Product Image -->
                 <div class="col-md-6">
-                    <img src="../images/${requestScope.product.image}" alt="Cải Thìa" class="img-fluid">
+<!--                    <img src="${requestScope.product.image}" alt="Cải Thìa" class="img-fluid">
                     <div class="mt-3 d-flex">
-                        <img src="../images/${requestScope.product.image}" class="img-thumbnail me-2" alt="Cải Thìa 1">
-                        <img src="../images/${requestScope.product.image}" class="img-thumbnail me-2" alt="Cải Thìa 2">
+                        <img src="${requestScope.product.image}" style="width: 30%; height: 50%;"  class="img-thumbnail me-2" alt="Cải Thìa 1">
+                        <img src="${requestScope.product.image}" style="width: 30%; height: 50%;" class="img-thumbnail me-2" alt="Cải Thìa 2">
+                    </div>-->
+                    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">                    
+                        <div class="carousel-inner">
+                            <c:forEach var="itemImage1" items="${listImage}" varStatus="status">
+                                <div class="carousel-item ${status.index == 0 ? 'active' : ''}">
+                                    <img src="${itemImage1.galleryImage}" class="d-block w-100" alt="Slide ${status.index + 1}">
+                                </div>
+                            </c:forEach>
+                        </div>
+
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+
+                    </div>
+                    <div style="display: flex; justify-content: center; margin-top: 20px;">
+                        <c:forEach var="itemImage" items="${listImage}" varStatus="status">
+                            <!-- Thay thế nút bằng hình ảnh -->
+                            <img src="${itemImage.galleryImage}"
+                                 data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${status.index}" 
+                                 class="${status.index == 0 ? 'active' : ''} thumbnail mx-1" 
+                                 aria-current="${status.index == 0 ? 'true' : ''}" 
+                                 style="width: 20%; height: 100px; border: 2px solid #ccc; border-radius: 10px; cursor: pointer;" />
+                        </c:forEach>
                     </div>
                 </div>
                 <!-- Product Information -->
@@ -46,23 +68,39 @@
                             <i class="bi bi-star-fill text-warning"></i>
                             <i class="bi bi-star-fill text-warning"></i>
                             <i class="bi bi-star text-warning"></i>
-                        
+
                         </div>
                     </div>
 
-                    <p class="product-price text-danger fs-4">${(requestScope.product.unitPrice* (100-requestScope.product.discount))/100}đ <span
-                            class="text-decoration-line-through text-muted">${requestScope.product.unitPrice}đ</span></p>
+<!--                    <p class="product-price text-danger fs-4">${(requestScope.product.unitPrice* (100-requestScope.product.discount))/100}đ <span
+                            class="text-decoration-line-through text-muted">${requestScope.product.unitPriceString}đ</span></p>-->
+                    <p class="product-price text-danger fs-4">
+                        <c:if test="${requestScope.product.discount > 0}">
+                            <!-- Hiển thị giá sau khi đã chiết khấu nếu discount > 0 -->
+                            <fmt:formatNumber value="${(requestScope.product.unitPrice * (100 - requestScope.product.discount)) / 100}" 
+                                              type="currency" currencySymbol="₫" groupingUsed="true" />
+                            <span class="text-decoration-line-through text-muted">${requestScope.product.unitPriceString}đ</span>
+                        </c:if>
+                        <c:if test="${requestScope.product.discount == 0}">
+                            <!-- Hiển thị giá bình thường nếu không có chiết khấu -->
+                            <fmt:formatNumber value="${requestScope.product.unitPrice}" type="currency" currencySymbol="₫" groupingUsed="true" />
+                        </c:if>
+                    </p>
                     <p><strong>Loại:</strong> <span>${requestScope.product.nameCategory}</span> | <strong>Thẻ:</strong> <span>Cải Xanh, Sức
                             khỏe</span></p>
+                    <form action="${pageContext.request.contextPath}/customer/shoppingcart" method="get"> 
+                        <div class="product-quantity d-flex align-items-center mb-4">
+                            <label class="me-3">Số lượng:</label>
+                            <input type="number" name="soluong" value="1" class="form-control w-25">
+                        </div>
 
-                    <div class="product-quantity d-flex align-items-center mb-4">
-                        <label class="me-3">Số lượng:</label>
-                        <input type="number" value="1" class="form-control w-25">
-                    </div>
-                    <button class="btn btn-success btn-lg w-100 mb-3 position-relative add-btn">Thêm vào giỏ
-                        hàng
-                        <i class="fas fa-cart-plus cart-icon"></i>
-                    </button>
+                        <input type="hidden" name="id" id="id" value="${requestScope.product.productId}" />
+                        <button type="submit" class="btn btn-success btn-lg w-100 mb-3 position-relative add-btn">Thêm vào giỏ
+                            hàng
+                            <i class="fas fa-cart-plus cart-icon"></i>
+                        </button>
+                    </form>
+
 
                     <div class="d-flex align-items-center justify-content-between">
                         <div class="d-flex align-items-center">
@@ -80,14 +118,43 @@
                         </div>
                         <a href="#" class="btn btn-outline-primary">Yêu Thích</a>
                     </div>
-                    <div class="promotion mt-3">
-                        <img src="../images/.png" class="w-100" alt="alt" />
-                        <div class="row promotion-info mt-2">
-                            <div class="col-md-6 d-flex align-items-center">
-                                <i class="fas fa-shipping-fast"></i> Giao hàng nhanh
-                            </div>
-                            <div class="col-md-6 d-flex align-items-center">
-                                <i class="fas fa-leaf"></i> 100% tươi sạch
+                    <!--                    <div class="promotion mt-3">
+                                            <img src="../images/Ship1.png" class="w-100" alt="alt" />
+                                            <div class="row promotion-info mt-2">
+                                                <div class="col-md-6 d-flex align-items-center">
+                                                    <i class="fas fa-shipping-fast"></i> Giao hàng nhanh
+                                                </div>
+                                                <div class="col-md-6 d-flex align-items-center">
+                                                    <i class="fas fa-leaf"></i> 100% tươi sạch
+                                                </div>
+                                            </div>
+                                        </div>-->
+                    <div class="box mt-4">
+                        <div class="box-header">
+                            <h4>Nhận ngay khuyến mại đặc biệt</h4>
+                        </div>
+                        <div class="box-content">
+                            <div>
+                                <li>
+                                    <span><i class="icon fas fa-check-circle" style="color: #48bb78;"></i></span>
+                                    <h5>Tham gia rút thăm trúng thưởng với giải thưởng lên đến 10.000.000đ</h5>
+                                </li>
+                                <li>
+                                    <span><i class="icon fas fa-check-circle" style="color: #48bb78;"></i></span>
+                                    <h5>Cơ hội nhận được phần quà dụng cụ nhà bếp lên tới 5.000.000đ</h5>
+                                </li>
+                                <li>
+                                    <span><i class="icon fas fa-check-circle" style="color: #48bb78;"></i></span>
+                                    <h5>Cơ hội trúng phiếu mua hàng trị giá 500.000₫ mỗi tháng</h5>
+                                </li>
+                                <li>
+                                    <span><i class="icon fas fa-check-circle" style="color: #48bb78;"></i></span>
+                                    <h5>Tặng túi vải khi thu đổi túi nhựa</h5>
+                                </li>
+                                <li>
+                                    <span><i class="icon fas fa-check-circle" style="color: #48bb78;"></i></span>
+                                    <h5>Nhận phiếu mua hàng 40.000₫ khi mua thực phẩm theo mùa</h5>
+                                </li>
                             </div>
                         </div>
                     </div>
@@ -129,20 +196,20 @@
                 <h4 class="mb-4">Sản Phẩm Liên Quan</h4>
                 <div class="row">
                     <c:forEach var="p" items="${lienquan}"> 
-                    <div class="col-md-3">
-                        <div class="card">
-                            <a href="productDetail?id=${p.productId}">
-                            <img src="../images/${p.image}" class="card-img-top" alt="Táo Xanh">
-                            </a>
-                            <div class="card-body">
-                                <h5 class="card-title">${p.name}</h5>
-                                <p class="card-text text-danger">${p.unitPrice}đ</p>
+                        <div class="col-md-3">
+                            <div class="card">
+                                <a href="productDetail?id=${p.productId}">
+                                    <img src="${p.image}" class="card-img-top" alt="Táo Xanh">
+                                </a>
+                                <div class="card-body">
+                                    <h5 class="card-title">${p.name}</h5>
+                                    <p class="card-text text-danger">${p.unitPriceString}đ</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     </c:forEach>
-                    
-                   
+
+
                 </div>
             </div>
         </section>

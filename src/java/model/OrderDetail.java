@@ -13,6 +13,7 @@ import java.util.Date;
 public class OrderDetail {
     private int orderDetailId;
     private int orderId;
+    private int userId;
     private int batchId;
     private double unitPriceOut;
     private int quantity;
@@ -36,8 +37,19 @@ public class OrderDetail {
     private String paymentType;
     private Date orderCreatedAt;
     private double discount;
-    
     public OrderDetail() {
+    }
+
+    public OrderDetail(int orderDetailId, int orderId, int userId, double unitPriceOut, int quantity, String productImage, String productName, double shippingFee, double discount) {
+        this.orderDetailId = orderDetailId;
+        this.orderId = orderId;
+        this.userId = userId;
+        this.unitPriceOut = unitPriceOut;
+        this.quantity = quantity;
+        this.productImage = productImage;
+        this.productName = productName;
+        this.shippingFee = shippingFee;
+        this.discount = discount;
     }
 
 //    public OrderDetail(int orderDetailId, int orderId, int batchId, double unitPriceOut, int quantity, String productImage, String productName) {
@@ -49,7 +61,7 @@ public class OrderDetail {
 //        this.productImage = productImage;
 //        this.productName = productName;
 //    }
-
+    
     public OrderDetail(int orderDetailId, int orderId, int batchId, double unitPriceOut, int quantity, 
             String productImage, String productName, String fullName, String address, String email, 
             String phone, String receiverName, String deliveryLocation, String receiverPhone, double shippingFee, 
@@ -259,6 +271,14 @@ public class OrderDetail {
 
     public void setShippingFeeString(String shippingFeeString) {
         this.shippingFeeString = shippingFeeString;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
     
     @Override

@@ -66,41 +66,62 @@ public class ProductDAO extends DBContext {
         }
         return null;
     }
+    //tìm ảnh trong gallery
+    public ArrayList<ProductDTO> findProductGalleryById(int id) {
+        ArrayList<ProductDTO> p = new ArrayList<>();
+        String sql = "select g.productId, g.src FROM products p join Gallery g on g.productId = p.productId WHERE p.productId= ?";
+
+        try {
+            // connect
+            con = new DBContext().getConnection();
+            // sql
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                p.add( new ProductDTO(rs.getInt(1),
+                        rs.getString(2)
+                ));
+
+            }
+        } catch (Exception e) {
+        }
+        return p;
+    }
 
     // 4 sản phẩm nổi bật
     public List<ProductDTO> top4ProductNoiBat() {
         List<ProductDTO> p = new ArrayList<>();
         String sql = """
-                     
                       SELECT TOP 4
-                                                  p.productId,
-                                                  p.name,
-                                                  p.unitPrice,
-                                                  p.image,
-                         						  pr.discount,
-                                                  SUM(od.quantity) AS totalQuantity
-                                              FROM 
-                                                  OrderDetails od
-                                              JOIN 
-                                                  Orders o ON od.orderId = o.orderId
-                                              JOIN 
-                                                  Products p ON od.batchId = (
-                                                      SELECT TOP 1 bp.batchId
-                                                      FROM BatchesProduct bp
-                                                      WHERE bp.productId = p.productId
-                                                      ORDER BY bp.createdAt DESC
-                                                  )
-                         						 left join Promos pr ON p.productId = pr.productId 
-                                              WHERE 
-                                                  o.orderCreatedAt >= DATEADD(DAY, -7, GETDATE()) 
-                                              GROUP BY 
-                                                  p.productId, 
-                                                  p.name,
-                                                  p.unitPrice,  
-                                                  p.image,      
-                             pr.discount       
-                                              ORDER BY 
-                                                  totalQuantity DESC; """;
+                                p.productId,
+                                p.name,
+                                p.unitPrice,
+                                p.image,
+                                                      pr.discount,
+                                SUM(od.quantity) AS totalQuantity
+                            FROM 
+                                OrderDetails od
+                            JOIN 
+                                Orders o ON od.orderId = o.orderId
+                            JOIN 
+                                Products p ON od.batchId = (
+                                    SELECT TOP 1 bp.batchId
+                                    FROM BatchesProduct bp
+                                    WHERE bp.productId = p.productId
+                                    ORDER BY bp.expiryDate ASC
+                                )
+                                                     left join Promos pr ON p.productId = pr.productId 
+                            WHERE 
+                                o.orderCreatedAt >= DATEADD(DAY, -7, GETDATE()) 
+                            GROUP BY 
+                                p.productId, 
+                                p.name,
+                                p.unitPrice,  
+                                p.image,      
+                                pr.discount       
+                            ORDER BY 
+                                totalQuantity DESC; """;
 
         try {
             // connect

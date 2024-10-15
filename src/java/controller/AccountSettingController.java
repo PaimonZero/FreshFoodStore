@@ -5,6 +5,7 @@
 package controller;
 
 import dal.DashboardDAO;
+import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -73,6 +74,7 @@ public class AccountSettingController extends HttpServlet {
                 handleEdit(request, response);
                 break;
             case "changePassword":
+                handleChangePassword(request, response);
                 break;
             default:
                 throw new AssertionError();
@@ -161,6 +163,21 @@ public class AccountSettingController extends HttpServlet {
 
         // Trả về tên file đã lưu
         return fileName;
+    }
+    private void handleChangePassword(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        UserDAO dao = new UserDAO();
+        DashboardDAO dao1=new DashboardDAO();
+        HttpSession session = request.getSession();
+        //Lấy về userID từ account trong sesion khi đăng nhập
+        Users account = (Users) session.getAttribute("account");
+        String newPassword = request.getParameter("new-password");
+        dao.updatePasswordUserDB(account.getUserId(), newPassword);
+        // Redirect to the account settings page after update
+        //lấy thông tin user
+        Users listInfo = dao1.findAllInfo(account.getUserId());
+        request.setAttribute("listInfo", listInfo);
+        //hiện thông tin order của user        
+        request.getRequestDispatcher("/customer/AccountSetting.jsp").forward(request, response);
     }
 
     /**

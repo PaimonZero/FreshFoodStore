@@ -15,7 +15,8 @@ import model.Promos;
  * @author nguye
  */
 public class ProductDTO {
-     private int productId;
+
+    private int productId;
     private String name;
     private String unitMeasure;
     private int supplierId;
@@ -27,23 +28,55 @@ public class ProductDTO {
     private Date createdAt;
     private Date updateAt;
     private String nameCategory;
+    // batches
+    private int batchId;
+    private int quantity;
+    private Date expiryDate;
+    private Date created_At;
     // promos
-     private int promotionId;
+    private int promotionId;
     private int quantitySale;
     private Double discount;
     private Date startDate;
     private Date endDate;
-    //Huy thêm
+    //Huy thÃªm
     private String productName;
     private String categoryName;
     private String supplierName;
     private String supplierPhone;
     private List<BatchProduct> batchProducts;
     private List<Promos> promosList;
-
+    
+    //trung thêm
+    private String unitPriceString;
+    private String galleryImage;
     public ProductDTO() {
     }
+
+    public ProductDTO(int productId, String galleryImage) {
+        this.productId = productId;
+        this.galleryImage = galleryImage;
+    }
     
+    public ProductDTO(int productId, String name, String unitMeasure, int supplierId, int categoryId, String description, String image, BigDecimal unitPrice, String status, Date createdAt, Date updateAt, int batchId, int quantity, Date expiryDate, Double discount) {
+        this.productId = productId;
+        this.name = name;
+        this.unitMeasure = unitMeasure;
+        this.supplierId = supplierId;
+        this.categoryId = categoryId;
+        this.description = description;
+        this.image = image;
+        this.unitPrice = unitPrice;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.updateAt = updateAt;
+        this.batchId = batchId;
+
+        this.quantity = quantity;
+        this.expiryDate = expiryDate;
+        this.discount = discount;
+    }
+
     public ProductDTO(int productId, String productName, String unitMeasure, String description, BigDecimal unitPrice, String categoryName, String supplierName, String supplierPhone, List<BatchProduct> batchProducts, List<Promos> promosList) {
         this.productId = productId;
         this.productName = productName;
@@ -56,27 +89,27 @@ public class ProductDTO {
         this.batchProducts = batchProducts;
         this.promosList = promosList;
     }
-    
+
     public ProductDTO(int productId, String name, String unitMeasure, int supplierId, int categoryId, String description, String image, BigDecimal unitPrice, String status, Date createdAt, Date updatedAt, int promotionId, int quantitySale, double discount, Date startDate, Date endDate) {
         this.productId = productId;
-    this.name = name;
-    this.unitMeasure = unitMeasure;
-    this.supplierId = supplierId;
-    this.categoryId = categoryId;
-    this.description = description;
-    this.image = image;
-    this.unitPrice = unitPrice;
-    this.status = status;
-    this.createdAt = createdAt;
-    this.updateAt = updatedAt;
-    this.promotionId = promotionId;
-    this.quantitySale = quantitySale;
-    this.discount = discount;
-    this.startDate = startDate;
-    this.endDate = endDate;
+        this.name = name;
+        this.unitMeasure = unitMeasure;
+        this.supplierId = supplierId;
+        this.categoryId = categoryId;
+        this.description = description;
+        this.image = image;
+        this.unitPrice = unitPrice;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.updateAt = updatedAt;
+        this.promotionId = promotionId;
+        this.quantitySale = quantitySale;
+        this.discount = discount;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
-    public ProductDTO(int productId, String name, String unitMeasure, int supplierId, int categoryId, String description, String image, BigDecimal unitPrice, String status, Date createdAt, Date updateAt, String nameCategory,Double discount) {
+    public ProductDTO(int productId, String name, String unitMeasure, int supplierId, int categoryId, String description, String image, BigDecimal unitPrice, String status, Date createdAt, Date updateAt, String nameCategory, Double discount) {
         this.productId = productId;
         this.name = name;
         this.unitMeasure = unitMeasure;
@@ -88,19 +121,20 @@ public class ProductDTO {
         this.status = status;
         this.createdAt = createdAt;
         this.updateAt = updateAt;
-        this.nameCategory=nameCategory;
-        this.discount=discount;
+        this.nameCategory = nameCategory;
+        this.discount = discount;
     }
+
     // Top 4 san pham noi bat
-     public ProductDTO(int productId, String name, BigDecimal unitPrice, String image, Double discount) {
+    public ProductDTO(int productId, String name, BigDecimal unitPrice, String image, Double discount) {
         this.productId = productId;
-        this.name =name;
+        this.name = name;
         this.unitPrice = unitPrice;
         this.image = image;
-        this.discount=discount;
+        this.discount = discount;
     }
-     
-      public ProductDTO(int productId, String name, String unitMeasure, int supplierId, int categoryId, String description, String image, BigDecimal unitPrice, String status, Date createdAt, Date updateAt, Double discount) {
+
+    public ProductDTO(int productId, String name, String unitMeasure, int supplierId, int categoryId, String description, String image, BigDecimal unitPrice, String status, Date createdAt, Date updateAt, Double discount) {
         this.productId = productId;
         this.name = name;
         this.unitMeasure = unitMeasure;
@@ -115,7 +149,7 @@ public class ProductDTO {
         this.discount = discount;
     }
 
-       public ProductDTO(int productId, String name, String unitMeasure, int supplierId, int categoryId, String description, String image, BigDecimal unitPrice, String status, Date createdAt, Date updateAt) {
+    public ProductDTO(int productId, String name, String unitMeasure, int supplierId, int categoryId, String description, String image, BigDecimal unitPrice, String status, Date createdAt, Date updateAt) {
         this.productId = productId;
         this.name = name;
         this.unitMeasure = unitMeasure;
@@ -127,6 +161,38 @@ public class ProductDTO {
         this.status = status;
         this.createdAt = createdAt;
         this.updateAt = updateAt;
+    }
+
+    public int getBatchId() {
+        return batchId;
+    }
+
+    public void setBatchId(int batchId) {
+        this.batchId = batchId;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public Date getExpiryDate() {
+        return expiryDate;
+    }
+
+    public void setExpiryDate(Date expiryDate) {
+        this.expiryDate = expiryDate;
+    }
+
+    public Date getCreated_At() {
+        return created_At;
+    }
+
+    public void setCreated_At(Date created_At) {
+        this.created_At = created_At;
     }
 
     public String getCategoryName() {
@@ -176,7 +242,7 @@ public class ProductDTO {
     public void setPromosList(List<Promos> promosList) {
         this.promosList = promosList;
     }
-       
+
     public int getProductId() {
         return productId;
     }
@@ -313,13 +379,32 @@ public class ProductDTO {
         this.endDate = endDate;
     }
 
-    @Override
-    public String toString() {
-        return "ProductDTO{" + "productId=" + productId + ", name=" + name + ", unitMeasure=" + unitMeasure + ", supplierId=" + supplierId + ", categoryId=" + categoryId + ", description=" + description + ", image=" + image + ", unitPrice=" + unitPrice + ", status=" + status + ", createdAt=" + createdAt + ", updateAt=" + updateAt + ", nameCategory=" + nameCategory + ", promotionId=" + promotionId + ", quantitySale=" + quantitySale + ", discount=" + discount + ", startDate=" + startDate + ", endDate=" + endDate + '}';
+    public String getUnitPriceString() {
+        return unitPriceString;
+    }
+
+    public void setUnitPriceString(String unitPriceString) {
+        this.unitPriceString = unitPriceString;
+    }
+
+    public String getGalleryImage() {
+        return galleryImage;
+    }
+
+    public void setGalleryImage(String galleryImage) {
+        this.galleryImage = galleryImage;
     }
     
 
+//    @Override
+//    public String toString() {
+//        return "ProductDTO{" + "productId=" + productId + ", name=" + name + ", unitMeasure=" + unitMeasure + ", supplierId=" + supplierId + ", categoryId=" + categoryId + ", description=" + description + ", image=" + image + ", unitPrice=" + unitPrice + ", status=" + status + ", createdAt=" + createdAt + ", updateAt=" + updateAt + ", nameCategory=" + nameCategory + ", batchId=" + batchId + ", quantity=" + quantity + ", expiryDate=" + expiryDate + ", created_At=" + created_At + ", promotionId=" + promotionId + ", quantitySale=" + quantitySale + ", discount=" + discount + ", startDate=" + startDate + ", endDate=" + endDate + ", productName=" + productName + ", categoryName=" + categoryName + ", supplierName=" + supplierName + ", supplierPhone=" + supplierPhone + ", batchProducts=" + batchProducts + ", promosList=" + promosList + '}';
+//    }
+
+    @Override
+    public String toString() {
+        return "ProductDTO{" + "productId=" + productId + ", galleryImage=" + galleryImage + '}';
+    }
     
-    
-    
+
 }

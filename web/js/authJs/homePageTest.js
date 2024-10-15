@@ -1,6 +1,6 @@
 
 
-var countdownDate = new Date("Sep 30, 2024 23:59:59").getTime();
+var countdownDate = new Date("Oct 20, 2024 23:59:59").getTime();
 
 // Cập nhật đồng hồ mỗi 1 giây  
 var countdownFunction = setInterval(function () {
