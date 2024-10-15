@@ -2,15 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/DELL/Documents/GitHub/FreshFoodStore/1_Project/FreshFoodStore/src/java/dal/checkOutDAO.java</file>
-            <file>file:/C:/Users/DELL/Documents/GitHub/FreshFoodStore/1_Project/FreshFoodStore/web/customer/GioHang.jsp</file>
-            <file>file:/C:/Users/DELL/Documents/GitHub/FreshFoodStore/1_Project/FreshFoodStore/web/css/customerCss/ShoppingCart.css</file>
-            <file>file:/C:/Users/DELL/Documents/GitHub/FreshFoodStore/1_Project/FreshFoodStore/web/css/customerCss/homePageTest.css</file>
-            <file>file:/C:/Users/DELL/Documents/GitHub/FreshFoodStore/1_Project/FreshFoodStore/src/java/controller/AddProductServlet.java</file>
-            <file>file:/C:/Users/DELL/Documents/GitHub/FreshFoodStore/1_Project/FreshFoodStore/src/java/controller/ShoppingCartController.java</file>
-            <file>file:/C:/Users/DELL/Documents/GitHub/FreshFoodStore/1_Project/FreshFoodStore/src/java/dal/DatabaseInfo.java</file>
-            <file>file:/C:/Users/DELL/Documents/GitHub/FreshFoodStore/1_Project/FreshFoodStore/web/customer/HomePageTest.jsp</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
