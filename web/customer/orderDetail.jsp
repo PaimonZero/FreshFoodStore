@@ -75,7 +75,7 @@
                                 </form>
                             </li>
                             <li>
-                                <form id="infoForm6" action="authC?action=logout" method="POST"> <%--đổi đường dẫn--%>
+                                <form id="infoForm6" action="" method="POST"> <%--đổi đường dẫn--%>
                                     <a class="nav-link" onclick="document.getElementById('infoForm6').submit();" style="cursor: pointer;">
                                         <i class="fas fa-sign-out-alt me-2"></i>
                                         Đăng xuất
@@ -90,59 +90,54 @@
                     <div class="card shadow-sm">
                         <div class="card-header">
                             <div class="d-flex justify-content-between align-items-center mb-2 mt-2 content">
-                                <h5 class="card-title text-center fw-bold">Chi tiết đơn hàng &#8901; <small
-                                        class="text-muted fw-light">${orderCreatedAtString} &#8901; ${totalQuantity} sản phẩm</small></h5>
-                                <form id="back" action="OrderHistory" method="POST"> <%--đổi đường dẫn--%>
-                                    <a class="text-success fw-bold" onclick="document.getElementById('back').submit();" style="cursor: pointer;">
-                                        Trở về lịch sử đơn hàng
-                                    </a>
-                                </form>
+                                <h5 class="card-title text-center fw-bold">Order Details &#8901; <small
+                                        class="text-muted fw-light">${orderCurrent.orderCreatedAtString} &#8901;${orderCurrent.quantity} sản phẩm</small></h5>
+                                <a href="#" class="text-success fw-bold">Back to List</a> <%--trỏ qua orderHistory--%>
                             </div>
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                
-                                    <div class="col-md-7">
-                                        <div class="row mb-4 g-0">
-                                            <div class="col-md-6">
-                                                <div class="card" style="border-radius: 0; height: 345px;">
-                                                    <div class="card-header text-uppercase text-muted">
-                                                        <h6 class="mt-2">Địa chỉ thanh toán</h6>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <p class="fw-bold">${fullName}</p>
-                                                        <p>${address}</p>
-                                                        <p>Email <br><strong>${email}</strong></p>
-                                                        <p>Số điện thoại <br><strong>${phone}</strong></p>
-                                                    </div>
+                                <div class="col-md-7">
+                                    <div class="row mb-4 g-0">
+                                        <div class="col-md-6">
+                                            <div class="card" style="border-radius: 0;">
+                                                <div class="card-header text-uppercase text-muted">
+                                                    <h6 class="mt-2">Địa chỉ thanh toán</h6>
+                                                </div>
+                                                <div class="card-body">
+                                                    <p class="fw-bold">${orderCurrent.fullName}</p>
+                                                    <p>${orderCurrent.address}</p>
+                                                    <p>Email <br><strong>${orderCurrent.email}</strong></p>
+                                                    <p>Số điện thoại <br><strong>${orderCurrent.phone}</strong></p>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="card" style="border-radius: 0; height: 345px;">
-                                                    <div class="card-header text-uppercase text-muted">
-                                                        <h6 class="mt-2">Địa chỉ giao hàng</h6>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <p class="fw-bold">${receiverName}</p>
-                                                        <p>${deliveryLocation}</p>
-                                                        <p>Email <br><strong>${email}</strong></p>
-                                                        <p>Số điện thoại <br><strong>${receiverPhone}</strong></p>
-                                                    </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="card" style="border-radius: 0;">
+                                                <div class="card-header text-uppercase text-muted">
+                                                    <h6 class="mt-2">Địa chỉ giao hàng</h6>
+                                                </div>
+                                                <div class="card-body">
+                                                    <p class="fw-bold">${orderCurrent.receiverName}</p>
+                                                    <p>${orderCurrent.deliveryLocation}</p>
+                                                    <p>Email <br><strong>${orderCurrent.email}</strong></p>
+                                                    <p>Số điện thoại <br><strong>${orderCurrent.receiverPhone}</strong></p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
                                 <div class="col-md-5">
                                     <div class="card">
                                         <div class="card-header text-muted">
                                             <div class="row p-2">
                                                 <div class="col-md-5" style="border-right: 2px solid #ccc;">
                                                     <h6>Mã đơn hàng: </h6>
-                                                    <strong class="text-dark">${orderId}</strong>
+                                                    <strong class="text-dark">${orderCurrent.orderId}</strong>
                                                 </div>
                                                 <div class="col-md-7">
                                                     <h6>Phương thức thanh toán: </h6>
-                                                    <strong class="text-dark">${paymentType}</strong>
+                                                    <strong class="text-dark">${orderCurrent.paymentType}</strong>
                                                 </div>
                                             </div>
                                         </div>
@@ -154,7 +149,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td>Phí vận chuyển:</td>
-                                                    <td class="shippingFee">${shippingFeeString}đ</td>
+                                                    <td class="shippingFee">${orderCurrent.shippingFeeString}đ</td>
                                                 </tr>
                                                 <tr>
                                                     <td style="font-size: 19px;">Tổng thanh toán: </td>
@@ -167,11 +162,10 @@
                             </div>
                         </div>
 
-
                         <!-- Order Progress -->
                         <div class="mb-4">
                             <div class="step-wizard">
-                                <c:set var="status" value="${deliveryStatus}" />
+                                <c:set var="status" value="${orderCurrent.deliveryStatus}" />
                                 <ul class="step-wizard-list">
                                     <li class="step-wizard-item ${status == 'Cancelled' ? 'current-item' : ''}">
                                         <span class="progress-count">1</span>
@@ -206,19 +200,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach var="orderCurrentItem" items="${orderCurrent}">
                                 <tr>
                                     <td class="d-flex align-items-center">
                                         <!--lưu ý ở image chỉ được phép nhận tên ảnh chứ không lấy đường dẫn-->
-                                        <img src="${orderCurrentItem.productImage}" alt="Red Capsicum" class="product-img me-2">
-                                        <span>${orderCurrentItem.productName}</span>
+                                        <img src="../images/${orderCurrent.productImage}" alt="Red Capsicum" class="product-img me-2">
+                                        <span>Red Capsicum</span>
                                     </td>
-                                    <td class="item-price">${orderCurrentItem.unitPriceOutString}đ</td>
-                                    <td class="input-qty">${orderCurrentItem.quantity}</td>
-                                    <td class="discount">${orderCurrentItem.discountString}%</td>
+                                    <td class="item-price">${orderCurrent.unitPriceOutString}đ</td>
+                                    <td class="input-qty">${orderCurrent.quantity}</td>
+                                    <td class="discount">${orderCurrent.discountString}%</td>
                                     <td class="item-total-price"></td>
                                 </tr>
-                                </c:forEach>
                             </tbody>
                         </table>
 

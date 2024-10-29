@@ -15,15 +15,15 @@
     /*margin-top: 84px;*/
 }
 
-.sidebar h2 {
+.sidebar h3 {
     display: flex;
     font-size: 1.5rem;
     font-weight: bold;
     color: #2b2b2b;
 }
 
-.sidebar h2 img {
-    height: 24px;
+.sidebar h3 img {
+    
     margin-right: 10px;
 }
 

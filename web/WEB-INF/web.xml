@@ -20,14 +20,6 @@
         <servlet-name>OrderHistoryController</servlet-name>
         <servlet-class>controller.OrderHistoryController</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>checkOutController</servlet-name>
-        <servlet-class>controller.checkOutController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ShoppingCartController</servlet-name>
-        <servlet-class>controller.ShoppingCartController</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>CustomerDashboard</servlet-name>
         <url-pattern>/customer/Dashboard</url-pattern>
@@ -49,9 +41,10 @@
         <url-pattern>/customer/OrderHistory</url-pattern>
     </servlet-mapping>
     <!-- Admin -->
+    <!-- Huy -->
     <servlet>
         <servlet-name>AddProductServlet</servlet-name>
-        <servlet-class>controller.AddProductServlet</servlet-class>
+        <servlet-class>controller.admin.AddProductServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AddProductServlet</servlet-name>
@@ -59,24 +52,58 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>UpdateProductServlet</servlet-name>
-        <servlet-class>controller.UpdateProductServlet</servlet-class>
+        <servlet-class>controller.admin.UpdateProductServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UpdateProductServlet</servlet-name>
-        <url-pattern>/admin/UpdateProductServlet</url-pattern>
+        <url-pattern>/admin/UpdateProduct</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>DeleteProductServlet</servlet-name>
-        <servlet-class>controller.DeleteProductServlet</servlet-class>
+        <servlet-class>controller.admin.DeleteProductServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>DeleteProductServlet</servlet-name>
         <url-pattern>/admin/DeleteProductServlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>DeliveryServlet</servlet-name>
+        <servlet-class>controller.DeliveryServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeliveryServlet</servlet-name>
+        <url-pattern>/admin/deliveryList</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>DeliveryStatusController</servlet-name>
+        <servlet-class>controller.admin.DeliveryStatusController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeliveryStatusController</servlet-name>
+        <url-pattern>/admin/DeliveryStatusController</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>UpdateDeliveryStatusServlet</servlet-name>
+        <servlet-class>controller.admin.UpdateDeliveryStatusServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateDeliveryStatusServlet</servlet-name>
+        <url-pattern>/admin/UpdateDeliveryStatusServlet</url-pattern>
+    </servlet-mapping>
+    <!---->
+    <servlet>
+        <servlet-name>AdDashboardServlet</servlet-name>
+        <servlet-class>controller.admin.AdDashboardServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdDashboardServlet</servlet-name>
+        <url-pattern>/admin/Dashboard</url-pattern>
+    </servlet-mapping>
+    <!-- Huy end -->
     <!-- Quan -->
     <servlet>
         <servlet-name>OrdersController</servlet-name>
-        <servlet-class>controller.OrdersController</servlet-class>
+        <servlet-class>controller.admin.OrdersController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>OrdersController</servlet-name>
@@ -84,14 +111,6 @@
     </servlet-mapping>
     <!-- Quan end -->
     <!-- Admin end -->
-    <servlet-mapping>
-        <servlet-name>checkOutController</servlet-name>
-        <url-pattern>/customer/checkOut</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ShoppingCartController</servlet-name>
-        <url-pattern>/customer/shoppingcart</url-pattern>
-    </servlet-mapping>
     <welcome-file-list>
         <welcome-file>SignIn.jsp</welcome-file>
     </welcome-file-list>

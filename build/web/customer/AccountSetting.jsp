@@ -52,7 +52,7 @@
                                 </form>
                             </li>
                             <li>
-                                <form id="infoForm4" action="giohang" method="GET"> <%--đổi đường dẫn--%>
+                                <form id="infoForm4" action="" method="POST"> <%--đổi đường dẫn--%>
                                     <a class="nav-link" onclick="document.getElementById('infoForm4').submit();" style="cursor: pointer;">
                                         <i class="bi bi-bag me-2"></i>
                                         Giỏ hàng
@@ -68,7 +68,7 @@
                                 </form>
                             </li>
                             <li>
-                                <form id="infoForm6" action="authC?action=logout" method="POST"> <%--đổi đường dẫn--%>
+                                <form id="infoForm6" action="Dashboard?action=logout" method="POST"> <%--đổi đường dẫn--%>
                                     <a class="nav-link" onclick="document.getElementById('infoForm6').submit();" style="cursor: pointer;">
                                         <i class="fas fa-sign-out-alt me-2"></i>
                                         Đăng xuất
@@ -84,7 +84,9 @@
                             <h5 class="card-title">Cài đặt tài khoản</h5>
                         </div>
                         <div class="card-body">
+
                             <div class="row">
+
                                 <form action="AccountSetting?action=editData" method="POST" enctype="multipart/form-data">
                                     <div class="row">
                                         <div class="col-md-6 px-3 desktop-view"><%--lưu ý cái này cho máy tính--%>
@@ -120,7 +122,7 @@
                                                 <div class="button_outer">
                                                     <div class="btn_upload">
                                                         <%--id="upload-file"--%>
-                                                        <input type="file" id="upload-avatar" class="input" name="file" accept="image/*">       
+                                                        <input type="file" id="upload-avatar" name="file" accept="image/*">       
                                                         Upload Image
                                                     </div>
                                                     <div class="processing_bar"></div>
@@ -175,7 +177,7 @@
                                                    placeholder="Đại học FPT Đà Nẵng" value="${listInfo.address}" name="address" required>
                                         </div>
                                         <div>
-                                            <button type="submit" class="save-btn" disabled>Lưu thay đổi</button>
+                                            <button type="submit" class="save-btn">Lưu thay đổi</button>
                                         </div>
                                     </div>
                                 </form>
@@ -187,12 +189,12 @@
                         <div class="card-header">
                             <h5 class="card-title">Thay đổi mật khẩu</h5>
                         </div>
-                        <form action="AccountSetting?action=changePassword" method="POST">
+                        <form action="">
                             <div class="card-body">
                                 <label for="pass" class="form-label">Mật khẩu hiện tại</label>
                                 <div class="position-relative">
                                     <input type="password" class="form-control input" name="password" id="pass"
-                                           value="${listInfo.password}" disabled>
+                                           value="${listInfo.password}">
                                     <span toggle="#pass" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                 </div>
                                 <div class="row g-3 mt-1">
@@ -200,8 +202,7 @@
                                         <label for="new-pass" class="form-label">Mật khẩu mới</label>
                                         <div class="position-relative">
                                             <input type="password" class="form-control input" name="new-password"
-                                                   id="new-pass" placeholder="Mật khẩu mới" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" 
-                                                   title="Mật khẩu phải có ít nhất 8 kí tự và phải chứa cả chữ và số" required>
+                                                   id="new-pass" placeholder="Mật khẩu mới" >
                                             <span toggle="#new-pass"
                                                   class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                         </div>
@@ -210,7 +211,7 @@
                                         <label for="confirm-pass" class="form-label">Xác nhận mật khẩu mới</label>
                                         <div class="position-relative">
                                             <input type="password" class="form-control input" name="confirm-password"
-                                                   id="confirm-pass" placeholder="Xác nhận mật khẩu mới">
+                                                   id="confirm-pass" placeholder="Xác nhận mật khẩu mới" >
                                             <span toggle="#confirm-pass"
                                                   class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                         </div>

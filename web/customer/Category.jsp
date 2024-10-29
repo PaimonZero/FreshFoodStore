@@ -1,6 +1,4 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -56,11 +54,9 @@
                                         </li>
                                         <li><input type="radio" name="food" value="Egg" />Trứng <span class="lighter-text">(${trung})</span>
                                         </li>
-                                        <li><input type="radio" name="food" value="CerealsNuts" />Ngũ Cốc và Hạt<span class="lighter-text">(${CerealsNuts})</span>
+                                        <li><input type="radio" name="food" value="Mushroom" />Nấm <span class="lighter-text">(${nam})</span>
                                         </li>
-                                        <li><input type="radio" name="food" value="Tuber" />Đồ ăn trẻ em <span class="lighter-text">(${Tuber})</span>
-                                        </li>
-                                        <li><input type="radio" name="food" value="DairyProducts" />Sữa<span class="lighter-text">(${DairyProducts})</span>
+                                        <li><input type="radio" name="food" value="Protein" />Protein <span class="lighter-text">(${protein})</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -115,45 +111,35 @@
                             <div class="mt-4">
                                 <h5>Sản phẩm sales</h5>
                                 <c:forEach var="p" items="${sale}">
-                                    <a href="productDetail?id=${p.productId}" style="text-decoration: none; color: unset;">
-                                        <div class="card mb-3">
-                                            <div class="row g-0">
-                                                <div class="col-md-4">
-                                                    <img src="${p.image}" class="img-fluid rounded-start" alt="...">
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <div class="card-body sale-card">
-                                                        <h6 class="card-title">${p.name}</h6>
-    <!--                                                    <p class="card-text fw-bold" style="margin: 0;">${p.unitPrice*(100-p.discount)/100}đ &emsp;&emsp;
-                                                          
-                                                            <span class="fw-lighter"
-                                                                  style="text-decoration: line-through; color: gray;font-size: 14px;">${p.unitPrice}₫
-                                                            </span>
-                                                          
-                                                        </p>-->
-                                                        <p class="card-text fw-bold" style="margin: 0;">
-                                                            <!-- Discounted Price -->
-                                                            <fmt:formatNumber value="${(p.unitPrice * (100 - p.discount)) / 100}" type="currency" currencySymbol="₫" groupingUsed="true" />
-                                                            &emsp;&emsp;
-
-                                                            <!-- Original Price (Strikethrough) -->
-                                                            <span class="fw-lighter" style="text-decoration: line-through; color: gray; font-size: 14px;">
-                                                                <fmt:formatNumber value="${p.unitPrice}" type="currency" currencySymbol="₫" groupingUsed="true" />
-                                                            </span>
-                                                        </p>
-                                                        <div>
-                                                            <span class="fa fa-star checked"></span>
-                                                            <span class="fa fa-star checked"></span>
-                                                            <span class="fa fa-star checked"></span>
-                                                            <span class="fa fa-star checked"></span>
-                                                            <span class="fa fa-star"></span>
-                                                        </div>
+                                <a href="productDetail?id=${p.productId}" style="text-decoration: none; color: unset;">
+                                    <div class="card mb-3">
+                                        <div class="row g-0">
+                                            <div class="col-md-4">
+                                                <img src="../images/${p.image}" class="img-fluid rounded-start" alt="...">
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="card-body sale-card">
+                                                    <h6 class="card-title">${p.name}</h6>
+                                                    <p class="card-text fw-bold" style="margin: 0;">${p.unitPrice*(100-p.discount)/100}đ &emsp;&emsp;
+                                                      
+                                                        <span class="fw-lighter"
+                                                              style="text-decoration: line-through; color: gray;font-size: 14px;">${p.unitPrice}₫
+                                                        </span>
+                                                      
+                                                    </p>
+                                                    <div>
+                                                        <span class="fa fa-star checked"></span>
+                                                        <span class="fa fa-star checked"></span>
+                                                        <span class="fa fa-star checked"></span>
+                                                        <span class="fa fa-star checked"></span>
+                                                        <span class="fa fa-star"></span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </a>
-                                </c:forEach>
+                                    </div>
+                                </a>
+                                 </c:forEach>
                             </div>
 
                         </div>
@@ -172,7 +158,8 @@
                                 <option value="moi">Sản phẩm mới nhất</option>
 
                             </select>
-                            <button type="submit" class="btn btn-success p-1 px-3">Lọc</button>
+                            <button type="submit">Lọc</button>
+
                         </div>
                     </form>
                     <div style="margin-left: auto;">
@@ -183,7 +170,7 @@
                             <div class="col-lg-4 col-md-4 col-sm-6 col-4">
                                 <div class="card outstand">
                                     <a href="productDetail?id=${p.productId}">
-                                        <img src="${p.image}" class="card-img-top" alt="...">
+                                        <img src="../images/${p.image}" class="card-img-top" alt="...">
                                     </a>
                                     <div class="btn ${p.status == 'In Stock'? 'btn-success' : 'btn-dark'} out-stock-btn">
                                         ${p.status == 'In Stock' ? 'Còn Hàng' : 'Hết hàng'}
@@ -193,21 +180,15 @@
                                         <i class="fas fa-eye"></i>
                                     </div>
                                     <div class="card-body">
-
-                                        <h5 class="card-title fw-bold">${p.name}</h5>
-
+                                        
+                                            <h5 class="card-title fw-bold">${p.name}</h5>
+                                        
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <h6 class="fw-bold" style="margin-bottom: 0;">
-                                                    <!-- Discounted Price -->
-                                                    <fmt:formatNumber value="${(p.unitPrice * (100 - p.discount)) / 100}" type="currency" currencySymbol="₫" groupingUsed="true" />
-                                                </h6>
-
-                                                <!-- Original Price (Strikethrough) -->
-                                                <span style="text-decoration: line-through; color: gray; font-size: 14px;">
-                                                    <fmt:formatNumber value="${p.unitPrice}" type="currency" currencySymbol="₫" groupingUsed="true" />
+                                                <h6 class="fw-bold" style="margin-bottom: 0;">${p.unitPrice*(100-p.discount)/100}₫</h6>
+                                                <span class=""
+                                                      style="text-decoration: line-through; color: gray;font-size: 14px;">${p.unitPrice}₫
                                                 </span>
-
                                                 <div>
                                                     <span class="fa fa-star checked"></span>
                                                     <span class="fa fa-star checked"></span>

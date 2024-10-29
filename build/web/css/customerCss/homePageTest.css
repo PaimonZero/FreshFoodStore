@@ -1,152 +1,12 @@
-/*header của homepage*/
-.header-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0;
-}
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this template
+*/
+/* 
+    Created on : Sep 27, 2024, 3:25:17 PM
+    Author     : DELL
+*/
 
-.navbar-custom {
-    background-color: #000000;
-    /* Black background */
-}
-
-.navbar-custom .nav-link,
-.navbar-custom .navbar-toggler-icon,
-.navbar-custom .navbar-toggler {
-    color: #ffffff;
-    /* White text */
-}
-
-
-.header-logo img {
-    max-height: 50px;
-}
-
-.search-bar input {
-    border-radius: 20px;
-    padding: 5px 15px;
-    border: 1px solid #ddd;
-    width: 300px;
-}
-
-.nav-item a {
-    color: black;
-    font-weight: bold;
-}
-
-.contact-info {
-    display: flex;
-    align-items: center;
-    font-size: 14px;
-}
-
-.contact-info i {
-    margin-right: 5px;
-}
-
-.sidebar-container {
-    /* background-color: white; */
-    /* Background color of the sidebar */
-    border: 1px solid #ccc;
-    /* Border of the sidebar */
-    transition: background-color 0.3s;
-    /* Smooth transition for background color */
-    border-radius: 5px;
-}
-
-.sidebar .nav-link {
-    display: block;
-    padding: 10px;
-    color: #6c757d;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.sidebar .nav-link:hover {
-    background-color: #28a745;
-    color: white;
-}
-
-.content-section {
-    padding-left: 220px;
-    /* Adjust based on sidebar width */
-}
-
-.carousel-image {
-    height: 450px;
-    object-fit: cover;
-}
-
-.info-bar {
-    margin-left: 90px;
-    margin-right: 90px;
-    display: flex;
-    /* Use flexbox for layout */
-    justify-content: space-between;
-    /* Space out items evenly */
-    align-items: center;
-    /* Center items vertically */
-    padding: 10px;
-    /* Optional padding */
-}
-
-
-.info-image {
-    font-size: 50px;
-    /* Adjust the size of the icon */
-    color: #28a745;
-    /* Set the icon color to green */
-    /* margin-right: 15px; */
-    /* Space between icon and text */
-}
-
-
-.info-text {
-    display: flex;
-    flex-direction: column;
-    /* Stack title and content vertically */
-}
-
-.info-text h4 {
-    font-weight: bold;
-    margin: 0;
-    /* Remove default margin */
-    font-size: 1.2em;
-    /* Set title font size */
-}
-
-.info-text p {
-    font-weight: normal;
-    /* Make the paragraph text normal weight */
-    color: #6c757d;
-    /* Use a lighter color for the paragraph text */
-    margin-top: 5px;
-    /* Add some space between title and paragraph */
-}
-
-
-/* chỉnh carousel */
-.caro-btn {
-    padding: 30px 10px;
-}
-
-.caro-btn:hover {
-    background-color: #ddd;
-    border-radius: 10px;
-}
-
-/* menu */
-.menu-btn {
-    width: 10%;
-}
-.sidebar-offcanvas{
-    background-color: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(5px);
-}
-.info-item {
-    height: 160px;
-}
-/*body*/
 .pro-img1 {
     background-image: url('../../images/Picture1.png');
     background-repeat: no-repeat;
@@ -261,9 +121,9 @@
 .list-img {
     background-image: url('../../images/list1.png');
     background-repeat: no-repeat;
-    background-size: 100% 332px;
+    background-size: 100% 400px;
     padding-top: 30px;
-    height: 332px;
+    height: 400px;
     text-align: center;
 }
 
@@ -433,25 +293,9 @@ video {
     padding: 50px 20px;
     background-color: #ddd;
 }
-/*btn go to top*/
-#myBtn {
-    display: none;
-    position: fixed;
-    bottom: 60px;
-    right: 20px;
-    width: 3%;
-    z-index: 99;
-    font-size: 18px;
-    border: none;
-    outline: none;
-    background-color: red;
-    color: white;
-    cursor: pointer;
-    padding: 10px;
-    border-radius: 4px;
-}
+
 @media (max-width: 768px) {
-    .desktop-menu, .desktop-view {
+    .desktop-menu {
         display: none;
     }
 
@@ -473,41 +317,24 @@ video {
     .feedback-mobile{
         display: none;
     }
-
-    .homePageHeader {
-        display: none;
-    }
-    .info-item{
-        height: fit-content;
-    }
-    .carousel-item img {
-        height: 200px;
-        object-fit: cover;
-    }
-
-    .carousel-inner {
-        height: auto;
-    }
-    .info-text p{
-        display: none;
-    }
-    .info-image{
-        font-size: 20px;
-        text-align: center;
-    }
-    #myBtn{
-        width: 35px;
-    }
-    .info-text h4{
-        font-size: 11px;
-        text-align: center;
-    }
-    .pro-img1, .pro-img2, .pro-img3 {
-        height: 350px;
-        background-size: 100% 350px;
-    }
 }
-
+/*btn go to top*/
+#myBtn {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    width: 3%;
+    z-index: 99;
+    font-size: 18px;
+    border: none;
+    outline: none;
+    background-color: red;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 4px;
+}
 @media (min-width: 768px) {
     .desktop-menu {
         display: flex;
@@ -522,9 +349,6 @@ video {
     }
 
     .buy-mobile {
-        display: none;
-    }
-    .mobile-view {
         display: none;
     }
 }
@@ -671,12 +495,4 @@ video {
     .buy-mobile {
         display: none;
     }
-}
-.text--wrap{
-    white-space: nowrap;
-    /* Không cho phép xuống dòng */
-    overflow: hidden;
-    /* Ẩn nội dung tràn   */
-    text-overflow: ellipsis;
-    /* Thêm dấu ba chấm nếu nội dung bị cắt */
 }

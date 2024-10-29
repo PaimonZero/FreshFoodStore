@@ -2,6 +2,14 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/D:/University/KI5%202024%20FALL/SWP391/FreshFoodStore_namFix2/FreshFoodStore/web/admin/Dashboard.jsp</file>
+            <file>file:/D:/University/KI5%202024%20FALL/SWP391/FreshFoodStore_namFix2/FreshFoodStore/web/admin/Product.jsp</file>
+            <file>file:/D:/University/KI5%202024%20FALL/SWP391/FreshFoodStore_namFix2/FreshFoodStore/src/java/dal/DeliveryDAO.java</file>
+            <file>file:/D:/University/KI5%202024%20FALL/SWP391/FreshFoodStore_namFix2/FreshFoodStore/web/admin/Delivery.jsp</file>
+            <file>file:/D:/University/KI5%202024%20FALL/SWP391/FreshFoodStore_namFix2/FreshFoodStore/src/java/dal/AdDashboardDAO.java</file>
+            <file>file:/D:/University/KI5%202024%20FALL/SWP391/FreshFoodStore_namFix2/FreshFoodStore/web/admin/DeliveryStatus.jsp</file>
+            <file>file:/D:/University/KI5%202024%20FALL/SWP391/FreshFoodStore_namFix2/FreshFoodStore/src/java/dal/ProductDAO.java</file>
+        </group>
     </open-files>
 </project-private>

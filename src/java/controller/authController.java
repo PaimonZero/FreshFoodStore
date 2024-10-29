@@ -105,7 +105,7 @@ public class authController extends HttpServlet {
                     request.setAttribute("notifyAuth", "success");
 
                     //targetURL = request.getContextPath() + "/Admin/index";
-                    targetURL = "admin/Dashboard.jsp";      //đổi dường dẫn ở đây
+                    targetURL = request.getContextPath() + "/admin/Dashboard";      //đổi dường dẫn ở đây
                     encodedURL = response.encodeRedirectURL(targetURL);
                     response.sendRedirect(encodedURL);
                     break;

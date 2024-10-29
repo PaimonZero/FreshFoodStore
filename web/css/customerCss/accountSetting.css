@@ -32,7 +32,7 @@
 }
 
 .sidebar a:hover::after,
-.sidebar a:focus::after,
+.sidebar a:focus::after, 
 .content a:focus::after,
 .content a:hover::after{
     opacity: 1;
@@ -185,7 +185,6 @@
     display: flex;
     margin: 0 auto;
     border-radius: 50%;
-    border: 2px solid #ccc;
 }
 
 /* nút lưu */
@@ -201,12 +200,6 @@
 .save-btn:hover {
     transform: scale(1.05);
     box-shadow: 0 0 10px blue;
-}
-.save-btn:disabled {
-    background-color: #cccccc; /* Gray background */
-    color: #666666; /* Gray text */
-    cursor: not-allowed; /* Cursor indicates disabled state */
-    opacity: 0.6; /* Optional: Make it semi-transparent */
 }
 
 .field-icon {

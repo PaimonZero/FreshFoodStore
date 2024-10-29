@@ -58,7 +58,7 @@
                                 </form>
                             </li>
                             <li>
-                                <form id="infoForm4" action="giohang" method="GET"> <%--đổi đường dẫn--%>
+                                <form id="infoForm4" action="" method="POST"> <%--đổi đường dẫn--%>
                                     <a class="nav-link" onclick="document.getElementById('infoForm4').submit();" style="cursor: pointer;">
                                         <i class="bi bi-bag me-2"></i>
                                         Giỏ hàng
@@ -74,7 +74,7 @@
                                 </form>
                             </li>
                             <li>
-                                <form id="infoForm6" action="authC?action=logout" method="POST"> <%--đổi đường dẫn--%>
+                                <form id="infoForm6" action="" method="POST"> <%--đổi đường dẫn--%>
                                     <a class="nav-link" onclick="document.getElementById('infoForm6').submit();" style="cursor: pointer;">
                                         <i class="fas fa-sign-out-alt me-2"></i>
                                         Đăng xuất
@@ -116,12 +116,11 @@
                                                     <td>${order.orderCreatedAtString}</td>
                                                     <!--<td>$135.00 (5 Products)</td>-->
                                                     <td>${order.totalString}₫ (${order.quantity} Product)</td><%--đã validate về dạng tiền VN--%>
-                                                    <td><span class="badge p-2
+                                                    <td><span class="badge 
                                                               <c:choose>
-                                                                  <c:when test="${order.deliveryStatus == 'Waiting'}">bg-warning text-white</c:when>
-                                                                  <c:when test="${order.deliveryStatus == 'Shipping'}">bg-info text-white</c:when>
+                                                                  <c:when test="${order.deliveryStatus == 'Pending'}">bg-warning text-dark</c:when>
+                                                                  <c:when test="${order.deliveryStatus == 'Shipped'}">bg-info text-dark</c:when>
                                                                   <c:when test="${order.deliveryStatus == 'Delivered'}">bg-success</c:when>
-                                                                  <c:when test="${order.deliveryStatus == 'Failed'}">bg-danger</c:when>
                                                               </c:choose>">
                                                             ${order.deliveryStatus}
                                                         </span>
@@ -181,10 +180,10 @@
         <%@include file="Footer.jsp" %>
         <script src="../js/bootstrap.bundle.min.js"></script>
         <script>
-                                        //hiện thanh sidebar mobile
-                                        document.querySelector('.menu-toggle').addEventListener('click', function () {
-                                            document.getElementById('sidebar').classList.toggle('show');
-                                        });
+            //hiện thanh sidebar mobile
+            document.querySelector('.menu-toggle').addEventListener('click', function () {
+                document.getElementById('sidebar').classList.toggle('show');
+            });
         </script>
     </body>
 </html>

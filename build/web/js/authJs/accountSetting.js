@@ -77,15 +77,7 @@ document.getElementById('save-btn').addEventListener('click', function (event) {
     var newPassword = document.getElementById('new-pass').value;
     var confirmPassword = document.getElementById('confirm-pass').value;
     var errorElement = document.getElementById('password-error');
-    var form = event.target.closest('form'); // Get the form element
 
-    // Trigger HTML5 form validation (pattern, required, etc.)
-    if (!form.checkValidity()) {
-        // Prevent form submission if any input is invalid (like pattern or required)
-        event.preventDefault();
-        form.reportValidity(); // This will show validation errors in the form fields
-        return;
-    }
     // Kiểm tra nếu mật khẩu và xác nhận mật khẩu không trùng khớp  
     if (newPassword !== confirmPassword) {
         errorElement.style.display = 'block'; // Hiển thị thông báo lỗi  

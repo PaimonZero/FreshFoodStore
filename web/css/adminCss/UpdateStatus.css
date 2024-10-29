@@ -257,6 +257,15 @@ body {
     /* Màu của thanh cuộn khi hover */
 }
 
+.product-img {
+    width: 100px; /* Đặt chiều rộng là 50px (bạn có thể thay đổi kích thước này) */
+    height: auto; /* Tự động điều chỉnh chiều cao để giữ tỷ lệ */
+    border-radius: 5px; /* Tùy chọn: bo tròn các góc ảnh */
+    object-fit: cover; /* Tùy chọn: đảm bảo ảnh không bị méo */
+    margin-right: 10px; /* Khoảng cách giữa ảnh và các phần tử xung quanh */
+}
+
+
 @media (max-width: 576px) {
     .step-wizard-item {
         padding: 0 10px; /* Giảm khoảng cách giữa các bước */

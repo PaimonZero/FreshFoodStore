@@ -22,8 +22,10 @@ public class Products {
     private Date updateAt;
     private int quantity; 
     private double discount; 
-    //trung thêm 
-    private String unitPriceString;
+    //Trường thêm hiển thị danh sách
+    private String promotionStatus;
+    
+    
       public Products() {
     }
     
@@ -57,14 +59,13 @@ public class Products {
         this.discount = discount;
     }
     
-    public Products(int productId, String name, String unitMeasure, String status, BigDecimal unitPrice, int quantity, double discount) {
+    public Products(int productId, String name, String unitMeasure, String status, BigDecimal unitPrice, int quantity) {
         this.productId = productId;
         this.name = name;
         this.unitMeasure = unitMeasure;
         this.status = status;
         this.unitPrice = unitPrice;
         this.quantity = quantity;
-        this.discount = discount;
     }
 
     public int getProductId() {
@@ -171,17 +172,16 @@ public class Products {
         this.discount = discount;
     }
 
-    public String getUnitPriceString() {
-        return unitPriceString;
-    }
-
-    public void setUnitPriceString(String unitPriceString) {
-        this.unitPriceString = unitPriceString;
-    }
-    
     @Override
     public String toString() {
         return "Products{" + "productId=" + productId + ", name=" + name + ", unitMeasure=" + unitMeasure + ", supplierId=" + supplierId + ", categoryId=" + categoryId + ", description=" + description + ", image=" + image + ", unitPrice=" + unitPrice + ", status=" + status + ", createdAt=" + createdAt + ", updateAt=" + updateAt + ", quantity=" + quantity + ", discount=" + discount + '}';
     }
-    
+
+    public String getPromotionStatus() {
+        return promotionStatus;
+    }
+
+    public void setPromotionStatus(String promotionStatus) {
+        this.promotionStatus = promotionStatus;
+    }
 }

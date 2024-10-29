@@ -35,9 +35,9 @@
     <body>
         <%@include file="HeaderLogin.jsp" %>
         <!-- Navbar (Menu) -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding-top: 110px;">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding-top: 130px;">
             <div class="container">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
@@ -46,22 +46,22 @@
                             <a class="nav-link" href="#">Home</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Shop
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Fruits</a></li>
-                                <li><a class="dropdown-item" href="#">Vegetables</a></li>
-                            </ul>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#">Fruits</a>
+                                <a class="dropdown-item" href="#">Vegetables</a>
+                            </div>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPages" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPages" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Pages
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownPages">
-                                <li><a class="dropdown-item" href="#">Account</a></li>
-                                <li><a class="dropdown-item" href="#">About Us</a></li>
-                            </ul>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownPages">
+                                <a class="dropdown-item" href="#">Account</a>
+                                <a class="dropdown-item" href="#">About Us</a>
+                            </div>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Blog</a>
@@ -108,10 +108,10 @@
                             <h3 class="text-center mb-4">Sign In</h3>
                             <div class="social-container">
                                 <!--<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>-->
-                                <%-- Sửa lại tên FreshFoodShop ở đây (Đăng kí)   (Đẫ thêm uri HexTech bên gg)   --%>     
-                                <!--                                <a href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile%20openid&redirect_uri=http://localhost:8080/FreshFoodStore/loginGoogle&response_type=code&client_id=618274633562-0q8f8eupsfksnkc8hvrjl73uh9nicmf7.apps.googleusercontent.com&approval_prompt=force" 
-                                                                   class="social"><i class="fab fa-google-plus-g"></i></a>-->
-                                <%-- End sửa lại tên FreshFoodShop ở đây --%>
+                                    <%-- Sửa lại tên FreshFoodShop ở đây (Đăng kí)   (Đẫ thêm uri HexTech bên gg)   --%>     
+<!--                                <a href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile%20openid&redirect_uri=http://localhost:8080/FreshFoodStore/loginGoogle&response_type=code&client_id=618274633562-0q8f8eupsfksnkc8hvrjl73uh9nicmf7.apps.googleusercontent.com&approval_prompt=force" 
+                                   class="social"><i class="fab fa-google-plus-g"></i></a>-->
+                                    <%-- End sửa lại tên FreshFoodShop ở đây --%>
                                 <!--<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>-->
                             </div>
                             <form action="auth?action=login" method="POST">

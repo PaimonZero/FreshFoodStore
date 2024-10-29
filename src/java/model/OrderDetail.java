@@ -13,7 +13,6 @@ import java.util.Date;
 public class OrderDetail {
     private int orderDetailId;
     private int orderId;
-    private int userId;
     private int batchId;
     private double unitPriceOut;
     private int quantity;
@@ -35,21 +34,15 @@ public class OrderDetail {
     private double shippingFee;
     private String deliveryStatus;
     private String paymentType;
+    private String paymentStatus;
     private Date orderCreatedAt;
     private double discount;
+    //Nam thêm
+    private int shipperId;
+    private String shipperName;
+    private String shipperPhone;
+    
     public OrderDetail() {
-    }
-
-    public OrderDetail(int orderDetailId, int orderId, int userId, double unitPriceOut, int quantity, String productImage, String productName, double shippingFee, double discount) {
-        this.orderDetailId = orderDetailId;
-        this.orderId = orderId;
-        this.userId = userId;
-        this.unitPriceOut = unitPriceOut;
-        this.quantity = quantity;
-        this.productImage = productImage;
-        this.productName = productName;
-        this.shippingFee = shippingFee;
-        this.discount = discount;
     }
 
 //    public OrderDetail(int orderDetailId, int orderId, int batchId, double unitPriceOut, int quantity, String productImage, String productName) {
@@ -61,7 +54,7 @@ public class OrderDetail {
 //        this.productImage = productImage;
 //        this.productName = productName;
 //    }
-    
+
     public OrderDetail(int orderDetailId, int orderId, int batchId, double unitPriceOut, int quantity, 
             String productImage, String productName, String fullName, String address, String email, 
             String phone, String receiverName, String deliveryLocation, String receiverPhone, double shippingFee, 
@@ -86,8 +79,31 @@ public class OrderDetail {
         this.orderCreatedAt = orderCreatedAt;
         this.discount=discount;
     }
-    
 
+    public int getShipperId() {
+        return shipperId;
+    }
+
+    public void setShipperId(int shipperId) {
+        this.shipperId = shipperId;
+    }
+
+    public String getShipperName() {
+        return shipperName;
+    }
+
+    public void setShipperName(String shipperName) {
+        this.shipperName = shipperName;
+    }
+
+    public String getShipperPhone() {
+        return shipperPhone;
+    }
+
+    public void setShipperPhone(String shipperPhone) {
+        this.shipperPhone = shipperPhone;
+    }
+    
     public int getOrderDetailId() {
         return orderDetailId;
     }
@@ -272,18 +288,18 @@ public class OrderDetail {
     public void setShippingFeeString(String shippingFeeString) {
         this.shippingFeeString = shippingFeeString;
     }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
     
     @Override
     public String toString() {
         return "OrderDetail{" + "orderDetailId=" + orderDetailId + ", orderId=" + orderId + ", batchId=" + batchId + ", unitPriceOut=" + unitPriceOut + ", quantity=" + quantity + ", productImage=" + productImage + ", productName=" + productName + ", unitPriceOutString=" + unitPriceOutString + ", orderCreatedAtString=" + orderCreatedAtString + ", fullName=" + fullName + ", address=" + address + ", email=" + email + ", phone=" + phone + ", receiverName=" + receiverName + ", deliveryLocation=" + deliveryLocation + ", receiverPhone=" + receiverPhone + ", shippingFee=" + shippingFee + ", deliveryStatus=" + deliveryStatus + ", paymentType=" + paymentType + ", orderCreatedAt=" + orderCreatedAt + ", discount=" + discount + '}';
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
     
     

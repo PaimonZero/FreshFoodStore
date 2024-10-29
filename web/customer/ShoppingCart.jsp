@@ -14,7 +14,7 @@
     <body>
         <%@include file="HeaderLogin1.jsp" %>
         <div class="container mb-3" style="padding-top: 130px;">
-            <h3 class="text-center mt-3 fw-bold">Giỏ hàng của tôi</h3>
+            <h3 class="text-center mt-3">Giỏ hàng của tôi</h3>
             <div class="row mt-5">
                 <div class="col-12">
                     <div class="card">
@@ -28,75 +28,241 @@
                                                     <th class="first-column">Sản phẩm</th>
                                                     <th class="text-center">Giá</th>
                                                     <th class="second-column">Số lượng</th>
-                                                    <!--<th></th>-->
-                                                    <th colspan="2">Tổng tiền</th>
-                                                    <th></th>
+                                                    <th>Tổng tiền</th>
+                                                    <th style="width: 5%;"></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <c:forEach var="p" items="${requestScope.listProduct}"> 
-                                                    <tr class="product">
-                                                        <td>
-                                                            <img src="${p.image}" alt="contact-img" title="contact-img"
-                                                                 class="rounded me-3" height="64" />
-                                                            <p class="m-0 d-inline-block align-middle font-16 product-name">
-                                                                <a href="apps-ecommerce-products-details.html"
-                                                                   class="text-body">${p.name}</a>
-                                                                <!-- <br>
-                                                                <small class="me-2"><b>Size:</b> Large </small>
-                                                                <small><b>Color:</b> Orange </small> -->
-                                                            </p>
-                                                        </td>
-                                                        <td>
-                                                            <div class="item-price">${p.unitPriceString} đ</div>
-                                                            <div class="d-none">${p.discountString}%</div>
-                                                        </td>
+                                                <tr class="product">
+                                                    <td>
+                                                        <img src="../images/fil2.png" alt="contact-img" title="contact-img"
+                                                             class="rounded me-3" height="64" />
+                                                        <p class="m-0 d-inline-block align-middle font-16 product-name">
+                                                            <a href="apps-ecommerce-products-details.html"
+                                                               class="text-body">Ớt chuông</a>
+                                                            <!-- <br>
+                                                            <small class="me-2"><b>Size:</b> Large </small>
+                                                            <small><b>Color:</b> Light Green
+                                                            </small> -->
+                                                        </p>
+                                                    </td>
+                                                    <td>
+                                                        <div class="item-price">$14</div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <div class="item-quantity d-flex justify-content-center">
+                                                            <div class="qty-container">
+                                                                <button class="qty-btn-minus btn-light" type="button"><i
+                                                                        class="fa fa-minus"></i></button>
+                                                                <input type="text" name="qty" value="2" class="input-qty" />
+                                                                <button class="qty-btn-plus btn-light" type="button"><i
+                                                                        class="fa fa-plus"></i></button>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="item-total-price">$74</div>
+                                                    </td>
+                                                    <td>
+                                                        <a href="javascript:void(0);" class="action-icon"> <i
+                                                                class="far fa-trash-alt"></i></a>
+                                                    </td>
+                                                </tr>
+                                                <tr class="product">
+                                                    <td>
+                                                        <img src="../images/fil3.png" alt="contact-img" title="contact-img"
+                                                             class="rounded me-3" height="64" />
+                                                        <p class="m-0 d-inline-block align-middle font-16 product-name">
+                                                            <a href="apps-ecommerce-products-details.html"
+                                                               class="text-body">Xoài</a>
+                                                            <!-- <br>
+                                                            <small class="me-2"><b>Size:</b> Small </small>
+                                                            <small><b>Color:</b> Brown </small> -->
+                                                        </p>
+                                                    </td>
+                                                    <td>
+                                                        <div class="item-price">$99.00</div>
+                                                    </td>
+                                                    <td>
+                                                        <!-- <input type="number" min="1" value="2" class="form-control"
+                                                            placeholder="Qty" style="width: 90px;"> -->
+                                                        <div class="item-quantity d-flex justify-content-center">
+                                                            <div class="qty-container">
+                                                                <button class="qty-btn-minus btn-light" type="button"><i
+                                                                        class="fa fa-minus"></i></button>
+                                                                <input type="text" name="qty" value="2" class="input-qty" />
+                                                                <button class="qty-btn-plus btn-light" type="button"><i
+                                                                        class="fa fa-plus"></i></button>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="item-total-price">$198.00</div>
+                                                    </td>
+                                                    <td>
+                                                        <a href="javascript:void(0);" class="action-icon"> <i
+                                                                class="far fa-trash-alt"></i></a>
+                                                    </td>
+                                                </tr>
+                                                <tr class="product">
+                                                    <td>
+                                                        <img src="../images/fil4.png" alt="contact-img" title="contact-img"
+                                                             class="rounded me-3" height="64" />
+                                                        <p class="m-0 d-inline-block align-middle font-16 product-name">
+                                                            <a href="apps-ecommerce-products-details.html"
+                                                               class="text-body">Ớt chuông xanh</a>
+                                                            <!-- <br>
+                                                            <small class="me-2"><b>Size:</b> Medium </small>
+                                                            <small><b>Color:</b> Green </small> -->
+                                                        </p>
+                                                    </td>
+                                                    <td>
+                                                        <div class="item-price">$49.99</div>
+                                                    </td>
+                                                    <td>
+                                                        <!-- <input type="number" min="1" value="10" class="form-control"
+                                                            placeholder="Qty" style="width: 90px;"> -->
+                                                        <div class="item-quantity d-flex justify-content-center">
+                                                            <div class="qty-container">
+                                                                <button class="qty-btn-minus btn-light" type="button"><i
+                                                                        class="fa fa-minus"></i></button>
+                                                                <input type="text" name="qty" value="2" class="input-qty" />
+                                                                <button class="qty-btn-plus btn-light" type="button"><i
+                                                                        class="fa fa-plus"></i></button>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="item-total-price">$499.90</div>
+                                                    </td>
+                                                    <td>
+                                                        <a href="javascript:void(0);" class="action-icon"> <i
+                                                                class="far fa-trash-alt"></i></a>
+                                                    </td>
+                                                </tr>
+                                                <tr class="product">
+                                                    <td>
+                                                        <img src="../images/fil4.png" alt="contact-img" title="contact-img"
+                                                             class="rounded me-3" height="64" />
+                                                        <p class="m-0 d-inline-block align-middle font-16 product-name">
+                                                            <a href="apps-ecommerce-products-details.html"
+                                                               class="text-body">Ớt chuông xanh</a>
+                                                            <!-- <br>
+                                                            <small class="me-2"><b>Size:</b> Large </small>
+                                                            <small><b>Color:</b> Orange </small> -->
+                                                        </p>
+                                                    </td>
+                                                    <td>
+                                                        <div class="item-price">$129.99</div>
+                                                    </td>
+                                                    <td>
                                                         <!-- <input type="number" min="1" value="1" class="form-control"
                                                             placeholder="Qty" style="width: 90px;"> -->
-                                                        <td class="text-center d-flex">
-                                                            <div class="item-quantity d-flex justify-content-center" style="padding-left: 20px;">
-                                                                <div class="qty-container" style="width: 100%;">
-<!--                                                                    <form action="${pageContext.request.contextPath}/customer/shoppingcart" method="Post"> -->
-                                                                    <button type="button" class="qty-btn-minus btn-light" onclick="changeQuantity(${p.orderDetailId}, -1, this)">-</button>
-                                                                    <input type="number" name="quantity" class="input-qty" style="width: 55px;" value="${p.quantity}" min="1" max="${p.batchQuantity}" readonly />
-                                                                    <button type="button" class="qty-btn-plus btn-light" onclick="changeQuantity(${p.orderDetailId}, +1, this)">+</button>
-<!--                                                                </form>-->
-                                                                </div>
+                                                        <div class="item-quantity d-flex justify-content-center">
+                                                            <div class="qty-container">
+                                                                <button class="qty-btn-minus btn-light" type="button"><i
+                                                                        class="fa fa-minus"></i></button>
+                                                                <input type="text" name="qty" value="2" class="input-qty" />
+                                                                <button class="qty-btn-plus btn-light" type="button"><i
+                                                                        class="fa fa-plus"></i></button>
                                                             </div>
-                                                            <input type="submit" class="ok" style="display: none; background: none; border: none; padding: 0; cursor: pointer; outline: none; color: blue;" value="OK"> <%--update giỏ hàng khi số lượng tăng hoặc giảm--%>
-                                                        </td>
-                                                        <td>
-                                                            <div class="item-total-price">${p.quantity*(100-p.discount)*p.unitPrice}</div>
-                                                        </td>
-                                                        <td>
-                                                            <!--                                                            <a href="javascript:void(0);" class="action-icon"> <i
-                                                                                                                                class="far fa-trash-alt"></i></a>-->
-                                                                                                                                            <!--<h1>${p.orderDetailId}</h1>-->
-                                                            <form id="delete" action="shoppingcart?action=delete" method="POST"> <%--đổi đường dẫn--%>
-                                                                <input type="hidden" name="deleteId" id="deleteId" value="${p.orderDetailId}" />
-                                                                <button class="action-icon p-0" style="border: none; background-color: unset;" type="submit"> 
-                                                                    <i class="far fa-trash-alt me-2"></i>
-                                                                </button>
-                                                            </form>                                                                
-                                                        </td>
-                                                    </tr>
-                                                </c:forEach>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="item-total-price">$129.99</div>
+                                                    </td>
+                                                    <td>
+                                                        <a href="javascript:void(0);" class="action-icon"> <i
+                                                                class="far fa-trash-alt"></i></a>
+                                                    </td>
+                                                </tr>
+                                                <tr class="product">
+                                                    <td>
+                                                        <img src="../images/fil4.png" alt="contact-img" title="contact-img"
+                                                             class="rounded me-3" height="64" />
+                                                        <p class="m-0 d-inline-block align-middle font-16 product-name">
+                                                            <a href="apps-ecommerce-products-details.html"
+                                                               class="text-body">Ớt chuông xanh</a>
+                                                            <!-- <br>
+                                                            <small class="me-2"><b>Size:</b> Large </small>
+                                                            <small><b>Color:</b> Orange </small> -->
+                                                        </p>
+                                                    </td>
+                                                    <td>
+                                                        <div class="item-price">$129.99</div>
+                                                    </td>
+                                                    <td>
+                                                        <!-- <input type="number" min="1" value="1" class="form-control"
+                                                            placeholder="Qty" style="width: 90px;"> -->
+                                                        <div class="item-quantity d-flex justify-content-center">
+                                                            <div class="qty-container">
+                                                                <button class="qty-btn-minus btn-light" type="button"><i
+                                                                        class="fa fa-minus"></i></button>
+                                                                <input type="text" name="qty" value="2" class="input-qty" />
+                                                                <button class="qty-btn-plus btn-light" type="button"><i
+                                                                        class="fa fa-plus"></i></button>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="item-total-price">$129.99</div>
+                                                    </td>
+                                                    <td>
+                                                        <a href="javascript:void(0);" class="action-icon"> <i
+                                                                class="far fa-trash-alt"></i></a>
+                                                    </td>
+                                                </tr>
+                                                <tr class="product">
+                                                    <td>
+                                                        <img src="../images/fil4.png" alt="contact-img" title="contact-img"
+                                                             class="rounded me-3" height="64" />
+                                                        <p class="m-0 d-inline-block align-middle font-16 product-name">
+                                                            <a href="apps-ecommerce-products-details.html"
+                                                               class="text-body">Ớt chuông xanh</a>
+                                                            <!-- <br>
+                                                            <small class="me-2"><b>Size:</b> Large </small>
+                                                            <small><b>Color:</b> Orange </small> -->
+                                                        </p>
+                                                    </td>
+                                                    <td>
+                                                        <div class="item-price">$129.99</div>
+                                                    </td>
+                                                    <td>
+                                                        <!-- <input type="number" min="1" value="1" class="form-control"
+                                                            placeholder="Qty" style="width: 90px;"> -->
+                                                        <div class="item-quantity d-flex justify-content-center">
+                                                            <div class="qty-container">
+                                                                <button class="qty-btn-minus btn-light" type="button"><i
+                                                                        class="fa fa-minus"></i></button>
+                                                                <input type="text" name="qty" value="2" class="input-qty" />
+                                                                <button class="qty-btn-plus btn-light" type="button"><i
+                                                                        class="fa fa-plus"></i></button>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="item-total-price">$129.99</div>
+                                                    </td>
+                                                    <td>
+                                                        <a href="javascript:void(0);" class="action-icon"> <i
+                                                                class="far fa-trash-alt"></i></a>
+                                                    </td>
+                                                </tr>
                                             </tbody>
                                         </table>
 
                                     </div> <!-- end table-responsive-->
                                     <div class="mt-3 d-flex">
-                                        <a href="${pageContext.request.contextPath}/customer/Homepage">
-
+                                        <a href="#">
                                             <button class="btn"
                                                     style="background-color: #ddd; font-weight: bold; border-radius: 50px; padding: 10px 20px;font-size: 15px;">Tiếp
                                                 tục mua hàng</button>
                                         </a>
-                                        <!--                                        <a href="#" style="margin-left: auto;">
-                                                                                    <button class="btn"
-                                                                                            style="background-color: #ddd; font-weight: bold; border-radius: 50px; padding: 10px 20px;font-size: 15px;">Cập
-                                                                                        nhật giỏ hàng</button>
-                                                                                </a>-->
+                                        <a href="#" style="margin-left: auto;">
+                                            <button class="btn"
+                                                    style="background-color: #ddd; font-weight: bold; border-radius: 50px; padding: 10px 20px;font-size: 15px;">Cập
+                                                nhật giỏ hàng</button>
+                                        </a>
                                     </div>
                                     <div class="coupon mt-4">
                                         <div class="row">
@@ -120,17 +286,25 @@
                                 <div class="col-lg-4">
                                     <div class="border p-3 mt-4 mt-lg-0 rounded">
                                         <h4 class="header-title mb-3">Tổng giá trị giỏ hàng</h4>
-                                        <form action="checkOut?action=listCart" method="POST">
+                                        <form action="">
                                             <div class="table-responsive">
                                                 <table class="table mb-0">
                                                     <tbody>
                                                         <tr>
                                                             <td>Tổng cộng :</td>
-                                                            <td><div class="total-amount">1571.19</div></td>
+                                                            <td><div class="total-amount">$1571.19</div></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Giảm giá : </td>
+                                                            <td><div class="discount-amount">-$157.11</div></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Phí vận chuyển :</td>
                                                             <td><div class="shipping-amount">$25</div></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Thuế khấu trừ (10%): </td>
+                                                            <td><div class="tax-amount">$19.22</div></td>
                                                         </tr>
                                                         <tr>
                                                             <th>Tổng tiền phải thanh toán :</th>
@@ -140,27 +314,20 @@
                                                 </table>
                                                 <button type="submit" class="process-pay-btn btn w-100 mt-4">Đi đến thanh
                                                     toán</button>
-
-                                            </div>
                                         </form>
-                                        <!-- end table-responsive -->
                                     </div>
-                                </div> <!-- end col -->
+                                    <!-- end table-responsive -->
+                                </div>
+                            </div> <!-- end col -->
 
-                            </div> <!-- end row -->
-                        </div> <!-- end card-body-->
-                    </div> <!-- end card-->
-                </div> <!-- end col -->
-            </div>
+                        </div> <!-- end row -->
+                    </div> <!-- end card-body-->
+                </div> <!-- end card-->
+            </div> <!-- end col -->
         </div>
-        <%@ include file="Footer.jsp" %>
-        <script src="../js/bootstrap.bundle.min.js"></script>
-        <script src="../js/authJs/ShoppingCart.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script>
-    const contextPath = "${pageContext.request.contextPath}";
-</script>
-
-
-    </body>
+    </div>
+    <%@ include file="Footer.jsp" %>
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script src="../js/authJs/ShoppingCart.js"></script>
+</body>
 </html>

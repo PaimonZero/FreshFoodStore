@@ -24,7 +24,7 @@ import model.Products;
 @WebServlet(name = "CategoryDAO", urlPatterns = {"/customer/category"})
 public class CategoryController extends HttpServlet {
 
-    private static final int PAGE_SIZE = 12;
+    private static final int PAGE_SIZE = 2;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,11 +46,10 @@ public class CategoryController extends HttpServlet {
         int douong = c.countProduct("Beverages");
         int snack = c.countProduct("Snacks");
         int giavi = c.countProduct("Spices");
-        int dauthucvat = c.countProduct("VegetableOil");
+        int dauthucvat = c.countProduct("Vegetable Oil");
         int trung = c.countProduct("Egg");
-        int DairyProducts = c.countProduct("DairyProducts");
-        int Tuber = c.countProduct("Tuber");
-        int CerealsNuts = c.countProduct("CerealsNuts");
+        int nam = c.countProduct("Mushroom");
+        int protein = c.countProduct("Protein");
 
         // paging
         int page = 1;
@@ -66,10 +65,10 @@ public class CategoryController extends HttpServlet {
         List<ProductDTO> products = getProductByType(food, offset, row, sortOrder);
 
         int pageCount;
-        if (productCount % PAGE_SIZE == 0) {
-            pageCount = productCount / PAGE_SIZE;
+        if(productCount % PAGE_SIZE==0){
+            pageCount =productCount /PAGE_SIZE;
         } else {
-            pageCount = productCount / PAGE_SIZE + 1;
+            pageCount =productCount /PAGE_SIZE +1;
         }
 
         List<ProductDTO> sale = c.listProductSale();
@@ -90,9 +89,8 @@ public class CategoryController extends HttpServlet {
         request.setAttribute("giavi", giavi);
         request.setAttribute("dauthucvat", dauthucvat);
         request.setAttribute("trung", trung);
-        request.setAttribute("DairyProducts", DairyProducts);
-        request.setAttribute("BabyFood", Tuber);
-        request.setAttribute("CerealsNuts", CerealsNuts);
+        request.setAttribute("nam", nam);
+        request.setAttribute("protein", protein);
 
         request.getRequestDispatcher("Category.jsp").forward(request, response);
     }
@@ -155,16 +153,14 @@ public class CategoryController extends HttpServlet {
             p = cd.findByName("Snacks", offset, row);
         } else if ("Spices".equals(food)) {
             p = cd.findByName("Spices", offset, row);
-        } else if ("VegetableOil".equals(food)) {
-            p = cd.findByName("VegetableOil", offset, row);
+        } else if ("Vegetable Oil".equals(food)) {
+            p = cd.findByName("Vegetable Oil", offset, row);
         } else if ("Egg".equals(food)) {
             p = cd.findByName("Egg", offset, row);
-        } else if ("DairyProducts".equals(food)) {
-            p = cd.findByName("DairyProducts", offset, row);
-        } else if ("Tuber".equals(food)) {
-            p = cd.findByName("Tuber", offset, row);
-        } else if ("CerealsNuts".equals(food)) {
-            p = cd.findByName("CerealsNuts", offset, row);
+        } else if ("Mushroom".equals(food)) {
+            p = cd.findByName("Mushroom", offset, row);
+        } else if ("Protein".equals(food)) {
+            p = cd.findByName("Protein", offset, row);
         }
 
         if (sortOrder != null) {
@@ -207,16 +203,14 @@ public class CategoryController extends HttpServlet {
             p = cd.countProduct("Snacks");
         } else if ("Spices".equals(food)) {
             p = cd.countProduct("Spices");
-        } else if ("VegetableOil".equals(food)) {
+        } else if ("Vegetable Oil".equals(food)) {
             p = cd.countProduct("Vegetable Oil");
         } else if ("Egg".equals(food)) {
             p = cd.countProduct("Egg");
-        } else if ("DairyProducts".equals(food)) {
-            p = cd.countProduct("DairyProducts");
-        } else if ("Tuber".equals(food)) {
-            p = cd.countProduct("Tuber");
-        } else if ("CerealsNuts".equals(food)) {
-            p = cd.countProduct("CerealsNuts");
+        } else if ("Mushroom".equals(food)) {
+            p = cd.countProduct("Mushroom");
+        } else if ("Protein".equals(food)) {
+            p = cd.countProduct("Protein");
         }
 
         return p;

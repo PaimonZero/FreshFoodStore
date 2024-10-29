@@ -34,8 +34,8 @@ header p {
 .breadcrumb-content {
     display: flex;
     align-items: center;
-    font-size: 1rem;
-    color: white;
+    font-size: 1.2rem;
+    /*color: white;*/
 }
 
 .breadcrumb-content a {
