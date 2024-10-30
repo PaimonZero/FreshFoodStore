@@ -96,34 +96,36 @@
                                 <h3 class="text-center mb-4">Create Account</h3>
                                 <form action="auth?action=signup" method="POST">
                                     <div class="mb-3">
-                                        <input required type="text" name="fullname" class="form-control input-form" placeholder="Full name">
+                                        <input required type="text" name="fullname" class="form-control input-form" placeholder="Họ và tên" pattern="[A-Za-zÀ-ỹ\s]{1,100}" title="Tên chỉ được chứa chữ cái và tối đa 100 ký tự.">
                                     </div>
                                     <div class="mb-3">
                                         <input required type="email" name="email" class="form-control input-form" placeholder="Email">
                                     </div>
                                     <div class="mb-3">
-                                        <input required type="tel" name="phoneNumber" pattern="[0-9]{10}" title="Vui lòng nhập đúng số điện thoại" class="form-control input-form" placeholder="Phone Number">
+                                        <input required type="tel" name="phoneNumber" pattern="[0-9]{10}" title="Vui lòng nhập đúng số điện thoại bao gồm 10 số và chỉ chứa số" class="form-control input-form" placeholder="Số điện thoại">
                                     </div>
                                     <div class="mb-3 position-relative">
-                                        <input required type="password" name="password" class="form-control input-form" id="new-pass" placeholder="Password">
+                                        <input required type="password" name="password" class="form-control input-form" id="new-pass" placeholder="Mật khẩu" 
+                                               pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" 
+                                                   title="Mật khẩu phải có ít nhất 8 kí tự và phải chứa cả chữ và số">
                                         <span toggle="#new-pass"
                                               class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                     </div>
                                     <div class="mb-3 position-relative">
-                                        <input required type="password" class="form-control input-form" id="confirm-pass" placeholder="Confirm Password">
+                                        <input required type="password" class="form-control input-form" id="confirm-pass" placeholder="Xác nhận mật khẩu">
                                         <span toggle="#confirm-pass"
                                               class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                     </div>
                                     <div class="text-danger mt-2" id="password-error" style="display: none;">Mật khẩu xác nhận không trùng khớp!</div>
                                     <div class="mb-3 form-check">
                                         <input type="checkbox" class="form-check-input" id="termsCheck">
-                                        <label class="form-check-label" for="termsCheck">Accept all terms & Conditions</label>
+                                        <label class="form-check-label" for="termsCheck">Đồng ý với tất cả chính sách và điều khoản của chúng tôi</label>
                                     </div>
                                     <div class="d-grid">
-                                        <button type="submit" class="btn btn-success p-2" style="border-radius: 50px; background-color: #1DBD3A; border: none;" id="save-btn">Create Account</button>
+                                        <button type="submit" class="btn btn-success p-2" style="border-radius: 50px; background-color: #1DBD3A; border: none;" id="save-btn">Tạo tài khoản</button>
                                     </div>
                                 </form>
-                                <p class="text-center mt-3 link">Already have an account? <a href="SignIn.jsp">Login</a></p>
+                                <p class="text-center mt-3 link">Đã có tài khoản? <a href="SignIn.jsp">Đăng nhập ngay</a></p>
                             </div>
                         </div>
                     </div>

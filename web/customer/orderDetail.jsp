@@ -16,6 +16,7 @@
         <link rel="stylesheet"
               href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <link rel="stylesheet" href="../css/customerCss/orderDetail.css">
+        <link rel="shotcut icon" href="../images/logoFFSNoBG.png"/>
     </head>
 
     <body>
@@ -50,14 +51,14 @@
                                     </a>
                                 </form>
                             </li>
-                            <li>
+<!--                            <li>
                                 <form id="infoForm3" action="" method="POST"> <%--đổi đường dẫn--%>
                                     <a class="nav-link" onclick="document.getElementById('infoForm3').submit();" style="cursor: pointer;">
                                         <i class="far fa-heart me-2"></i>
                                         Danh sách yêu thích
                                     </a>
                                 </form>
-                            </li>
+                            </li>-->
                             <li>
                                 <form id="infoForm4" action="" method="POST"> <%--đổi đường dẫn--%>
                                     <a class="nav-link" onclick="document.getElementById('infoForm4').submit();" style="cursor: pointer;">
@@ -101,37 +102,37 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                
-                                    <div class="col-md-7">
-                                        <div class="row mb-4 g-0">
-                                            <div class="col-md-6">
-                                                <div class="card" style="border-radius: 0; height: 345px;">
-                                                    <div class="card-header text-uppercase text-muted">
-                                                        <h6 class="mt-2">Địa chỉ thanh toán</h6>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <p class="fw-bold">${fullName}</p>
-                                                        <p>${address}</p>
-                                                        <p>Email <br><strong>${email}</strong></p>
-                                                        <p>Số điện thoại <br><strong>${phone}</strong></p>
-                                                    </div>
+
+                                <div class="col-md-7">
+                                    <div class="row mb-4 g-0">
+                                        <div class="col-md-6">
+                                            <div class="card" style="border-radius: 0; height: 345px;">
+                                                <div class="card-header text-uppercase text-muted">
+                                                    <h6 class="mt-2">Địa chỉ thanh toán</h6>
+                                                </div>
+                                                <div class="card-body">
+                                                    <p class="fw-bold">${fullName}</p>
+                                                    <p>${address}</p>
+                                                    <p>Email <br><strong>${email}</strong></p>
+                                                    <p>Số điện thoại <br><strong>${phone}</strong></p>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="card" style="border-radius: 0; height: 345px;">
-                                                    <div class="card-header text-uppercase text-muted">
-                                                        <h6 class="mt-2">Địa chỉ giao hàng</h6>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <p class="fw-bold">${receiverName}</p>
-                                                        <p>${deliveryLocation}</p>
-                                                        <p>Email <br><strong>${email}</strong></p>
-                                                        <p>Số điện thoại <br><strong>${receiverPhone}</strong></p>
-                                                    </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="card" style="border-radius: 0; height: 345px;">
+                                                <div class="card-header text-uppercase text-muted">
+                                                    <h6 class="mt-2">Địa chỉ giao hàng</h6>
+                                                </div>
+                                                <div class="card-body">
+                                                    <p class="fw-bold">${receiverName}</p>
+                                                    <p>${deliveryLocation}</p>
+                                                    <p>Email <br><strong>${email}</strong></p>
+                                                    <p>Số điện thoại <br><strong>${receiverPhone}</strong></p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
                                 <div class="col-md-5">
                                     <div class="card">
                                         <div class="card-header text-muted">
@@ -168,29 +169,68 @@
                         </div>
 
 
-                        <!-- Order Progress -->
-                        <div class="mb-4">
-                            <div class="step-wizard">
-                                <c:set var="status" value="${deliveryStatus}" />
-                                <ul class="step-wizard-list">
-                                    <li class="step-wizard-item ${status == 'Cancelled' ? 'current-item' : ''}">
-                                        <span class="progress-count">1</span>
-                                        <span class="progress-label">Cancelled</span>
-                                    </li>
-                                    <li class="step-wizard-item ${status == 'Order received' ? 'current-item' : ''}">
-                                        <span class="progress-count">2</span>
-                                        <span class="progress-label">Order received</span>
-                                    </li>
-                                    <li class="step-wizard-item ${status == 'On the way' ? 'current-item' : ''}">
-                                        <span class="progress-count">3</span>
-                                        <span class="progress-label">On the way</span>
-                                    </li>
-                                    <li class="step-wizard-item ${status == 'Delivered' ? 'current-item' : ''}">
-                                        <span class="progress-count">4</span>
-                                        <span class="progress-label">Delivered</span>
-                                    </li>
-                                </ul>
-                            </div>
+                        <!--                         Order Progress 
+                                                <div class="mb-4">
+                                                    <div class="step-wizard">
+                        <c:set var="status" value="${deliveryStatus}" />
+                        <ul class="step-wizard-list">
+                            <h3>${deliveryStatus}</h3>
+                            <li class="step-wizard-item ${status == 'Cancelled' ? 'current-item' : ''}">
+                                <span class="progress-count">1</span>
+                                <span class="progress-label">Cancelled</span>
+                            </li>
+                            <li class="step-wizard-item ${status == 'Order received' ? 'current-item' : ''}">
+                                <span class="progress-count">2</span>
+                                <span class="progress-label">Order received</span>
+                            </li>
+                            <li class="step-wizard-item ${status == 'On the way' ? 'current-item' : ''}">
+                                <span class="progress-count">3</span>
+                                <span class="progress-label">On the way</span>
+                            </li>
+                            <li class="step-wizard-item ${status == 'Delivered' ? 'current-item' : ''}">
+                                <span class="progress-count">4</span>
+                                <span class="progress-label">Delivered</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>-->
+                        <%-- Thanh tiến trình cho trạng thái giao hàng deliveryStatus --%>
+                        <div class="step-wizard">
+                            <c:set var="status" value="${deliveryStatus}" />
+                            <ul class="step-wizard-list">
+                                <!-- Step 1: Receive or Cancel -->
+                                <li class="step-wizard-item ">
+                                    <span class="progress-count">1</span>
+                                    <span class="progress-label">
+                                        <c:choose>
+                                            <c:when test="${status == 'Cancel'}">
+                                                Cancel
+                                            </c:when>
+                                            <c:otherwise>
+                                                Receive
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </span>
+                                </li>
+
+                                <!-- Step 2: Waiting -->
+                                <li class="step-wizard-item ${status == 'Cancel' ? 'current-item' : ''}">
+                                    <span class="progress-count">2</span>
+                                    <span class="progress-label">Waiting</span>
+                                </li>
+
+                                <!-- Step 3: Shipping -->
+                                <li class="step-wizard-item ${status == 'Waiting' ? 'current-item' : ''}">
+                                    <span class="progress-count">3</span>
+                                    <span class="progress-label">Shipping</span>
+                                </li>
+
+                                <!-- Step 4: Delivered -->
+                                <li class="step-wizard-item ${status == 'Shipping' ? 'current-item' : ''}">
+                                    <span class="progress-count">4</span>
+                                    <span class="progress-label">Delivered</span>
+                                </li>
+                            </ul>
                         </div>
 
 
@@ -207,17 +247,17 @@
                             </thead>
                             <tbody>
                                 <c:forEach var="orderCurrentItem" items="${orderCurrent}">
-                                <tr>
-                                    <td class="d-flex align-items-center">
-                                        <!--lưu ý ở image chỉ được phép nhận tên ảnh chứ không lấy đường dẫn-->
-                                        <img src="${orderCurrentItem.productImage}" alt="Red Capsicum" class="product-img me-2">
-                                        <span>${orderCurrentItem.productName}</span>
-                                    </td>
-                                    <td class="item-price">${orderCurrentItem.unitPriceOutString}đ</td>
-                                    <td class="input-qty">${orderCurrentItem.quantity}</td>
-                                    <td class="discount">${orderCurrentItem.discountString}%</td>
-                                    <td class="item-total-price"></td>
-                                </tr>
+                                    <tr>
+                                        <td class="d-flex align-items-center">
+                                            <!--lưu ý ở image chỉ được phép nhận tên ảnh chứ không lấy đường dẫn-->
+                                            <img src="${orderCurrentItem.productImage}" alt="Red Capsicum" class="product-img me-2">
+                                            <span>${orderCurrentItem.productName}</span>
+                                        </td>
+                                        <td class="item-price">${orderCurrentItem.unitPriceOutString}đ</td>
+                                        <td class="input-qty">${orderCurrentItem.quantity}</td>
+                                        <td class="discount">${orderCurrentItem.discountString}%</td>
+                                        <td class="item-total-price"></td>
+                                    </tr>
                                 </c:forEach>
                             </tbody>
                         </table>

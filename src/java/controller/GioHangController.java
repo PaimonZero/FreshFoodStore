@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
+import model.Users;
 import util.Validate;
 
 /**
@@ -50,23 +51,24 @@ public class GioHangController extends HttpServlet {
         }
     } 
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
-     * Handles the HTTP <code>GET</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         HttpSession session = request.getSession();
+        Users user = (Users) session.getAttribute("account");
+        if (session.getAttribute("account") == null) {
+            response.sendRedirect(request.getContextPath() + "/auth");
+            return;
+        }
         int a = 0;
         OrderDetailDAO od = new OrderDetailDAO();
         
-        List<OrderDetailDTO> listOrderDetail = od.listGioHang();
-        
+        List<OrderDetailDTO> listOrderDetail = od.listGioHang(user.getUserId());
+        if (!listOrderDetail.isEmpty()) {
+            String shippingFeeString = Validate.doubleToMoney(listOrderDetail.get(0).getShippingFee());
+            request.setAttribute("shippingFeeString", shippingFeeString);
+        }
         for(OrderDetailDTO x:listOrderDetail){
             a=x.getOrderId();
             x.setUnitPriceString(Validate.BigDecimalToMoney(x.getUnitPrice()));
@@ -106,3 +108,4 @@ public class GioHangController extends HttpServlet {
     }// </editor-fold>
 
 }
+//done

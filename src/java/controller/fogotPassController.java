@@ -7,6 +7,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Random;
@@ -66,6 +67,9 @@ public class fogotPassController extends HttpServlet {
         if (otp == otpInput) {   //nếu user nhập đúng otp
             dao.updatePasswordUserDB(userID, newPass);
             //Chuyển hướng qua trang đăng nhập
+            //thông báo đổi mật khẩu thành công
+            HttpSession session = request.getSession();
+            session.setAttribute("notifyForgot", "success");
             response.sendRedirect("SignIn.jsp");
         } else {                //nếu sai otp
             //Thông báo cho khách hàng và chuyển lại trang quên mk
@@ -103,7 +107,7 @@ public class fogotPassController extends HttpServlet {
             // Tạo số ngẫu nhiên trong khoảng [min, max]
             int otp = random.nextInt((max - min) + 1) + min;
 
-            String tieuDe = "Forgot password notification from your HexTech account";
+            String tieuDe = "Forgot password notification from your FreshFoodStore account";
             String noiDung = "<!DOCTYPE html>\n"
                     + "<html lang=\"en\">\n"
                     + "\n"
@@ -158,7 +162,7 @@ public class fogotPassController extends HttpServlet {
                     + "            Nếu đúng Quý khách thực hiện yêu cầu trên, vui lòng bỏ qua email này.\n"
                     + "        </p>\n"
                     + "        <div class=\"row\">\n"
-                    + "            <p class=\"col-9\">Trân trọng, <br>HEXTECH SHOP</p>\n"
+                    + "            <p class=\"col-9\">Trân trọng, <br>FRESHFOODSTORE SHOP</p>\n"
                     + "            <img class=\"col-3\" style=\"width: 22%;\" src=\"./images/logo-color.png\" alt=\"\">\n"
                     + "        </div>\n"
                     + "    </div>\n"

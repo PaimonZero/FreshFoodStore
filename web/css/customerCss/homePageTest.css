@@ -243,6 +243,7 @@
 .cate-img img {
     height: 200px;
     padding: 10px 10px 0;
+    mix-blend-mode: multiply;
 }
 
 .shop-now-btn button {
@@ -437,7 +438,7 @@ video {
 #myBtn {
     display: none;
     position: fixed;
-    bottom: 60px;
+    bottom: 80px;
     right: 20px;
     width: 3%;
     z-index: 99;

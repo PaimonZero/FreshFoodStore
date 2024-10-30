@@ -77,7 +77,7 @@ public class authController extends HttpServlet {
             //khi này account = null; ko cho sài tính năng (limited access)
             session.setAttribute("account", account);
             request.setAttribute("notifyAuth", "failed");
-
+            request.setAttribute("error", "Đăng nhập thất bại, vui lòng kiểm tra lại email hoặc mật khẩu.");
             request.getRequestDispatcher("SignIn.jsp").forward(request, response);
             //Chuyển hướng trang
 //            String targetURL = "auth";

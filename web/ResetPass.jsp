@@ -90,46 +90,47 @@
                     <div class="col-md-5">
                         <div class="card p-4">
                             <h3 class="text-center mb-3">Reset password</h3>
-                            <p class="text-center mb-4">Please enter the OTP code sent to your email</p>
+                            <p class="text-center mb-4">Vui lòng nhập mã OTP mà chúng tôi đã gửi cho bạn qua Email</p>
                             <form action="forgot" method="POST">
                                 <input type="hidden" name="otpRight" value="${otp}"/>
                                 <input type="hidden" name="userID" value="${userID}"/>
                                 <input type="hidden" name="emailUser" value="${emailUser}"/>
                                 <!-- OTP Input -->
                                 <div class="form-group">
-                                    <label for="otp" class="sr-only">Enter OTP</label>
+                                    <label for="otp" class="sr-only">Nhập OTP</label>
                                     <input type="number" name="OTP" required class="form-control input-form" id="otp" placeholder="Enter OTP">
                                 </div>
                                 <!-- Resend OTP Link -->
                                 <div class="text-right mb-3 mt-3">
-                                    <a href="forgot?action=resendOtp&email=${emailUser}" class="text-success">Resend OTP code</a>
+                                    <a href="forgot?action=resendOtp&email=${emailUser}" class="text-success">Gửi lại mã OTP</a>
                                 </div>
                                 <!-- New Password Input -->
                                 <div class="form-group position-relative">
-                                    <label for="newPassword" class="sr-only">New password</label>
-                                    <input type="password" name="newPass" required class="form-control input-form" id="new-pass" placeholder="New password">
+                                    <label for="newPassword" class="sr-only">Mật khẩu mới</label>
+                                    <input type="password" name="newPass" required class="form-control input-form" id="new-pass" placeholder="Mật khẩu mới" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" 
+                                           title="Mật khẩu phải có ít nhất 8 kí tự và phải chứa cả chữ và số">     <!--chỗ này đã sửa lại pattern chưa update bên nam-->
                                     <span toggle="#new-pass"
                                           class="fa fa-fw fa-eye field-icon password-toggle"></span>
                                 </div>
                                 <!-- Confirm Password Input -->
                                 <div class="form-group position-relative mt-3">
-                                    <label for="confirmPassword" class="sr-only">Confirm password</label>
-                                    <input type="password" class="form-control input-form" id="confirm-pass" placeholder="Confirm password">
+                                    <label for="confirmPassword" class="sr-only">Xác nhận mật khẩu</label>
+                                    <input type="password" class="form-control input-form" id="confirm-pass" placeholder="Xác nhận mật khẩu">
                                     <!--<span class="password-toggle"><i class="fa fa-eye"></i></span>-->
                                     <span toggle="#confirm-pass"
-                                                  class="fa fa-fw fa-eye field-icon password-toggle"></span>
+                                          class="fa fa-fw fa-eye field-icon password-toggle"></span>
                                 </div>
                                 <!-- Phần hiển thị lỗi -->
                                 <div class="text-danger mt-2" id="password-error" style="display: none;">Mật khẩu xác nhận
                                     không
                                     trùng khớp!</div>
                                 <div>
-                                <!-- Submit Button -->
-                                <button type="submit" class="btn btn-success btn-block mt-3 w-100" id="save-btn" style="border-radius: 50px;">Submit</button>
-                                <!-- Sign In Link -->
-                                <div class="text-center mt-3">
-                                    <p>Want to go back? <a href="SignIn.jsp">Sign in</a></p>
-                                </div>
+                                    <!-- Submit Button -->
+                                    <button type="submit" class="btn btn-success btn-block mt-3 w-100" id="save-btn" style="border-radius: 50px;">Gửi</button>
+                                    <!-- Sign In Link -->
+                                    <div class="text-center mt-3">
+                                        <p>Muốn quay trở lại? <a href="SignIn.jsp">Đăng nhập</a></p>
+                                    </div>
                             </form>
                         </div>
                     </div>
@@ -137,14 +138,14 @@
             </div>
         </section>
         <%@ include file="./Footer.jsp" %>
-        
+
         <script>
             window.onload = function () {
                 var notifyForgotField = document.getElementById('notifyForgot');
                 if (notifyForgotField) {
                     var notifyAuth = notifyForgotField.value;
                     if (notifyAuth === "saiOtp") {
-                        alert("Sai mã otp! nhập lại mã!");
+                        alert("Sai mã otp! Vui lòng nhập lại mã!");
                     } else if (notifyAuth === "resendOtp") {
                         alert("Đã gửi lại mã OTP! Hãy kiểm tra email của bạn!");
                     }
@@ -152,6 +153,7 @@
                     notifyForgotField.remove();
                 }
             };
+            
         </script>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>

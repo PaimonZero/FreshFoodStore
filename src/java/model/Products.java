@@ -22,8 +22,11 @@ public class Products {
     private Date updateAt;
     private int quantity; 
     private double discount; 
+    //Trường thêm hiển thị danh sách
+    private String promotionStatus;
     //trung thêm 
     private String unitPriceString;
+    
       public Products() {
     }
     
@@ -55,6 +58,15 @@ public class Products {
         this.updateAt = updateAt;
         this.quantity = quantity;
         this.discount = discount;
+    }
+    
+    public Products(int productId, String name, String unitMeasure, String status, BigDecimal unitPrice, int quantity) {
+        this.productId = productId;
+        this.name = name;
+        this.unitMeasure = unitMeasure;
+        this.status = status;
+        this.unitPrice = unitPrice;
+        this.quantity = quantity;
     }
     
     public Products(int productId, String name, String unitMeasure, String status, BigDecimal unitPrice, int quantity, double discount) {
@@ -171,6 +183,14 @@ public class Products {
         this.discount = discount;
     }
 
+    public String getPromotionStatus() {
+        return promotionStatus;
+    }
+
+    public void setPromotionStatus(String promotionStatus) {
+        this.promotionStatus = promotionStatus;
+    }
+    
     public String getUnitPriceString() {
         return unitPriceString;
     }
@@ -178,10 +198,10 @@ public class Products {
     public void setUnitPriceString(String unitPriceString) {
         this.unitPriceString = unitPriceString;
     }
-    
+
     @Override
     public String toString() {
-        return "Products{" + "productId=" + productId + ", name=" + name + ", unitMeasure=" + unitMeasure + ", supplierId=" + supplierId + ", categoryId=" + categoryId + ", description=" + description + ", image=" + image + ", unitPrice=" + unitPrice + ", status=" + status + ", createdAt=" + createdAt + ", updateAt=" + updateAt + ", quantity=" + quantity + ", discount=" + discount + '}';
+        return "Products{" + "productId=" + productId + ", name=" + name + ", unitMeasure=" + unitMeasure + ", supplierId=" + supplierId + ", categoryId=" + categoryId + ", description=" + description + ", image=" + image + ", unitPrice=" + unitPrice + ", status=" + status + ", createdAt=" + createdAt + ", updateAt=" + updateAt + ", quantity=" + quantity + ", discount=" + discount + ", promotionStatus=" + promotionStatus + ", unitPriceString=" + unitPriceString + '}';
     }
     
 }

@@ -15,6 +15,7 @@
         <script src="https://kit.fontawesome.com/54f0cb7e4a.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="../css/bootstrap.min.css">
         <link rel="stylesheet" href="../css/customerCss/contact.css" />
+        <link rel="shotcut icon" href="../images/logoFFSNoBG.png"/>
     </head>
     <body>
         <%@include file="./HeaderLogin1.jsp" %>

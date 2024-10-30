@@ -10,6 +10,7 @@
         <script src="https://kit.fontawesome.com/54f0cb7e4a.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <link rel="stylesheet" href="../css/customerCss/ShoppingCart.css">
+        <link rel="shotcut icon" href="../images/logoFFSNoBG.png"/>
     </head>
     <body>
         <%@include file="HeaderLogin1.jsp" %>
@@ -34,53 +35,89 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <c:forEach var="p" items="${requestScope.listProduct}"> 
-                                                    <tr class="product">
-                                                        <td>
-                                                            <img src="${p.image}" alt="contact-img" title="contact-img"
-                                                                 class="rounded me-3" height="64" />
-                                                            <p class="m-0 d-inline-block align-middle font-16 product-name">
-                                                                <a href="apps-ecommerce-products-details.html"
-                                                                   class="text-body">${p.name}</a>
-                                                                <!-- <br>
-                                                                <small class="me-2"><b>Size:</b> Large </small>
-                                                                <small><b>Color:</b> Orange </small> -->
-                                                            </p>
-                                                        </td>
-                                                        <td>
-                                                            <div class="item-price">${p.unitPriceString} đ</div>
-                                                            <div class="d-none">${p.discountString}%</div>
-                                                        </td>
-                                                        <!-- <input type="number" min="1" value="1" class="form-control"
-                                                            placeholder="Qty" style="width: 90px;"> -->
-                                                        <td class="text-center d-flex">
-                                                            <div class="item-quantity d-flex justify-content-center" style="padding-left: 20px;">
-                                                                <div class="qty-container" style="width: 100%;">
-<!--                                                                    <form action="${pageContext.request.contextPath}/customer/shoppingcart" method="Post"> -->
-                                                                    <button type="button" class="qty-btn-minus btn-light" onclick="changeQuantity(${p.orderDetailId}, -1, this)">-</button>
-                                                                    <input type="number" name="quantity" class="input-qty" style="width: 55px;" value="${p.quantity}" min="1" max="${p.batchQuantity}" readonly />
-                                                                    <button type="button" class="qty-btn-plus btn-light" onclick="changeQuantity(${p.orderDetailId}, +1, this)">+</button>
-<!--                                                                </form>-->
-                                                                </div>
-                                                            </div>
-                                                            <input type="submit" class="ok" style="display: none; background: none; border: none; padding: 0; cursor: pointer; outline: none; color: blue;" value="OK"> <%--update giỏ hàng khi số lượng tăng hoặc giảm--%>
-                                                        </td>
-                                                        <td>
-                                                            <div class="item-total-price">${p.quantity*(100-p.discount)*p.unitPrice}</div>
-                                                        </td>
-                                                        <td>
-                                                            <!--                                                            <a href="javascript:void(0);" class="action-icon"> <i
-                                                                                                                                class="far fa-trash-alt"></i></a>-->
-                                                                                                                                            <!--<h1>${p.orderDetailId}</h1>-->
-                                                            <form id="delete" action="shoppingcart?action=delete" method="POST"> <%--đổi đường dẫn--%>
-                                                                <input type="hidden" name="deleteId" id="deleteId" value="${p.orderDetailId}" />
-                                                                <button class="action-icon p-0" style="border: none; background-color: unset;" type="submit"> 
-                                                                    <i class="far fa-trash-alt me-2"></i>
-                                                                </button>
-                                                            </form>                                                                
-                                                        </td>
-                                                    </tr>
-                                                </c:forEach>
+                                                <c:choose>
+                                                    <c:when test="${not empty requestScope.listProduct}">
+                                                        <c:forEach var="p" items="${requestScope.listProduct}"> 
+                                                            <tr class="product">
+                                                                <td>
+                                                                    <img src="${p.image}" alt="contact-img" title="contact-img"
+                                                                         class="rounded me-3" height="64" />
+                                                                    <p class="m-0 d-inline-block align-middle font-16 product-name">
+                                                                        <a href="apps-ecommerce-products-details.html"
+                                                                           class="text-body">${p.name}</a>
+                                                                        <!-- <br>
+                                                                        <small class="me-2"><b>Size:</b> Large </small>
+                                                                        <small><b>Color:</b> Orange </small> -->
+                                                                    </p>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="item-price">${p.unitPriceString} đ</div>
+                                                                    <div class="d-none discount">${p.discountString}%</div>
+                                                                </td>
+                                                                <!-- <input type="number" min="1" value="1" class="form-control"
+                                                                    placeholder="Qty" style="width: 90px;"> -->
+                                                                <td class="text-center d-flex">
+                                                                    <!--                                                                    <div class="item-quantity d-flex justify-content-center" style="padding-left: 20px;">
+                                                                                                                                            <div class="qty-container" style="width: 100%;">
+                                                                                                                                                <form action="${pageContext.request.contextPath}/customer/shoppingcart" method="Post"> 
+                                                                                                                                                <button type="button" class="qty-btn-minus btn-light" onclick="changeQuantity(${p.orderDetailId}, -1, this)">-</button>
+                                                                                                                                                <input type="number" name="quantity" class="input-qty" style="width: 55px;" value="${p.quantity}" min="1" max="${p.batchQuantity}" readonly />
+                                                                                                                                                <button type="button" class="qty-btn-plus btn-light" onclick="changeQuantity(${p.orderDetailId}, +1, this)">+</button>
+                                                                                                                                                                                                        </form>
+                                                                                                                                            </div>
+                                                                                                                                        </div>-->
+                                                                    <div class="item-quantity d-flex justify-content-center w-100">
+
+                                                                        <c:choose>  
+                                                                            <c:when test="${p.batchQuantity == 0}">  
+                                                                                <div class="qty-container d-none">
+                                                                                    <button type="button" class="qty-btn-minus btn-light" onclick="changeQuantity(${p.orderDetailId}, -1, this)">-</button>
+                                                                                    <input type="number" name="quantity" class="input-qty" style="width: 55px;" value="0" min="1" max="${p.batchQuantity}" readonly />
+                                                                                    <button type="button" class="qty-btn-plus btn-light" onclick="changeQuantity(${p.orderDetailId}, +1, this)">+</button>
+                                                                                </div>
+                                                                                <!--                                                                            <script>
+                                                                                                                                                                alert("batchQuantity is 0");
+                                                                                                                                                            </script>  -->
+                                                                                <div class="alert alert-danger p-1" style="font-size: 13px;" role="alert">
+                                                                                    <i class="bi bi-exclamation-triangle-fill"></i> Sản phẩm này đang tạm thời <br> hết hàng không thể thanh toán
+                                                                                </div>
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                                <div class="qty-container">
+                                                                                    <button type="button" class="qty-btn-minus btn-light" onclick="changeQuantity(${p.orderDetailId}, -1, this)">-</button>
+                                                                                    <input type="number" name="quantity" class="input-qty" style="width: 55px;" value="${p.quantity}" min="1" max="${p.batchQuantity}" readonly />
+                                                                                    <button type="button" class="qty-btn-plus btn-light" onclick="changeQuantity(${p.orderDetailId}, +1, this)">+</button>
+                                                                                </div>
+                                                                            </c:otherwise>
+                                                                        </c:choose>  
+                                                                    </div>
+                                                                    <input type="submit" class="ok" style="display: none; background: none; border: none; padding: 0; cursor: pointer; outline: none; color: blue;" value="OK"> <%--update giỏ hàng khi số lượng tăng hoặc giảm--%>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="item-total-price"></div>
+                                                                </td>
+                                                                <td>
+                                                                    <!--                                                            <a href="javascript:void(0);" class="action-icon"> <i
+                                                                                                                                        class="far fa-trash-alt"></i></a>-->
+                                                                                                                                                    <!--<h1>${p.orderDetailId}</h1>-->
+                                                                    <form id="delete" action="shoppingcart?action=delete" method="POST"> <%--đổi đường dẫn--%>
+                                                                        <input type="hidden" name="deleteId" id="deleteId" value="${p.orderDetailId}" />
+                                                                        <button class="action-icon p-0" style="border: none; background-color: unset;" type="submit"> 
+                                                                            <i class="far fa-trash-alt me-2"></i>
+                                                                        </button>
+                                                                    </form>                                                                
+                                                                </td>
+                                                            </tr>
+                                                        </c:forEach>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <tr>
+                                                            <td colspan="5" class="text-center pt-3 text-danger">
+                                                                <p>Giỏ hàng của bạn đang trống.</p>
+                                                            </td>
+                                                        </tr>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </tbody>
                                         </table>
 
@@ -130,7 +167,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td>Phí vận chuyển :</td>
-                                                            <td><div class="shipping-amount">$25</div></td>
+                                                            <td><div class="shipping-amount">${shippingFeeString} đ</div></td>
                                                         </tr>
                                                         <tr>
                                                             <th>Tổng tiền phải thanh toán :</th>
@@ -138,9 +175,17 @@
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                                <button type="submit" class="process-pay-btn btn w-100 mt-4">Đi đến thanh
-                                                    toán</button>
 
+                                                <c:choose>
+                                                    <c:when test="${not empty requestScope.listProduct}">
+                                                        <button type="submit" class="process-pay-btn btn w-100 mt-4">Đi đến thanh
+                                                            toán</button>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                        <button type="submit" class="process-pay-btn btn w-100 mt-4" disabled>Đi đến thanh
+                                                            toán</button>
+                                                        </c:otherwise>
+                                                    </c:choose>
                                             </div>
                                         </form>
                                         <!-- end table-responsive -->
@@ -158,9 +203,8 @@
         <script src="../js/authJs/ShoppingCart.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script>
-    const contextPath = "${pageContext.request.contextPath}";
-</script>
-
-
+                                                                                        const contextPath = "${pageContext.request.contextPath}";
+        </script>
     </body>
 </html>
+<!--done-->

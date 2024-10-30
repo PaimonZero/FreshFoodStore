@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dal.BatchProductDAO;
 import dal.ProductDAO;
 import dto.ProductDTO;
 import jakarta.servlet.ServletException;
@@ -37,7 +38,10 @@ public class ProductDetailController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         ProductDAO p = new ProductDAO();
+        BatchProductDAO bpdao = new BatchProductDAO();
         int productId = Integer.parseInt(request.getParameter("id"));
+         bpdao.updateBatchforProductDetail();
+
         ProductDTO pdto = p.findProductById(productId);
         List<Products> lienquan = p.findProductByCategory(productId);
         for(Products x:lienquan){

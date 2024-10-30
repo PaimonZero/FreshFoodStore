@@ -48,7 +48,7 @@
                 <div class="container">
                     <div class="footer-content row">
                         <div class="footer-logo col-md-4">
-                            <img src="./images/snapedit_1726937937080.png" alt="Ecobazar Logo">
+                            <img src="./images/logoFreshFoodStore.png" alt="Ecobazar Logo" class="w-100 h-100 mb-2">
                             <h6>Shop Fresh Food uy tín chất lượng nhất Việt Nam, chúng tôi có đội ngũ giao hàng nhanh chóng
                                 trong 24h. Hãy lựa chọn chúng tôi !!!</h6>
                             <p class="mt-3"><strong>(86+) 3374 432</strong> or <strong>freshfoodfpt@gmail.com</strong></p>

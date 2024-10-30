@@ -1,11 +1,13 @@
 package util;
 
 import java.math.BigDecimal;
+import java.text.Normalizer;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 public class Validate {
 
@@ -59,9 +61,23 @@ public class Validate {
 
         return formattedDate;
     }
+    
+    public static String removeVietnameseAccents(String str) {
+        // Chuẩn hóa chuỗi về dạng decomposed (NFD)
+        String normalized = Normalizer.normalize(str, Normalizer.Form.NFD);
+        
+        // Sử dụng regex để loại bỏ các ký tự dấu
+        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+        return pattern.matcher(normalized).replaceAll("").replace('đ', 'd').replace('Đ', 'D');
+    }
 
     public static void main(String[] args) {
-        String result = Validate.doubleToMoney(190000);
-        System.out.println("Formatted Number: " + result);
+        String fullName = "Nguyễn Văn Tài";
+        String fullNameWithoutDiacritics = removeVietnameseAccents(fullName);
+        
+        System.out.println(fullNameWithoutDiacritics);  // Kết quả: Nguyen Van Tai
+        
+//        String result = Validate.doubleToMoney(190000);
+//        System.out.println("Formatted Number: " + result);
     }
 }

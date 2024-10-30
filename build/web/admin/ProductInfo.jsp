@@ -3,11 +3,14 @@
 <%@page import="model.BatchProduct"%>
 <%@page import="model.Promos"%>
 <%@page import="dto.ProductDTO"%>
-
 <%@page import="model.Products"%>
 <%@page import="model.Supplier"%>
 <%@page import="model.Category"%>
 <%@page import="dal.ProductDAO"%>
+<%@page import="model.Gallery"%>
+<%@page import="dal.GalleryDAO"%>
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Locale" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 
@@ -52,13 +55,24 @@
                                         <h4 class="mb-0" style="font-weight: bold;"><%= productInfo.getProductName() %></h4>
                                         <div>
                                             <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal" 
-                                                    data-bs-target="#editProductModal" style="width: 105px;">Edit Product</button>
+                                                    data-bs-target="#editProductModal" style="width: 105px;"
+                                                    data-nameId="<%= productInfo.getProductName() %>"
+                                                    data-unitMeasure="<%= productInfo.getUnitMeasure() %>"
+                                                    data-supplier="<%= productInfo.getProductName() %>"
+                                                    data-category="<%= productInfo.getCategoryName() %>"
+                                                    data-description="<%= productInfo.getDescription() %>" 
+                                                    data-unitPrice="<%= String.format("%.0f", productInfo.getUnitPrice()) %>"
+                                                    onclick="editProduct(this)" >Edit Product</button>
 
                                             <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
                                                     data-bs-target="#deleteConfirmationModal"  style="width: 105px;">Delete</button>
 
                                         </div>
                                     </div>
+                                    <%
+                                                NumberFormat formatter = NumberFormat.getInstance(Locale.US); // or any locale you prefer
+                                    %>
+
 
                                     <!-- Start of the Content Section with 2 Columns -->
                                     <div class="card-body">
@@ -90,7 +104,7 @@
                                                                 </tr>
                                                                 <tr>
                                                                     <td style="padding: 10px 10px;"><strong>Giá bán ra:</strong></td>
-                                                                    <td style="padding: 10px 10px;"><%= productInfo.getUnitPrice() %> VND</td>
+                                                                    <td style="padding: 10px 10px;"><%= formatter.format(productInfo.getUnitPrice()) %></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td style="padding: 10px 10px;"><strong>Mô tả</strong></td>
@@ -128,7 +142,8 @@
                                                                 <th>Mã lô hàng</th>
                                                                 <th>Ngày nhập</th>
                                                                 <th>Ngày hết hạn</th>
-                                                                <th>Số lượng hiện có</th>
+                                                                <th class="no-border-right">Số lượng hiện có</th>
+                                                                <th class="no-border-left"></th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -143,6 +158,24 @@
                                                                 <td><%= batchProduct.getCreatedAt() %></td>
                                                                 <td><%= batchProduct.getExpiryDate() %></td>
                                                                 <td><%= batchProduct.getQuantity() %></td>
+                                                                <td>
+                                                                    <button class="btn btn-sm btn-outline-secondary" 
+                                                                            data-bs-toggle="modal" data-bs-target="#batchModal"
+                                                                            data-batchId="<%= batchProduct.getBatchId() %>"
+                                                                            data-quantity="<%= batchProduct.getQuantity() %>"
+                                                                            data-productIdm="<%= productInfo.getProductId() %>"
+                                                                            onclick="batchModal(this)">
+                                                                        <ion-icon name="pencil-outline"></ion-icon>
+                                                                    </button>
+                                                                    <button class="btn btn-sm btn-outline-danger" 
+                                                                            data-bs-toggle="modal" data-bs-target="#deleteBatchModal"
+                                                                            data-batchIdd="<%= batchProduct.getBatchId() %>"
+                                                                            data-productIdd="<%= productInfo.getProductId() %>"
+                                                                            onclick="deleteBatchModal(this)">
+                                                                        <ion-icon name="trash-bin-outline"></ion-icon>
+                                                                    </button>
+
+                                                                </td>
                                                             </tr>
                                                             <%
                                                                     }
@@ -183,7 +216,15 @@
                                                                 <td><%= promo.getEndDate() %></td>
                                                                 <td><%= promo.getDiscount() %></td>
                                                                 <td>
-                                                                    <button class="btn btn-sm btn-outline-secondary">
+                                                                    <button class="btn btn-sm btn-outline-secondary" 
+                                                                            data-bs-toggle="modal" data-bs-target="#promoModal"
+                                                                            data-promotionId="<%= promo.getPromotionId() %>"
+                                                                            data-startDate="<%= promo.getStartDate() %>"
+                                                                            data-endDate="<%= promo.getEndDate() %>"
+                                                                            data-discount="<%= promo.getDiscount() %>"
+                                                                            data-productId="<%= productInfo.getProductId() %>"
+                                                                            onclick="populateModal(this)"
+                                                                            >
                                                                         <ion-icon name="pencil-outline"></ion-icon>
                                                                     </button>
                                                                 </td>
@@ -202,17 +243,38 @@
                                                     </table>
                                                 </div>
                                             </div>
-                                            <div class="col-md-1"></div>
+
                                             <!-- Column for Product Image -->
-                                            <div class="col-md-4">
+                                            <div class="col-md-5">
                                                 <div class="d-flex flex-column align-items-center">
                                                     <div class="product-image mb-2">
-                                                        <img src="image.png" alt="Sản phẩm" class="img-fluid">
+                                                        <img src="<%= productInfo.getImage() %>" alt="Sản phẩm" class="img-fluid">
                                                     </div>
+                                                    <% 
+                                                        // Tạo ProductInfoDao và lấy thông tin sản phẩm
+                                                         GalleryDAO galleryDAO = new GalleryDAO();
+                                                         List<Gallery> galleryList = galleryDAO.getAllGalleryByPId(productId);
+                                                    %>
+                                                    <div class="row">
+                                                        <c:forEach var="ga" items="<%= galleryList %>">
+                                                            <div class="col-md-6" style="justify-content: center;">
+                                                                <div class="product-image mb-2" style="margin: 0 auto;">
+                                                                    <img src="${ga.src}" alt="Sản phẩm" class="img-fluid">
+                                                                </div>
+                                                            </div>
+                                                        </c:forEach>
+                                                        <c:if test="<%= galleryList.isEmpty() %>">
+                                                            <p>
+                                                                Không có ảnh trong thư viện
+                                                            </p>
+                                                        </c:if>
+
+                                                    </div>
+                                                    <!--                                                    
                                                     <div class="product-quantity text-center">
-                                                        <p><strong>Hiện có:</strong> 34</p>
-                                                        <p><strong>Số lượng hàng trong kho:</strong> 10</p>
-                                                    </div>
+                                                                                                            <p><strong>Hiện có:</strong> 34</p>
+                                                                                                            <p><strong>Số lượng hàng trong kho:</strong> 10</p>
+                                                                                                        </div>-->
                                                 </div>
                                             </div>
                                         </div>
@@ -258,7 +320,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="UpdateProductServlet" method="post">
+                        <form action="UpdateProduct" method="post" enctype="multipart/form-data">
                             <div class="container-fluid">
                                 <div class="row">
                                     <!-- Left Column -->
@@ -294,23 +356,16 @@
                                                 <% } %>
                                             </select>
                                         </div>
-                                        <div class="mb-3">
-                                            <label for="expirationDate" class="form-label">Expiration Date</label>
-                                            <input type="date" class="form-control" id="expirationDate" name="expirationDate" required>
-                                        </div>
-                                         <div class="mb-3">
-                                            <label for="unitPrice" class="form-label">Quantity</label>
-                                            <input type="number" class="form-control" id="quantity" name="quantity" required>
-                                        </div>
                                     </div>
 
                                     <!-- Right Column -->
                                     <div class="col-md-6">
+                                        <input type="hidden" name="pImgOld" value="<%= productInfo.getImage() %>"/>
                                         <div class="mb-3 text-center">
                                             <label for="imageUpload" class="form-label">Upload Image</label>
                                             <div class="image-upload">
                                                 <label for="imageFile" class="image-text">Click to upload image</label>
-                                                <input type="file" class="form-control" id="imageFile" name="image">
+                                                <input type="file" class="form-control" id="imageFile" name="file" accept="image/*" multiple>
                                             </div>
                                         </div>
                                     </div>
@@ -332,8 +387,8 @@
                                         <div class="mb-3">
                                             <label for="status" class="form-label">Status</label>
                                             <select class="form-select" id="status" name="status" required>
-                                                <option value="Available">Available</option>
-                                                <option value="Unavailable">Unavailable</option>
+                                                <option value="In Stock">In Stock</option>
+                                                <option value="Out of stock">Out of stock</option>
                                             </select>
                                         </div>
                                     </div>
@@ -348,6 +403,121 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="promoModal" tabindex="-1" aria-labelledby="promoModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="promoModalLabel">Thay đổi thông tin ưu đãi</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="promoForm" action="AdProductDetails?action=updatePromo" method="POST">
+                            <input type="hidden" class="form-control" id="promoId" name="promoId">
+                            <input type="hidden" class="form-control" id="productId" name="productId">
+                            <div class="mb-3">
+                                <label for="startDate" class="form-label">Ngày bắt đầu</label>
+                                <input type="date" class="form-control" id="startDate" name="startDate" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="endDate" class="form-label">Ngày kết thúc</label>
+                                <input type="date" class="form-control" id="endDate" name="endDate" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="discount" class="form-label">% Ưu đãi</label>
+                                <input type="number" class="form-control" id="discount" name="discount" min="0" max="100" required>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-primary" form="promoForm">Lưu thay đổi</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="batchModal" tabindex="-1" aria-labelledby="batchModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="promoModalLabel">Thay đổi số lượng sản phẩm</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="batchForm" action="AdProductDetails?action=updateBatch" method="POST">
+                            <input type="hidden" class="form-control" id="batchIdm" name="batchId">
+                            <input type="hidden" class="form-control" id="productIdm" name="productId">
+                            <div class="mb-3">
+                                <label for="discount" class="form-label">Số lượng</label>
+                                <input type="number" class="form-control" id="quantitym" name="quantity" min="0" required>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-primary" form="batchForm">Lưu thay đổi</button>
+                    </div>
+                </div>
+            </div>
+        </div>    
+
+        <div class="modal fade" id="deleteBatchModal" tabindex="-1" aria-labelledby="deleteBatchModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteBatchModalLabel">Xác nhận xóa lô hàng</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Bạn có chắc chắn muốn xóa lô hàng này không?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <form action="AdProductDetails?action=deleteBatch" method="post">
+                            <input type="hidden" class="form-control" id="batchIdd" name="batchId">
+                            <input type="hidden" class="form-control" id="productIdd" name="productId">
+                            <button type="submit" class="btn btn-danger">Xóa</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <script>
+            function populateModal(button) {
+                document.getElementById('productId').value = button.getAttribute('data-productId');
+                document.getElementById('promoId').value = button.getAttribute('data-promotionId');
+                document.getElementById('startDate').value = button.getAttribute('data-startDate');
+                document.getElementById('endDate').value = button.getAttribute('data-endDate');
+                document.getElementById('discount').value = button.getAttribute('data-discount');
+            }
+
+            function batchModal(button) {
+                document.getElementById('batchIdm').value = button.getAttribute('data-batchId');
+                document.getElementById('productIdm').value = button.getAttribute('data-productIdm');
+                document.getElementById('quantitym').value = button.getAttribute('data-quantity');
+            }
+
+            function editProduct(button) {
+                document.getElementById('productName').value = button.getAttribute('data-nameId');
+                document.getElementById('unitMeasure').value = button.getAttribute('data-unitMeasure');
+                document.getElementById('supplierSelect').value = button.getAttribute('data-supplier');
+                document.getElementById('categorySelect').value = button.getAttribute('data-category');
+                document.getElementById('description').value = button.getAttribute('data-description');
+                document.getElementById('unitPrice').value = button.getAttribute('data-unitPrice');
+            }
+
+            function deleteBatchModal(button) {
+                document.getElementById('batchIdd').value = button.getAttribute('data-batchIdd');
+                document.getElementById('productIdd').value = button.getAttribute('data-productIdd');
+            }
+        </script>                                   
+
 
         <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

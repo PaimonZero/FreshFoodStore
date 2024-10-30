@@ -4,6 +4,10 @@
 <%@page import="java.util.List" %>
 <%@page import="java.util.Map" %>
 <%@page import="java.util.HashMap" %>
+<%@page import="dal.OrdersDAO"%>
+<%@page import="model.Orders"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
@@ -34,23 +38,29 @@
                                         <div class="row">
                                             <div class="col-md-3" style="border-right: 3px solid #F0F1F3;">
                                                 <h5 class="card-title" style="color:#1570EF;">Tổng số đơn hàng</h5>
-                                                <p class="card-text">
-                                                    <c:choose>
-                                                        <c:when test="${not empty orderOverview}">
-                                                            <c:out value="${orderOverview['totalOrders']}" />
-                                                        </c:when>
-                                                        <c:otherwise>0</c:otherwise>
-                                                    </c:choose>
-                                                </p>
-                                                <p class="card-text">Last 7 days</p>
+                                                <div class="d-flex justify-content-between">
+                                                    <p class="card-text">
+                                                        <c:choose>
+                                                            <c:when test="${not empty orderOverview}">
+                                                                <c:out value="${orderOverview['totalOrders']}" />
+                                                            </c:when>
+                                                            <c:otherwise>0</c:otherwise>
+                                                        </c:choose>
+                                                    </p>
+                                                </div>
+                                                <div class="d-flex justify-content-between">
+                                                    <p class="card-text">Last 7 days</p>
+                                                    <p class="card-text">Order</p>
+                                                </div>
                                             </div>
+
                                             <div class="col-md-3" style="border-right: 3px solid #F0F1F3;">
                                                 <h5 class="card-title" style="color:#E19133;">Tổng tiền nhận được</h5>
                                                 <div class="d-flex justify-content-between">
                                                     <p class="card-text">
                                                         <c:choose>
                                                             <c:when test="${not empty orderOverview}">
-                                                                <c:out value="${orderOverview['totalRevenue']}" />
+                                                                <fmt:formatNumber value="${orderOverview['totalRevenue']}" type="currency" currencySymbol="₫" />
                                                             </c:when>
                                                             <c:otherwise>0</c:otherwise>
                                                         </c:choose>
@@ -61,6 +71,7 @@
                                                     <p class="card-text">Revenue</p>
                                                 </div>
                                             </div>
+
                                             <div class="col-md-3" style="border-right: 3px solid #F0F1F3;">
                                                 <h5 class="card-title" style="color:#845EBC">Đang vận chuyển</h5>
                                                 <div class="d-flex justify-content-between">
@@ -75,20 +86,25 @@
                                                 </div>
                                                 <div class="d-flex justify-content-between">
                                                     <p class="card-text">Last 7 days</p>
-                                                    <p class="card-text">Cost</p>
+                                                    <p class="card-text">Order</p>
                                                 </div>
                                             </div>
+
                                             <div class="col-md-3">
-                                                <h5 class="card-title" style="color:#F36960">Số đơn hủy/trả</h5>
+                                                <h5 class="card-title" style="color:#F36960">Chưa vận chuyển</h5>
                                                 <div class="d-flex justify-content-between">
                                                     <p class="card-text">
                                                         <c:choose>
                                                             <c:when test="${not empty orderOverview}">
-                                                                <c:out value="${orderOverview['totalCanceled']}" />
+                                                                <c:out value="${orderOverview['totalWaiting']}" />
                                                             </c:when>
                                                             <c:otherwise>0</c:otherwise>
                                                         </c:choose>
                                                     </p>
+                                                </div>
+                                                <div class="d-flex justify-content-between">
+                                                    <p class="card-text">Last 7 days</p>
+                                                    <p class="card-text">Order</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -106,18 +122,8 @@
                                     </div>
 
                                     <!-- Pagination logic -->
-                                    <%
-                                        int itemsPerPage = 9;
-                                        List<OrderDTO> orderDisplayList = (List<OrderDTO>) request.getAttribute("orderDisplayList");
-                                        int totalOrders = (orderDisplayList != null) ? orderDisplayList.size() : 0;
-                                        int totalPages = (int) Math.ceil((double) totalOrders / itemsPerPage);
-                                        int currentPage = (request.getParameter("page") != null) ? Integer.parseInt(request.getParameter("page")) : 1;
-                                        int startIndex = (currentPage - 1) * itemsPerPage;
-                                        int endIndex = Math.min(startIndex + itemsPerPage, totalOrders);
-                                    %>
-
-                                    <div class="card-body">
-                                        <table class="table">
+                                    <div class="card-body" style="height: auto">
+                                        <table class="table table-hover">
                                             <thead>
                                                 <tr>
                                                     <th scope="col">ID</th>
@@ -131,31 +137,41 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <!-- Lặp qua danh sách đơn hàng và hiển thị -->
-                                                <%
-                                                    if (orderDisplayList == null || orderDisplayList.isEmpty()) {
-                                                %>
-                                                <tr>
-                                                    <td colspan="7" class="text-center">Không có đơn hàng nào</td>
-                                                </tr>
-                                                <%
-                                                    } else {
-                                                        for (int i = startIndex; i < endIndex; i++) {
-                                                            OrderDTO order = orderDisplayList.get(i);
-                                                %>
-                                                <tr>
-                                                    <td><%= order.getOrderId() %></td>
-                                                    <td><%= order.getReceiverName() %></td>
-                                                    <td><%= order.getPaymentStatus() %></td>
-                                                    <td><%= order.getTotalPrice() %></td>
-                                                    <td><%= order.getOrderCreatedAt() %></td>
-                                                    <td><%= order.getShipperName() %></td>
-                                                    <td><%= order.getDeliveryStatus() %></td>
-                                                </tr>
-                                                <%
-                                                        }
-                                                    }
-                                                %>
+                                            
+                                                <c:forEach var="order" items="${orderDisplayList}">
+                                                   <form id="infoForm2_${order.orderId}" action="OrdersController?action=viewOrderDetail" method="POST">
+                                                    <tr onclick="document.getElementById('infoForm2_${order.orderId}').submit();" style="cursor: pointer;">
+                                                        <td>${order.orderId}</td>
+                                                        <td>${order.receiverName}</td>
+                                                        <td>${order.paymentStatus}</td>
+                                                        <td><fmt:formatNumber value="${order.totalPrice}" pattern="#,###" /></td>
+                                                        <td>${order.orderCreatedAt}</td>    
+                                                        <td>
+                                                            <c:choose>
+                                                                <c:when test="${empty order.shipperName}">
+                                                                    <span style="color:red;">Chưa có</span>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    ${order.shipperName}
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </td>
+                                                        <td>${order.deliveryStatus}</td>
+                                                        <td>
+                                                            <input type="hidden" name="currentId" value="${order.orderId}"/>    <%-- id order cần xem detail --%>
+                                                            <button class="btn btn-sm btn-outline-primary" type="submit">
+                                                                <ion-icon name="pencil-outline"/>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                   </form>
+                                                </c:forEach>
+                                                <c:if test="${empty orderDisplayList}">
+                                                    <tr>
+                                                        <td colspan="8" class="text-center">Không có đơn hàng nào</td>
+                                                    </tr>
+                                                </c:if>
+                                            
                                             </tbody>
                                         </table>
                                     </div>
@@ -163,9 +179,9 @@
                                     <!-- Pagination buttons -->
                                     <div class="card-footer d-flex justify-content-between"
                                          style="bottom: 0; background-color: white;">
-                                        <button class="btn btn-outline-secondary" id="prevPage" style="width: 100px;" <% if (currentPage == 1) { %>disabled<% } %>>Previous</button>
-                                        <span class="mx-3">Page <span id="currentPage"><%= currentPage %></span> of <span id="totalPages"><%= totalPages %></span></span>
-                                        <button class="btn btn-outline-secondary" id="nextPage" style="width: 100px;" <% if (currentPage == totalPages) { %>disabled<% } %>>Next</button>
+                                        <button class="btn btn-outline-secondary" id="prevPage" style="width: 100px;">Previous</button>
+                                        <span class="mx-3" id="pageInfo"></span>
+                                        <button class="btn btn-outline-secondary" id="nextPage" style="width: 100px;">Next</button>
                                     </div>
 
                                 </div>
@@ -182,23 +198,58 @@
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/bootstrap.js"></script>
     <script src="../admin/HeadSidebar/MenuButton.js"></script>
+    <script src="../admin/HeadSidebar/SideBar.js"></script>
 
     <!-- JavaScript to handle pagination -->
     <script>
-        document.getElementById('prevPage').addEventListener('click', function () {
-            var currentPage = parseInt(document.getElementById('currentPage').innerText);
-            if (currentPage > 1) {
-                window.location.href = "?page=" + (currentPage - 1);
-            }
-        });
+// Dữ liệu sẽ được hiển thị trong bảng
+                                                            let table = document.querySelector('table tbody');
+                                                            let rows = table.querySelectorAll('tr');
+                                                            let rowsPerPage = 8; // Số hàng hiển thị trên mỗi trang
+                                                            let currentPage = 1; // Trang hiện tại
+                                                            let totalPages = Math.ceil(rows.length / rowsPerPage); // Tổng số trang
 
-        document.getElementById('nextPage').addEventListener('click', function () {
-            var currentPage = parseInt(document.getElementById('currentPage').innerText);
-            var totalPages = parseInt(document.getElementById('totalPages').innerText);
-            if (currentPage < totalPages) {
-                window.location.href = "?page=" + (currentPage + 1);
-            }
-        });
+// Hàm hiển thị hàng theo trang
+                                                            function displayTablePage(page) {
+                                                                // Tính toán chỉ mục bắt đầu và kết thúc
+                                                                let start = (page - 1) * rowsPerPage;
+                                                                let end = start + rowsPerPage;
+
+                                                                // Ẩn tất cả các hàng trước
+                                                                rows.forEach((row, index) => {
+                                                                    row.style.display = (index >= start && index < end) ? '' : 'none';
+                                                                });
+
+                                                                // Cập nhật trạng thái nút phân trang
+                                                                document.getElementById('prevPage').disabled = (page === 1);
+                                                                document.getElementById('nextPage').disabled = (page === totalPages);
+
+                                                                // Cập nhật số trang hiển thị
+                                                                document.getElementById('pageInfo').innerText = `Page ${page} of ${totalPages}`;
+                                                            }
+
+// Hàm chuyển sang trang trước
+                                                            function prevPage() {
+                                                                if (currentPage > 1) {
+                                                                    currentPage--;
+                                                                    displayTablePage(currentPage);
+                                                                }
+                                                            }
+
+// Hàm chuyển sang trang tiếp theo
+                                                            function nextPage() {
+                                                                if (currentPage < totalPages) {
+                                                                    currentPage++;
+                                                                    displayTablePage(currentPage);
+                                                                }
+                                                            }
+
+// Gắn sự kiện cho các nút "Previous" và "Next"
+                                                            document.getElementById('prevPage').addEventListener('click', prevPage);
+                                                            document.getElementById('nextPage').addEventListener('click', nextPage);
+
+// Hiển thị trang đầu tiên khi trang tải
+                                                            displayTablePage(currentPage);
     </script>
 </body>
 </html>

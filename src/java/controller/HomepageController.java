@@ -5,7 +5,9 @@
 package controller;
 
 import dal.HomePageDAO;
+import dal.OrderDetailDAO;
 import dal.ProductDAO;
+import dto.OrderDTO;
 import dto.ProductDTO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -42,7 +44,7 @@ public class HomepageController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet HomePageController</title>");            
+            out.println("<title>Servlet HomePageController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet HomePageController at " + request.getContextPath() + "</h1>");
@@ -64,34 +66,46 @@ public class HomepageController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+        try {
+            //Lấy về userID từ account trong sesion khi đăng nhập
+            Users account = (Users) session.getAttribute("account");
+            OrderDetailDAO od = new OrderDetailDAO();
 
-        //Lấy về userID từ account trong sesion khi đăng nhập
-        Users account = (Users) session.getAttribute("account");
-        
+            if (account.getUserId() != 0) {
+                OrderDTO o = od.findOrderById(account.getUserId());
+
+                if (o == null) { //không có order
+                    o = new OrderDTO(); //tạo order mới
+                    o.setUserId(account.getUserId());
+                    od.createOrder(o);
+                }
+            }
+        } catch (Exception e) {
+        }
         HomePageDAO h = new HomePageDAO();
-        ProductDAO pd = new ProductDAO();
-        List<Products> banChay = h.getProductBanChay();
-        List<Products> khuyenMai = h.getProductKhuyenMai();
-        List<Products> danhGiaTot = h.getProductDanhGiaTot();
-        List<ProductDTO> noibat = pd.top4ProductNoiBat();
-        for(ProductDTO x:noibat){
-            x.setUnitPriceString(Validate.BigDecimalToMoney(x.getUnitPrice()));
-        }
-        for(Products y:banChay){
-            y.setUnitPriceString(Validate.BigDecimalToMoney(y.getUnitPrice()));
-        }
-        for(Products z:khuyenMai){
-            z.setUnitPriceString(Validate.BigDecimalToMoney(z.getUnitPrice()));
-        }
-        for(Products b: danhGiaTot){
-            b.setUnitPriceString(Validate.BigDecimalToMoney(b.getUnitPrice()));
-        }
-        request.setAttribute("noibat", noibat);
-        request.setAttribute("khuyenMai", khuyenMai);
-        request.setAttribute("banChay", banChay);
-        request.setAttribute("danhGiaTot", danhGiaTot);
+            ProductDAO pd = new ProductDAO();
+            List<Products> banChay = h.getProductBanChay();
+            List<Products> khuyenMai = h.getProductKhuyenMai();
+            List<Products> danhGiaTot = h.getProductDanhGiaTot();
+            List<ProductDTO> noibat = pd.top4ProductNoiBat();
+            for (ProductDTO x : noibat) {
+                x.setUnitPriceString(Validate.BigDecimalToMoney(x.getUnitPrice()));
+            }
+            for (Products y : banChay) {
+                y.setUnitPriceString(Validate.BigDecimalToMoney(y.getUnitPrice()));
+            }
+            for (Products z : khuyenMai) {
+                z.setUnitPriceString(Validate.BigDecimalToMoney(z.getUnitPrice()));
+            }
+            for (Products b : danhGiaTot) {
+                b.setUnitPriceString(Validate.BigDecimalToMoney(b.getUnitPrice()));
+            }
+            request.setAttribute("noibat", noibat);
+            request.setAttribute("khuyenMai", khuyenMai);
+            request.setAttribute("banChay", banChay);
+            request.setAttribute("danhGiaTot", danhGiaTot);
 
-        request.getRequestDispatcher("/customer/HomePageTest.jsp").forward(request, response);
+            request.getRequestDispatcher("/customer/HomePageTest.jsp").forward(request, response);
     }
 
     /**
@@ -113,7 +127,7 @@ public class HomepageController extends HttpServlet {
                 throw new AssertionError();
         }
     }
-    
+
     /**
      * Returns a short description of the servlet.
      *
@@ -125,3 +139,4 @@ public class HomepageController extends HttpServlet {
     }// </editor-fold>
 
 }
+//done

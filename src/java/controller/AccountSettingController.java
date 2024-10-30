@@ -112,12 +112,12 @@ public class AccountSettingController extends HttpServlet {
 
         // Update the user information in the database
         Users newAccInfo = dao.updateUserInfo(account.getUserId(), fullName, email, phone, address, avatar);
-        
+
         // Check if the update was successful
         if (newAccInfo == null) {
             System.out.println("Error: HandleEdit update failed!");
         }
-        
+
         // Cập nhật lại giá trị trong session
         session.setAttribute("account", newAccInfo);
 
@@ -150,6 +150,7 @@ public class AccountSettingController extends HttpServlet {
         }
 
         // Đường dẫn đầy đủ của file sẽ được lưu
+        //String filePath = uploadPath + File.separator + fileName;
         String filePath = uploadPath + File.separator + fileName;
 
         // Ghi file vào thư mục đích
@@ -157,27 +158,36 @@ public class AccountSettingController extends HttpServlet {
             File fileToSave = new File(filePath);
             Files.copy(fileContent, fileToSave.toPath(), StandardCopyOption.REPLACE_EXISTING);
         }
-        
+
         System.out.println("Upload Path: " + uploadPath);
         System.out.println("File Path: " + filePath);
 
-        // Trả về tên file đã lưu
+        // Trả về tên file đã lưu (là fileName và thêm ../images/ ở phía trc)
+        fileName = "../images/" + fileName;
         return fileName;
     }
+
     private void handleChangePassword(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         UserDAO dao = new UserDAO();
-        DashboardDAO dao1=new DashboardDAO();
+        DashboardDAO dao1 = new DashboardDAO();
         HttpSession session = request.getSession();
         //Lấy về userID từ account trong sesion khi đăng nhập
         Users account = (Users) session.getAttribute("account");
         String newPassword = request.getParameter("new-password");
-        dao.updatePasswordUserDB(account.getUserId(), newPassword);
-        // Redirect to the account settings page after update
-        //lấy thông tin user
+        String oldPassword = request.getParameter("oldPassword");
         Users listInfo = dao1.findAllInfo(account.getUserId());
-        request.setAttribute("listInfo", listInfo);
-        //hiện thông tin order của user        
-        request.getRequestDispatcher("/customer/AccountSetting.jsp").forward(request, response);
+        if (oldPassword.equals(listInfo.getPassword())) {
+            // Nếu mật khẩu cũ đúng, cập nhật mật khẩu mới
+            dao.updatePasswordUserDB(account.getUserId(), newPassword);   
+            request.setAttribute("listInfo", listInfo);
+            request.setAttribute("successMessage", "Mật khẩu đã được cập nhật thành công!");
+            request.getRequestDispatcher("/customer/AccountSetting.jsp").forward(request, response);
+        } else {
+            // Nếu mật khẩu cũ sai, trả về thông báo lỗi
+            request.setAttribute("listInfo", listInfo);
+            request.setAttribute("errorMessage", "Mật khẩu cũ không chính xác!");
+            request.getRequestDispatcher("/customer/AccountSetting.jsp").forward(request, response);
+        }
     }
 
     /**
@@ -189,5 +199,5 @@ public class AccountSettingController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
+    
 }
