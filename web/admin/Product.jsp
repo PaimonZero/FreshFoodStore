@@ -4,6 +4,8 @@
 <%@page import="model.Supplier"%>
 <%@page import="model.Category"%>
 <%@page import="java.util.List"%>
+<%--<%@ page import="javax.servlet.http.HttpSession" %>--%>
+<%@page import="model.Users"%>
 <%@ page import="java.text.NumberFormat" %>
 <%@ page import="java.util.Locale" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -20,6 +22,39 @@
 </head>
 
 <body>
+    <%
+        //===================Hàm phân quyền=====================================================
+    // Get the user account from the session
+    Users account = (Users) session.getAttribute("account");
+
+    if (account != null) {
+        String role = account.getRole();
+
+        // Redirect if the role is not manager, staff, or shipper
+        if (!role.equals("manager") && !role.equals("staff") && !role.equals("shipper")) {
+            session.setAttribute("notifyAuth", "notAuthorized");
+            String targetURL = request.getContextPath() + "/customer/Homepage";
+            String encodedURL = response.encodeRedirectURL(targetURL);
+            response.sendRedirect(encodedURL);
+            return;
+        } else if (role.equals("shipper")) {
+            // Redirect if the role is shipper to avoid access to this page
+            session.setAttribute("notifyAuth", "notAuthorized");
+            String targetURL = request.getContextPath() + "/admin/Dashboard";
+            String encodedURL = response.encodeRedirectURL(targetURL);
+            response.sendRedirect(encodedURL);
+            return;
+        }
+    } else {
+        // If no account is found in the session, redirect to login or another appropriate page
+        String loginURL = request.getContextPath() + "/SignIn.jsp";
+        String encodedURL = response.encodeRedirectURL(loginURL);
+        response.sendRedirect(encodedURL);
+        return;
+    }
+        //===================End Hàm phân quyền=================================================
+    %>
+
     <%@include file="HeadSidebar/sidebar.jsp" %> 
     <%@include file="HeadSidebar/header.jsp" %>
     <div class="scale-container">

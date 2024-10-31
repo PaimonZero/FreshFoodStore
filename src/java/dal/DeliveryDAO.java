@@ -29,27 +29,27 @@ public class DeliveryDAO extends DBContext {
     public List<Delivery> getAllDelivery() {
         List<Delivery> deliveryList = new ArrayList<>();
         String sql = "SELECT \n"
-        + "    o.orderId,\n"
-        + "    u.fullName AS userName,\n"
-        + "    o.receiverPhone,\n"
-        + "    o.paymentStatus,\n"
-        + "    SUM(od.unitPriceOut * od.quantity * (1 - COALESCE(p.discount, 0) / 100)) + 20000 AS totalValue,\n" // Tính tổng giá trị có giảm giá và thêm phí ship
-        + "    o.orderCreatedAt AS orderDate,\n"
-        + "    o.deliveryStatus\n"
-        + "FROM Orders o \n"
-        + "JOIN Users u ON o.userId = u.userId \n"
-        + "JOIN OrderDetails od ON o.orderId = od.orderId \n"
-        + "JOIN BatchesProduct bp ON od.batchId = bp.batchId  -- Thêm bảng BatchesProduct để lấy productId\n"
-        + "LEFT JOIN Promos p ON bp.productId = p.productId       -- Thêm bảng Promos để lấy discount \n"
-        + "WHERE o.isConfirmed = 1 \n"
-        + "GROUP BY \n"
-        + "    o.orderId, u.fullName, o.receiverPhone, o.paymentStatus, o.orderCreatedAt, o.deliveryStatus\n"
-        + "ORDER BY \n"
-        + "    CASE \n"
-        + "        WHEN o.deliveryStatus = 'Waiting' THEN 0  -- Đặt trạng thái \"Waiting\" lên đầu\n"
-        + "        ELSE 1 \n"
-        + "    END,\n"
-        + "    o.orderCreatedAt DESC;  -- Sau đó sắp xếp theo ngày tạo đơn hàng mới nhất";
+                + "    o.orderId,\n"
+                + "    u.fullName AS userName,\n"
+                + "    o.receiverPhone,\n"
+                + "    o.paymentStatus,\n"
+                + "    SUM(od.unitPriceOut * od.quantity * (1 - COALESCE(p.discount, 0) / 100)) + 20000 AS totalValue,\n" // Tính tổng giá trị có giảm giá và thêm phí ship
+                + "    o.orderCreatedAt AS orderDate,\n"
+                + "    o.deliveryStatus\n"
+                + "FROM Orders o \n"
+                + "JOIN Users u ON o.userId = u.userId \n"
+                + "JOIN OrderDetails od ON o.orderId = od.orderId \n"
+                + "JOIN BatchesProduct bp ON od.batchId = bp.batchId  -- Thêm bảng BatchesProduct để lấy productId\n"
+                + "LEFT JOIN Promos p ON bp.productId = p.productId       -- Thêm bảng Promos để lấy discount \n"
+                + "WHERE o.isConfirmed = 1 \n"
+                + "GROUP BY \n"
+                + "    o.orderId, u.fullName, o.receiverPhone, o.paymentStatus, o.orderCreatedAt, o.deliveryStatus\n"
+                + "ORDER BY \n"
+                + "    CASE \n"
+                + "        WHEN o.deliveryStatus = 'Waiting' THEN 0  -- Đặt trạng thái \"Waiting\" lên đầu\n"
+                + "        ELSE 1 \n"
+                + "    END,\n"
+                + "    o.orderCreatedAt DESC;  -- Sau đó sắp xếp theo ngày tạo đơn hàng mới nhất";
 
         try {
             connection = getConnection();
@@ -104,7 +104,7 @@ public class DeliveryDAO extends DBContext {
                 + "    o.shippingFee, \n"
                 + "    o.deliveryStatus, \n"
                 + "    o.paymentType, \n"
-                 + "   o.paymentStatus, \n"
+                + "   o.paymentStatus, \n"
                 + "    o.orderCreatedAt, \n"
                 + "    pro.discount\n"
                 + "FROM \n"
@@ -156,7 +156,7 @@ public class DeliveryDAO extends DBContext {
                         address, email, phone, receiverName, deliveryLocation, receiverPhone, shippingFee, deliveryStatus, paymentType, orderCreatedAt, discount);
                 orderDetails.setPaymentStatus(paymentStatus);
                 orderDetail.add(orderDetails);
-                
+
             }
             return orderDetail;
         } catch (SQLException e) {
@@ -186,6 +186,95 @@ public class DeliveryDAO extends DBContext {
         return currentStatus; // Trả về trạng thái hiện tại hoặc null nếu không tìm thấy
     }
 
+    //Hàm lấy dữ shipperID để lấy list đơn hàng của mỗi shipper riêng biệt
+    public int getShipperIdByUserId(int userId) {
+        int result = 0;
+        String query = "SELECT [shipperId]\n"
+                + "FROM [dbo].[Shippers]\n"
+                + "WHERE [userId] = ?";
+
+        try {
+            connection = getConnection();
+            if (connection != null) {
+                preStatement = connection.prepareStatement(query);
+                preStatement.setObject(1, userId);
+                resultSet = preStatement.executeQuery();
+
+                if (resultSet.next()) {
+                    result = resultSet.getInt("shipperId");
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("??(DeliveryDAO)getShipperIdByUserId: " + e.getMessage());
+        } finally {
+            closeConnection();
+        }
+        return result;
+    }
+
+    public List<Delivery> getAllDeliveryForShipper(int shipperId) {
+        List<Delivery> deliveryList = new ArrayList<>();
+        String sql = "SELECT \n"
+                + "    o.orderId,\n"
+                + "    u.fullName AS userName,\n"
+                + "    o.receiverPhone,\n"
+                + "    o.paymentStatus,\n"
+                + "    SUM(od.unitPriceOut * od.quantity * (1 - COALESCE(p.discount, 0) / 100)) + 20000 AS totalValue,\n"
+                + "    o.orderCreatedAt AS orderDate,\n"
+                + "    o.deliveryStatus\n"
+                + "FROM \n"
+                + "    Orders o \n"
+                + "JOIN \n"
+                + "    Users u ON o.userId = u.userId \n"
+                + "JOIN \n"
+                + "    OrderDetails od ON o.orderId = od.orderId \n"
+                + "JOIN \n"
+                + "    BatchesProduct bp ON od.batchId = bp.batchId\n"
+                + "LEFT JOIN \n"
+                + "    Promos p ON bp.productId = p.productId\n"
+                + "WHERE \n"
+                + "    o.isConfirmed = 1 \n"
+                + "    AND o.shipperId = ?  -- Filter for orders with shipperId equal to ?\n"
+                + "GROUP BY \n"
+                + "    o.orderId, u.fullName, o.receiverPhone, o.paymentStatus, o.orderCreatedAt, o.deliveryStatus\n"
+                + "ORDER BY \n"
+                + "    CASE \n"
+                + "        WHEN o.deliveryStatus = 'Waiting' THEN 0\n"
+                + "        ELSE 1 \n"
+                + "    END,\n"
+                + "    o.orderCreatedAt DESC;";
+
+        try {
+            connection = getConnection();
+            preStatement = connection.prepareStatement(sql);
+            preStatement.setObject(1, shipperId);
+            resultSet = preStatement.executeQuery();
+
+            while (resultSet.next()) {
+                // Lấy dữ liệu từ resultSet
+                String customerName = resultSet.getString("userName");
+                String customerPhone = resultSet.getString("receiverPhone");
+                int orderId = resultSet.getInt("orderId");
+                String paymentStatus = resultSet.getString("paymentStatus");
+                String deliveryStatus = resultSet.getString("deliveryStatus");
+                Date orderCreatedAt = resultSet.getDate("orderDate");
+                BigDecimal total = resultSet.getBigDecimal("totalValue");
+
+                // Tạo đối tượng Delivery từ các giá trị vừa lấy
+                Delivery delivery = new Delivery(customerName, customerPhone, orderId, paymentStatus, deliveryStatus, orderCreatedAt, total);
+
+                // Thêm đối tượng Delivery vào danh sách
+                deliveryList.add(delivery);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error in getAllDeliveryForShipper: " + e.getMessage());
+        } finally {
+            closeConnection();
+        }
+
+        return deliveryList;
+    }
+
     public boolean updateDeliveryStatus(int orderId, String newStatus, String paymentStatus) {
         String sql = "UPDATE Orders SET deliveryStatus = ? ,paymentStatus = ? WHERE orderId = ?";
         boolean isUpdated = false;
@@ -195,8 +284,7 @@ public class DeliveryDAO extends DBContext {
             preStatement.setString(1, newStatus);
             preStatement.setString(2, paymentStatus);
             preStatement.setInt(3, orderId);
-            
-            
+
             int rowsUpdated = preStatement.executeUpdate();
             isUpdated = rowsUpdated > 0; // Returns true if at least one row is updated
 
@@ -240,6 +328,8 @@ public class DeliveryDAO extends DBContext {
         } else {
             System.out.println("No status found for order ID " + testOrderId);
         }
+
+        System.out.println("Test hàm lấy shipperID với userId = 12\n ==>Kết quả: " + deliveryDAO.getShipperIdByUserId(12));
     }
 
 }

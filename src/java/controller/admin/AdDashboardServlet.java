@@ -27,13 +27,28 @@ public class AdDashboardServlet extends HttpServlet {
         //Lấy về userID từ account trong sesion khi đăng nhập
         Users account = (Users) session.getAttribute("account");
 
-        String role = account.getRole();
-        if (!role.equals("manager") && !role.equals("staff") && !role.equals("shipper")) {
-            session.setAttribute("notifyAuth", "notAuthorized");
+        if (account != null) {
+            String role = account.getRole();
+            if (!role.equals("manager") && !role.equals("staff") && !role.equals("shipper")) {
+                session.setAttribute("notifyAuth", "notAuthorized");
 
-            //Chuyển hướng trang qua chủ customer
-            String targetURL = request.getContextPath() + "/customer/Homepage";      //đổi dường dẫn ở đây
-            String encodedURL = response.encodeRedirectURL(targetURL);
+                //Chuyển hướng trang qua chủ customer
+                String targetURL = request.getContextPath() + "/customer/Homepage";      //đổi dường dẫn ở đây
+                String encodedURL = response.encodeRedirectURL(targetURL);
+                response.sendRedirect(encodedURL);
+                return;
+            } else if (role.equals("shipper")) {        //nếu là shipper thì ko cho coi trang này
+                session.setAttribute("notifyAuth", "notAuthorized");
+
+                String targetURL = request.getContextPath() + "/admin/Delivery.jsp";      //đổi dường dẫn ở đây
+                String encodedURL = response.encodeRedirectURL(targetURL);
+                response.sendRedirect(encodedURL);
+                return;
+            }
+        } else {
+            // If no account is found in the session, redirect to login or another appropriate page
+            String loginURL = request.getContextPath() + "/SignIn.jsp";
+            String encodedURL = response.encodeRedirectURL(loginURL);
             response.sendRedirect(encodedURL);
             return;
         }

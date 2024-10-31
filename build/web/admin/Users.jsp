@@ -55,34 +55,45 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <c:forEach var="user" items="${users}">
-                                                <tr>
-                                                    <td>${user.userId}</td>
-                                                    <td>${user.fullName}</td>
-                                                    <td>${user.phone}</td>
-                                                    <td>${user.email}</td>
-                                                    <td>${user.address}</td>
-                                                    <td>${user.roleName}</td>
-                                                    <td style="color: ${user.status == 'block' ? 'red' : 'green'};">${user.status}</td>
-                                                    <td>
-                                                        <fmt:formatDate value="${user.createdAt}" pattern="dd/MM/yyyy" />
-                                                    </td>
-                                                    <td>
-                                                        <!-- Edit Customer Button with data attributes -->
-                                                        <button class="btn btn-primary btn-sm" 
-                                                                data-user-id="${user.userId}"
-                                                                data-user-fullName="${user.fullName}"
-                                                                data-user-phone="${user.phone}"
-                                                                data-user-email="${user.email}"
-                                                                data-user-address="${user.address}"
-                                                                data-user-roleName="${user.roleName}"
-                                                                data-user-status="${user.status}" 
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#addProductModal"
-                                                                onclick="populateModal(this)">Edit</button>
-                                                    </td>
-                                                </tr>
-                                            </c:forEach>
+                                            <c:choose>
+                                                <c:when test="${empty users}">
+                                                    <tr>
+                                                        <td colspan="9" style="text-align: center;">No users found.</td>
+                                                    </tr>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <c:forEach var="user" items="${users}">
+                                                        <tr>
+                                                            <td>${user.userId}</td>
+                                                            <td>${user.fullName}</td>
+                                                            <td>${user.phone}</td>
+                                                            <td>${user.email}</td>
+                                                            <td>${user.address}</td>
+                                                            <td>${user.roleName}</td>
+                                                            <td style="color: ${user.status == 'block' ? 'red' : 'green'};">${user.status}</td>
+                                                            <td>
+                                                                <fmt:formatDate value="${user.createdAt}" pattern="dd/MM/yyyy" />
+                                                            </td>
+                                                            <td>
+                                                                <!-- Only show Edit button if account.role is not "staff" or user.roleName is not "manager" -->
+                                                                <c:if test="${account.role != 'staff' || user.roleName != 'Manager'}">
+                                                                    <button class="btn btn-primary btn-sm" 
+                                                                            data-user-id="${user.userId}"
+                                                                            data-user-fullName="${user.fullName}"
+                                                                            data-user-phone="${user.phone}"
+                                                                            data-user-email="${user.email}"
+                                                                            data-user-address="${user.address}"
+                                                                            data-user-roleName="${user.roleName}"
+                                                                            data-user-status="${user.status}" 
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#addProductModal"
+                                                                            onclick="populateModal(this)">Edit</button>
+                                                                </c:if>
+                                                            </td>
+                                                        </tr>
+                                                    </c:forEach>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </tbody>
                                     </table>
 

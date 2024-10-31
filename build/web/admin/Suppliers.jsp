@@ -29,9 +29,11 @@
                                 <div class="card-header bg-light d-flex align-items-center justify-content-between">
                                     <h4 class="mb-0" style="font-weight: bold;">Supplier</h4>
                                     <div style="display: flex; align-items: center;">
+                                        <!-- Only show Add button if account.role is "manager" -->
+                                        <c:if test="${account.role == 'manager'}">
                                         <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
                                                 data-bs-target="#addProductModal" style="width: 105px; margin-right: 10px;">Add Supplier</button>
-
+                                        </c:if>
                                         <form action="${pageContext.request.contextPath}/admin/suppliers?action=search" method="POST" style="display: flex; align-items: center;">
                                             <input type="text" name="searchQuery" placeholder="Find name, email, phone,.." class="form-control" style="width: 200px; margin-right: 10px; margin-bottom: 0">
                                             <button type="submit" class="btn btn-sm btn-outline-success" style="width: 105px;">Search</button>
@@ -52,28 +54,39 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <c:forEach var="supplier" items="${supplier}">
-                                                <tr>
-                                                    <td>${supplier.supplierId}</td>
-                                                    <td>${supplier.name}</td>
-                                                    <td>${supplier.phone}</td>
-                                                    <td>${supplier.email}</td>
-                                                    <td>${supplier.address}</td>
-                                                    <td>
-                                                        <!-- Edit Supplier Button with data attributes -->
-                                                        <button class="btn btn-primary btn-sm" 
-                                                                data-supplier-id="${supplier.supplierId}"
-                                                                data-supplier-name="${supplier.name}"
-                                                                data-supplier-number="${supplier.phone}"
-                                                                data-supplier-email="${supplier.email}"
-                                                                data-supplier-address="${supplier.address}"
-                                                                data-supplier-moreInfo="${supplier.moreInfo}"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#editProductModal"
-                                                                onclick="populateModal(this)">Edit</button>
-                                                    </td>
-                                                </tr>
-                                            </c:forEach>
+                                            <c:choose>
+                                                <c:when test="${empty supplier}">
+                                                    <tr>
+                                                        <td colspan="6" style="text-align: center;">No suppliers found.</td>
+                                                    </tr>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <c:forEach var="supplier" items="${supplier}">
+                                                        <tr>
+                                                            <td>${supplier.supplierId}</td>
+                                                            <td>${supplier.name}</td>
+                                                            <td>${supplier.phone}</td>
+                                                            <td>${supplier.email}</td>
+                                                            <td>${supplier.address}</td>
+                                                            <td>
+                                                    <!-- Only show Edit button if account.role is "manager" // hiện tại đang để cả staff cũng edit -->
+                                                                <%--<c:if test="${account.role == 'manager'}">--%>
+                                                                    <button class="btn btn-primary btn-sm" 
+                                                                            data-supplier-id="${supplier.supplierId}"
+                                                                            data-supplier-name="${supplier.name}"
+                                                                            data-supplier-number="${supplier.phone}"
+                                                                            data-supplier-email="${supplier.email}"
+                                                                            data-supplier-address="${supplier.address}"
+                                                                            data-supplier-moreInfo="${supplier.moreInfo}"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#editProductModal"
+                                                                            onclick="populateModal(this)">Edit</button>
+                                                                <%--</c:if>--%>
+                                                            </td>
+                                                        </tr>
+                                                    </c:forEach>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </tbody>
                                     </table>
 

@@ -100,13 +100,20 @@ public class authController extends HttpServlet {
                 switch (account.getRole()) {
                     case "staff":
                     case "manager":
-                    case "shipper":
                         //Chuyển hướng trang qua admin 
                         session.setAttribute("account", account);
                         session.setAttribute("notifyAuth", "success");      //đổi thành session
 
-                        //targetURL = request.getContextPath() + "/Admin/index";
-                        targetURL = "admin/Dashboard";      //đổi dường dẫn ở đây
+                        targetURL = "admin/Dashboard";                              //đổi dường dẫn ở đây
+                        encodedURL = response.encodeRedirectURL(targetURL);
+                        response.sendRedirect(encodedURL);
+                        break;
+                    case "shipper":
+                        session.setAttribute("account", account);
+                        session.setAttribute("notifyAuth", "success");
+                        
+                        //Chuyển hướng sang trang delivery
+                        targetURL = request.getContextPath() + "/admin/Delivery.jsp";      //đổi dường dẫn ở đây
                         encodedURL = response.encodeRedirectURL(targetURL);
                         response.sendRedirect(encodedURL);
                         break;
