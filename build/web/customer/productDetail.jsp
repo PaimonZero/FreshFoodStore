@@ -1,5 +1,6 @@
 <%-- Document : productDetail Created on : Oct 4, 2024, 7:29:26 PM Author : DELL --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<fmt:setLocale value="vi_VN"/><!--đổi thành location VN-->
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>

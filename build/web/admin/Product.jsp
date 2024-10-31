@@ -113,7 +113,6 @@
                                             <%
                                                 NumberFormat formatter = NumberFormat.getInstance(Locale.US); // or any locale you prefer
                                             %>
-
                                             <tr style="cursor: pointer;" onclick="window.location.href = 'ProductInfo.jsp?productId=<%= product.getProductId() %>'">
                                         <input type="hidden" value="<%= product.getProductId()%>">
                                         <td><%= product.getProductId() %></td>

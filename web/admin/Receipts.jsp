@@ -142,7 +142,7 @@
                                                         <td>${receipt.receiptId}</td>
                                                         <td>${receipt.supplierName}</td>
                                                         <td><fmt:formatDate value="${receipt.inputDate}" pattern="dd/MM/yyyy" /></td>
-                                                        <td><fmt:formatNumber value="${receipt.totalPrice}" pattern="#,###" /></td>
+                                                        <td><fmt:formatNumber value="${receipt.totalPrice}" type="currency" currencySymbol="₫" pattern="#,##0.##"/></td>
                                                         <td>${receipt.productTypes}</td>
                                                         <td>${receipt.totalQuantity}</td>
                                                         <td>

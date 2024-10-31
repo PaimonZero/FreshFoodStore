@@ -64,6 +64,32 @@ public class ReceiptsController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //===================Hàm phân quyền=====================================================
+        HttpSession session = request.getSession();
+
+        //Lấy về userID từ account trong sesion khi đăng nhập
+        Users account = (Users) session.getAttribute("account");
+
+        String role = account.getRole();
+        if (!role.equals("manager") && !role.equals("staff") && !role.equals("shipper")) {
+            session.setAttribute("notifyAuth", "notAuthorized");
+
+            //Chuyển hướng trang qua chủ customer
+            String targetURL = request.getContextPath() + "/customer/Homepage";      //đổi dường dẫn ở đây
+            String encodedURL = response.encodeRedirectURL(targetURL);
+            response.sendRedirect(encodedURL);
+            return;
+        } else if (role.equals("shipper")) {        //nếu là shipper thì ko cho coi trang này
+            session.setAttribute("notifyAuth", "notAuthorized");
+
+            //Chuyển hướng trang qua chủ admin
+            String targetURL = request.getContextPath() + "/admin/Dashboard";      //đổi dường dẫn ở đây
+            String encodedURL = response.encodeRedirectURL(targetURL);
+            response.sendRedirect(encodedURL);
+            return;
+        }
+        //===================End Hàm phân quyền=================================================
+
         //- Lấy giá trị action về
         String action = request.getParameter("action") == null ? "" : request.getParameter("action");
         //- switch case cac action

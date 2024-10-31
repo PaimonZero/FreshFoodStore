@@ -7,7 +7,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <link rel="stylesheet" href="../css/customerCss/Header-login.css"/>
-<!--Start of Fchat.vn--><script type="text/javascript" src="https://cdn.fchat.vn/assets/embed/webchat.js?id=67204c8ddd146c35d44174e6" async="async"></script><!--End of Fchat.vn-->    <link rel="shotcut icon" href="../images/logoFFSNoBG.png"/>
+        <!--Start of Fchat.vn--><script type="text/javascript" src="https://cdn.fchat.vn/assets/embed/webchat.js?id=67204c8ddd146c35d44174e6" async="async"></script><!--End of Fchat.vn-->    <link rel="shotcut icon" href="../images/logoFFSNoBG.png"/>
     <body>
         <header class="position-fixed w-100 bg-light hight--header d-flex flex-column">
             <!--mới sửa class navbar thêm vào bg-light-->
@@ -101,15 +101,15 @@
                                         <span class="d-lg-flex flex-column gap-1 d-none"></span>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated profile-dropdown p-2 dropdown--menu">
-                                        <!--tại đây chỉ dành cho admin-->
-                                        <form action="" class="menu-user" style="border-bottom: 1px solid black;"> 
-                                            <button class="menu-button mb-1">
-                                                <i class="fas fa-users-cog menu-icon text-light bg-warning"></i>
-                                                Admin Page
-                                            </button>
-                                        </form>
-                                        <!--hết admin-->
-                                        
+                                        <!-- Display only for roles: manager, shipper, staff -->
+                                        <c:if test="${account.role == 'manager' || account.role == 'shipper' || account.role == 'staff'}">
+                                            <form action="/FreshFoodStore/admin/Dashboard" class="menu-user" style="border-bottom: 1px solid black;"> 
+                                                <button class="menu-button mb-1">
+                                                    <i class="fas fa-users-cog menu-icon text-light bg-warning"></i>
+                                                    Admin Page
+                                                </button>
+                                            </form>
+                                        </c:if>
                                         <form action="authC?action=logout" method="POST" class="menu-user">
                                             <button class="menu-button mt-1">
                                                 <img class="menu-icon" src="../images/png/box-arrow-in-right.svg" alt="box-arrow">

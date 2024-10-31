@@ -42,6 +42,21 @@
 
 }
 
+.not-item {
+    display: flex;
+    padding: 10px 0;
+    color: #4f4f4f;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.not-item .icon {
+    font-size: 1.25rem;
+    margin-right: 15px;
+
+}
+
 .logo {
     font-size: 2rem;
     margin-right: 15px;
@@ -62,6 +77,23 @@
 }
 
 .menu-item.active .icon {
+    color: #27ae60; /* Màu icon khi active */
+}
+
+.not-item:hover {
+    color: #27ae60;
+    cursor: pointer;
+}
+
+.not-item:hover .icon {
+    color: #27ae60;
+}
+
+.not-item.active {
+    color: #27ae60; /* Màu văn bản khi active */
+}
+
+.not-item.active .icon {
     color: #27ae60; /* Màu icon khi active */
 }
 

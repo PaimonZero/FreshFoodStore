@@ -100,7 +100,7 @@
                                                                 </tr>
                                                                 <tr>
                                                                     <td style="padding: 10px 10px;"><strong>Tổng giá trị đơn nhập: </strong></td>
-                                                                    <td style="padding: 10px 10px;"><fmt:formatNumber value="${receiptInfo.totalPrice}" pattern="#,###" /></td>
+                                                                    <td style="padding: 10px 10px;"><fmt:formatNumber value="${receiptInfo.totalPrice}" type="currency" currencySymbol="₫" pattern="#,##0.##" /></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td style="padding: 10px 10px;"><strong>Tổng số loại sản phẩm nhập: </strong></td>

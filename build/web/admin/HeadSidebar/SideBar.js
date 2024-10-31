@@ -16,15 +16,15 @@ document.addEventListener('DOMContentLoaded', function () {
         localStorage.setItem('activeMenuItem', clickedItem.id);
     }
 
-//    // Thêm sự kiện click cho mỗi mục menu
-//    menuItems.forEach(item => {
-//        item.addEventListener('click', function () {
-//            setActiveMenuItem(item);
-//            // Điều hướng tới trang tương ứng dựa trên ID của mục
-//            const targetPage = item.id + '.jsp';
-//            window.location.href = './' + targetPage;
-//        });
-//    });
+    // Thêm sự kiện click cho mỗi mục menu
+    menuItems.forEach(item => {
+        item.addEventListener('click', function () {
+            setActiveMenuItem(item);
+            // Điều hướng tới trang tương ứng dựa trên ID của mục
+            const targetPage = item.id + '.jsp';
+            window.location.href = './' + targetPage;
+        });
+    });
 
     // Khôi phục trạng thái active khi tải lại trang
     const savedActiveMenuItem = localStorage.getItem('activeMenuItem');

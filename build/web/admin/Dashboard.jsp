@@ -341,6 +341,12 @@
             </div>
         </div>
     </div>
+    
+    <%-- Thông báo đăng nhập --%>
+    <c:if test="${not empty notifyAuth}">
+        <input type="hidden" id="notifyAuth" value="${notifyAuth}" />
+        <c:remove var="notifyAuth" scope="session" />
+    </c:if>
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
@@ -354,7 +360,23 @@
     <script src="../admin/HeadSidebar/SideBar.js"></script>
 
     <script>
-
+        window.onload = function () {
+            var notifyAuthField = document.getElementById('notifyAuth');
+            if (notifyAuthField) {
+                var notifyAuth = notifyAuthField.value;
+                if (notifyAuth === "success") {
+                    alert("Đăng nhập thành công!");
+                } else if (notifyAuth === "failed") {
+                    alert("Đăng nhập thất bại!");
+                } else if (notifyAuth === "blocked") {
+                    alert("Tài khoản của bạn đã bị khóa. Hãy liên hệ bộ phận chăm sóc khách hàng (0582647644) để biết thêm thông tin!");
+                } else if (notifyAuth === "notAuthorized") {
+                    alert("Bạn chưa được cấp quyền truy cập vào trang đấy!");
+                }
+                // Remove the hidden input field after alert
+                notifyAuthField.remove();
+            }
+        };
     </script>
 
 </body>

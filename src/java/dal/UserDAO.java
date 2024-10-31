@@ -24,6 +24,7 @@ public class UserDAO extends DBContext {
                          u.address, 
                          u.phone, 
                          u.avatar,
+                         u.status,
                          CASE 
                              WHEN c.customerId IS NOT NULL THEN 'customer'
                              WHEN s.staffId IS NOT NULL THEN 'staff'
@@ -53,9 +54,12 @@ public class UserDAO extends DBContext {
                 String role = resultSet.getString("role").trim();
                 String address_found = resultSet.getString("address").trim();
                 String avatar = resultSet.getString("avatar");
+                String status = resultSet.getString("status");
+                
                 int userID = resultSet.getInt("userID");
 
                 Users user1 = new Users(userID, fullname_found, email_found, phone_found, address_found, role);
+                user1.setStatus(status);
                 user1.setAvatar(avatar);
                 return user1;
             }

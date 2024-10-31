@@ -11,7 +11,7 @@
         <!--<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">-->
         <link href="./css/customerCss/SignIn.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-        
+
         <style>
             .social-container {
                 margin: 5px 0;
@@ -36,49 +36,49 @@
     <body>
         <%@include file="HeaderLogin.jsp" %>
         <input type="hidden" id="notifyForgot" name="notifyForgot" value="${notifyForgot}">
-        
+
         <!-- Navbar (Menu) -->
-<!--        <nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding-top: 110px;">
-            <div class="container">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="customer/Homepage">Home</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Shop
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Fruits</a></li>
-                                <li><a class="dropdown-item" href="#">Vegetables</a></li>
+        <!--        <nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding-top: 110px;">
+                    <div class="container">
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav">
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="customer/Homepage">Home</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Shop
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <li><a class="dropdown-item" href="#">Fruits</a></li>
+                                        <li><a class="dropdown-item" href="#">Vegetables</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPages" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Pages
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownPages">
+                                        <li><a class="dropdown-item" href="#">Account</a></li>
+                                        <li><a class="dropdown-item" href="#">About Us</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Blog</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">About Us</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="./customer/contact.jsp">Contact Us</a>
+                                </li>
                             </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPages" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Pages
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownPages">
-                                <li><a class="dropdown-item" href="#">Account</a></li>
-                                <li><a class="dropdown-item" href="#">About Us</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Blog</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">About Us</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./customer/contact.jsp">Contact Us</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>-->
+                        </div>
+                    </div>
+                </nav>-->
         <!-- Breadcrumb Section -->
         <section class="breadcrumb-section" style="padding-top: 140px;">
             <div class="container">
@@ -89,12 +89,6 @@
                 </div>
             </div>
         </section>
-
-        <%-- Thông báo đăng nhập --%>
-        <c:if test="${not empty notifyAuth}">
-            <input type="hidden" id="notifyAuth" value="${notifyAuth}" />
-            <c:remove var="notifyAuth" scope="request" />
-        </c:if>
 
         <%-- Thông báo đăng kí --%>
         <c:if test="${not empty notifySigup}">
@@ -149,6 +143,7 @@
                 </div>
             </div>
         </section>
+
         <%@include file="Footer.jsp" %>
         <!-- Bootstrap JS and dependencies -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

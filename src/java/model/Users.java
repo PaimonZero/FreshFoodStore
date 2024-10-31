@@ -14,6 +14,7 @@ public class Users {
     private String passGoogle;
     private Date createdAt;
     private String avatar;
+    private String status;
     //not in db
     private String role;
 
@@ -57,6 +58,14 @@ public class Users {
         this.createdAt = createdAt;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
     public String getPassGoogle() {
         return passGoogle;
     }

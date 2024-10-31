@@ -10,7 +10,7 @@
         </span>
     </div>
     <div class="icons d-flex align-items-center">
-        <div class="menu-item">
+        <div class="not-item ">
             <span class="icon">
                 <ion-icon name="notifications-outline" class="icon mx-2"></ion-icon>
             </span>

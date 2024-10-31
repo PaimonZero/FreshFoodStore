@@ -115,7 +115,7 @@
                                         <img src="${listInfo.avatar}" alt="Profile Image"
                                              class="profile-picture">
                                         <h5 class="card-title">${listInfo.fullName}</h5>
-                                        <p class="text-muted">Customer</p> <%--tạm để cứng ở đây--%>
+                                        <p class="text-muted" style="text-transform: uppercase;">${account.role}</p> <%--tạm để cứng ở đây--%>
                                         <button type="submit" class="btn btn-outline-success btn-sm">Edit
                                             Profile</button>
                                     </div>

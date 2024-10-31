@@ -1,11 +1,7 @@
-<%-- 
-    Document   : homePage
-    Created on : Sep 27, 2024, 3:22:47 PM
-    Author     : DELL
---%>
 <!--có đụng-->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<fmt:setLocale value="vi_VN"/><!--đổi thành location VN-->
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -795,7 +791,13 @@
         </div>
     </div>
     <!-- Giỏ hàng popup -->
-    
+
+    <%-- Thông báo đăng nhập --%>
+    <c:if test="${not empty notifyAuth}">
+        <input type="hidden" id="notifyAuth" value="${notifyAuth}" />
+        <c:remove var="notifyAuth" scope="session" />
+    </c:if>
+
     <button onclick="topFunction()" id="myBtn" title="Go to top">
         <i class="fas fa-arrow-up"></i>
     </button>
@@ -804,6 +806,24 @@
     <script src="../js/authJs/homePageTest.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
     <script>
+        window.onload = function () {
+            var notifyAuthField = document.getElementById('notifyAuth');
+            if (notifyAuthField) {
+                var notifyAuth = notifyAuthField.value;
+                if (notifyAuth === "success") {
+                    alert("Đăng nhập thành công!");
+                } else if (notifyAuth === "failed") {
+                    alert("Đăng nhập thất bại!");
+                } else if (notifyAuth === "blocked") {
+                    alert("Tài khoản của bạn đã bị khóa. Hãy liên hệ bộ phận chăm sóc khách hàng (0582647644) để biết thêm thông tin!");
+                } else if (notifyAuth === "notAuthorized") {
+                    alert("Bạn chưa được cấp quyền truy cập vào trang đấy!");
+                }
+                // Remove the hidden input field after alert
+                notifyAuthField.remove();
+            }
+        };
+
         //btn go to top
         let mybutton = document.getElementById("myBtn");
         // When the user scrolls down 20px from the top of the document, show the button
