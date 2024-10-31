@@ -30,7 +30,7 @@ public class DeliveryDAO extends DBContext {
         List<Delivery> deliveryList = new ArrayList<>();
         String sql = "SELECT \n"
                 + "    o.orderId,\n"
-                + "    u.fullName AS userName,\n"
+                + "    o.receiverName AS userName,\n"  // Changed from u.fullName to o.receiverName
                 + "    o.receiverPhone,\n"
                 + "    o.paymentStatus,\n"
                 + "    SUM(od.unitPriceOut * od.quantity * (1 - COALESCE(p.discount, 0) / 100)) + 20000 AS totalValue,\n" // Tính tổng giá trị có giảm giá và thêm phí ship
@@ -43,7 +43,7 @@ public class DeliveryDAO extends DBContext {
                 + "LEFT JOIN Promos p ON bp.productId = p.productId       -- Thêm bảng Promos để lấy discount \n"
                 + "WHERE o.isConfirmed = 1 \n"
                 + "GROUP BY \n"
-                + "    o.orderId, u.fullName, o.receiverPhone, o.paymentStatus, o.orderCreatedAt, o.deliveryStatus\n"
+                + "    o.orderId, o.receiverName, o.receiverPhone, o.paymentStatus, o.orderCreatedAt, o.deliveryStatus\n" // Updated GROUP BY to include o.receiverName
                 + "ORDER BY \n"
                 + "    CASE \n"
                 + "        WHEN o.deliveryStatus = 'Waiting' THEN 0  -- Đặt trạng thái \"Waiting\" lên đầu\n"
@@ -216,7 +216,7 @@ public class DeliveryDAO extends DBContext {
         List<Delivery> deliveryList = new ArrayList<>();
         String sql = "SELECT \n"
                 + "    o.orderId,\n"
-                + "    u.fullName AS userName,\n"
+                + "    o.receiverName AS userName,\n"  // Changed from u.fullName to o.receiverName
                 + "    o.receiverPhone,\n"
                 + "    o.paymentStatus,\n"
                 + "    SUM(od.unitPriceOut * od.quantity * (1 - COALESCE(p.discount, 0) / 100)) + 20000 AS totalValue,\n"
@@ -236,7 +236,7 @@ public class DeliveryDAO extends DBContext {
                 + "    o.isConfirmed = 1 \n"
                 + "    AND o.shipperId = ?  -- Filter for orders with shipperId equal to ?\n"
                 + "GROUP BY \n"
-                + "    o.orderId, u.fullName, o.receiverPhone, o.paymentStatus, o.orderCreatedAt, o.deliveryStatus\n"
+                + "    o.orderId, o.receiverName, o.receiverPhone, o.paymentStatus, o.orderCreatedAt, o.deliveryStatus\n" // Updated GROUP BY to include o.receiverName
                 + "ORDER BY \n"
                 + "    CASE \n"
                 + "        WHEN o.deliveryStatus = 'Waiting' THEN 0\n"
@@ -268,6 +268,76 @@ public class DeliveryDAO extends DBContext {
             }
         } catch (SQLException e) {
             System.err.println("Error in getAllDeliveryForShipper: " + e.getMessage());
+        } finally {
+            closeConnection();
+        }
+
+        return deliveryList;
+    }
+
+    public List<Delivery> searchDeliveries(int shipperId, String query) {
+        List<Delivery> deliveryList = new ArrayList<>();
+        String sql = """
+                 SELECT 
+                     o.orderId,
+                     o.receiverName AS userName,  -- Change from u.fullName to o.receiverName
+                     o.receiverPhone,
+                     o.paymentStatus,
+                     SUM(od.unitPriceOut * od.quantity * (1 - COALESCE(p.discount, 0) / 100)) + 20000 AS totalValue,
+                     o.orderCreatedAt AS orderDate,
+                     o.deliveryStatus
+                 FROM 
+                     Orders o
+                 JOIN 
+                     Users u ON o.userId = u.userId
+                 JOIN 
+                     OrderDetails od ON o.orderId = od.orderId
+                 JOIN 
+                     BatchesProduct bp ON od.batchId = bp.batchId
+                 LEFT JOIN 
+                     Promos p ON bp.productId = p.productId
+                 WHERE 
+                     o.isConfirmed = 1
+                     AND o.shipperId = ?  -- Filter for orders with shipperId equal to ?
+                     AND (o.orderId LIKE ? OR o.receiverName LIKE ? OR o.receiverPhone LIKE ?)  -- Search conditions
+                 GROUP BY 
+                     o.orderId, o.receiverName, o.receiverPhone, o.paymentStatus, o.orderCreatedAt, o.deliveryStatus
+                 ORDER BY 
+                     CASE 
+                         WHEN o.deliveryStatus = 'Waiting' THEN 0
+                         ELSE 1 
+                     END,
+                     o.orderCreatedAt DESC;""";
+
+        try {
+            connection = getConnection();
+            preStatement = connection.prepareStatement(sql);
+            preStatement.setObject(1, shipperId);
+            String searchPattern = "%" + query + "%";  // Using wildcards for LIKE
+            preStatement.setString(2, searchPattern); // For orderId
+            preStatement.setString(3, searchPattern); // For receiverName
+            preStatement.setString(4, searchPattern); // For receiverPhone
+
+            resultSet = preStatement.executeQuery();
+
+            while (resultSet.next()) {
+                // Retrieve data from resultSet
+                String customerName = resultSet.getString("userName");  // Still using userName for convenience
+                String customerPhone = resultSet.getString("receiverPhone");
+                int orderId = resultSet.getInt("orderId");
+                String paymentStatus = resultSet.getString("paymentStatus");
+                String deliveryStatus = resultSet.getString("deliveryStatus");
+                Date orderCreatedAt = resultSet.getDate("orderDate");
+                BigDecimal total = resultSet.getBigDecimal("totalValue");
+
+                // Create a Delivery object from the retrieved values
+                Delivery delivery = new Delivery(customerName, customerPhone, orderId, paymentStatus, deliveryStatus, orderCreatedAt, total);
+
+                // Add Delivery object to the list
+                deliveryList.add(delivery);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error in searchDeliveries: " + e.getMessage());
         } finally {
             closeConnection();
         }

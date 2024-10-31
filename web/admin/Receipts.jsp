@@ -115,10 +115,14 @@
                                 <div class="card text-dark bg-light d-flex mb-3">
                                     <div class="card-header bg-light d-flex align-items-center justify-content-between">
                                         <h4 class="mb-0" style="font-weight: bold;">Đơn nhập hàng</h4>
-<!--                                        <div>
-                                            <button class="btn btn-sm btn-outline-secondary" style="width: 105px;">Bộ lọc</button>
-                                            <button class="btn btn-sm btn-outline-secondary" style="width: 105px;">Lịch sử đơn hàng</button>
-                                        </div>-->
+                                        <div>
+                                            <form action="${pageContext.request.contextPath}/admin/receipts?action=search" method="POST" style="display: flex; align-items: center;">
+                                                <input type="text" name="searchQuery" placeholder="Find receiptId, supplier" class="form-control" style="width: 200px; margin-right: 10px; margin-bottom: 0">
+                                                <button type="submit" class="btn btn-sm btn-outline-success" style="width: 105px;">Search</button>
+                                            </form>
+                                            <!--                                            <button class="btn btn-sm btn-outline-secondary" style="width: 105px;">Bộ lọc</button>
+                                                                                        <button class="btn btn-sm btn-outline-secondary" style="width: 105px;">Lịch sử đơn hàng</button>-->
+                                        </div>
                                     </div>
 
                                     <!-- Pagination logic -->

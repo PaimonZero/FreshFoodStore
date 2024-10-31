@@ -113,7 +113,7 @@ public class authController extends HttpServlet {
                         session.setAttribute("notifyAuth", "success");
                         
                         //Chuyển hướng sang trang delivery
-                        targetURL = request.getContextPath() + "/admin/Delivery.jsp";      //đổi dường dẫn ở đây
+                        targetURL = request.getContextPath() + "/admin/DeliveryList";      //đổi dường dẫn ở đây
                         encodedURL = response.encodeRedirectURL(targetURL);
                         response.sendRedirect(encodedURL);
                         break;

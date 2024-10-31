@@ -45,7 +45,7 @@ public class UsersController extends HttpServlet {
             } else if (role.equals("shipper")) {        //nếu là shipper thì ko cho coi trang này
                 session.setAttribute("notifyAuth", "notAuthorized");
 
-                String targetURL = request.getContextPath() + "/admin/Delivery.jsp";      //đổi dường dẫn ở đây
+                String targetURL = request.getContextPath() + "/admin/DeliveryList";      //đổi dường dẫn ở đây
                 String encodedURL = response.encodeRedirectURL(targetURL);
                 response.sendRedirect(encodedURL);
                 return;
@@ -107,7 +107,7 @@ public class UsersController extends HttpServlet {
             } else if (role.equals("shipper")) {        //nếu là shipper thì ko cho coi trang này
                 session.setAttribute("notifyAuth", "notAuthorized");
 
-                String targetURL = request.getContextPath() + "/admin/Delivery.jsp";      //đổi dường dẫn ở đây
+                String targetURL = request.getContextPath() + "/admin/DeliveryList";      //đổi dường dẫn ở đây
                 String encodedURL = response.encodeRedirectURL(targetURL);
                 response.sendRedirect(encodedURL);
                 return;

@@ -67,7 +67,7 @@ public class OrdersController extends HttpServlet {
             } else if (role.equals("shipper")) {        //nếu là shipper thì ko cho coi trang này
                 session.setAttribute("notifyAuth", "notAuthorized");
 
-                String targetURL = request.getContextPath() + "/admin/Delivery.jsp";      //đổi dường dẫn ở đây
+                String targetURL = request.getContextPath() + "/admin/DeliveryList";      //đổi dường dẫn ở đây
                 String encodedURL = response.encodeRedirectURL(targetURL);
                 response.sendRedirect(encodedURL);
                 return;
@@ -128,7 +128,7 @@ public class OrdersController extends HttpServlet {
             } else if (role.equals("shipper")) {        //nếu là shipper thì ko cho coi trang này
                 session.setAttribute("notifyAuth", "notAuthorized");
 
-                String targetURL = request.getContextPath() + "/admin/Delivery.jsp";      //đổi dường dẫn ở đây
+                String targetURL = request.getContextPath() + "/admin/DeliveryList";      //đổi dường dẫn ở đây
                 String encodedURL = response.encodeRedirectURL(targetURL);
                 response.sendRedirect(encodedURL);
                 return;
@@ -157,6 +157,9 @@ public class OrdersController extends HttpServlet {
                 break;
             case "updateShipper":
                 handleUpdateShipper(request, response);
+                break;
+            case "search":
+                handleSearch(request, response);
                 break;
             default:
                 throw new AssertionError();
@@ -295,12 +298,30 @@ public class OrdersController extends HttpServlet {
         int shipperId = Integer.parseInt(request.getParameter("shipperId"));
 //        String shipperName = request.getParameter("shipperName");
 //        String shipperPhone = request.getParameter("shipperPhone");
-        
+
         OrdersDAO dao = new OrdersDAO();
         dao.updateDelivery(orderId, shipperId);
-        
+
         // Chuyển hướng về trang JSP với trạng thái mới
         response.sendRedirect("OrdersController?action=viewOrderDetail&currentId=" + orderId);
+    }
+
+    private void handleSearch(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String searchQuery = request.getParameter("searchQuery");
+        
+        // Khởi tạo OrdersDAO để lấy danh sách đơn hàng từ cơ sở dữ liệu
+        OrdersDAO ordersDAO = new OrdersDAO();
+        List<OrderDTO> orderDisplayList = ordersDAO.searchOrders(searchQuery);
+
+        // Lấy thông tin tổng quan đơn hàng
+        Map<String, Object> orderOverview = ordersDAO.getOrderOverview();
+
+        // Đặt dữ liệu vào request attribute
+        request.setAttribute("orderDisplayList", orderDisplayList);
+        request.setAttribute("orderOverview", orderOverview);
+
+        // Chuyển tiếp đến trang Orders.jsp
+        request.getRequestDispatcher("Orders.jsp").forward(request, response);
     }
 
 }

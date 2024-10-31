@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     document.getElementById('Delivery').addEventListener('click', function () {
-        window.location.href = './Delivery.jsp';
+        window.location.href = './DeliveryList';
     });
     document.getElementById('Settings').addEventListener('click', function () {
         const contextPath = '/' + window.location.pathname.split('/')[1];

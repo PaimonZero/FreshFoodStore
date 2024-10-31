@@ -73,36 +73,36 @@ public class OrdersDAO extends DBContext {
             System.out.println("Connection failed.");
         }
 
-         String sql = "SELECT \n"
-            + "    o.orderId, \n"
-            + "    o.receiverName AS customerName, \n"
-            + "    o.paymentStatus, \n"
-            + "    SUM(od.unitPriceOut * od.quantity * (1 - COALESCE(p.discount, 0) / 100)) + 20000 AS totalPrice, \n" // Tính tổng giá trị đã áp dụng giảm giá và thêm phí vận chuyển
-            + "    o.orderCreatedAt AS orderDate, \n"
-            + "    u_shipper.fullName AS shipperName, \n"
-            + "    o.deliveryStatus\n"
-            + "FROM Orders o\n"
-            + "JOIN Users u ON o.userId = u.userId                        -- Người đặt hàng\n"
-            + "LEFT JOIN Shippers s ON o.shipperId = s.shipperId           -- Người giao hàng\n"
-            + "LEFT JOIN Users u_shipper ON s.userId = u_shipper.userId    -- Lấy tên của shipper từ bảng Users thông qua userId\n"
-            + "JOIN OrderDetails od ON o.orderId = od.orderId\n"
-            + "JOIN BatchesProduct bp ON od.batchId = bp.batchId           -- Nối bảng BatchesProduct để lấy productId\n"
-            + "LEFT JOIN Promos p ON bp.productId = p.productId            -- Nối bảng Promos để lấy discount\n"
-            + "GROUP BY \n"
-            + "    o.orderId, \n"
-            + "    o.receiverName, \n"
-            + "    o.paymentStatus, \n"
-            + "    o.orderCreatedAt, \n"
-            + "    u_shipper.fullName, \n"
-            + "    o.deliveryStatus\n"
-            + "ORDER BY \n"
-            + "    CASE \n"
-            + "        WHEN u_shipper.fullName IS NULL THEN 0  -- Đưa các đơn hàng chưa có shipper lên đầu\n"
-            + "        WHEN o.deliveryStatus = 'Waiting' THEN 1\n"
-            + "        WHEN o.deliveryStatus = 'Shipping' THEN 2\n"
-            + "        ELSE 3\n"
-            + "    END,\n"
-            + "    o.orderCreatedAt ASC;";
+        String sql = "SELECT \n"
+                + "    o.orderId, \n"
+                + "    o.receiverName AS customerName, \n"
+                + "    o.paymentStatus, \n"
+                + "    SUM(od.unitPriceOut * od.quantity * (1 - COALESCE(p.discount, 0) / 100)) + 20000 AS totalPrice, \n" // Tính tổng giá trị đã áp dụng giảm giá và thêm phí vận chuyển
+                + "    o.orderCreatedAt AS orderDate, \n"
+                + "    u_shipper.fullName AS shipperName, \n"
+                + "    o.deliveryStatus\n"
+                + "FROM Orders o\n"
+                + "JOIN Users u ON o.userId = u.userId                        -- Người đặt hàng\n"
+                + "LEFT JOIN Shippers s ON o.shipperId = s.shipperId           -- Người giao hàng\n"
+                + "LEFT JOIN Users u_shipper ON s.userId = u_shipper.userId    -- Lấy tên của shipper từ bảng Users thông qua userId\n"
+                + "JOIN OrderDetails od ON o.orderId = od.orderId\n"
+                + "JOIN BatchesProduct bp ON od.batchId = bp.batchId           -- Nối bảng BatchesProduct để lấy productId\n"
+                + "LEFT JOIN Promos p ON bp.productId = p.productId            -- Nối bảng Promos để lấy discount\n"
+                + "GROUP BY \n"
+                + "    o.orderId, \n"
+                + "    o.receiverName, \n"
+                + "    o.paymentStatus, \n"
+                + "    o.orderCreatedAt, \n"
+                + "    u_shipper.fullName, \n"
+                + "    o.deliveryStatus\n"
+                + "ORDER BY \n"
+                + "    CASE \n"
+                + "        WHEN u_shipper.fullName IS NULL THEN 0  -- Đưa các đơn hàng chưa có shipper lên đầu\n"
+                + "        WHEN o.deliveryStatus = 'Waiting' THEN 1\n"
+                + "        WHEN o.deliveryStatus = 'Shipping' THEN 2\n"
+                + "        ELSE 3\n"
+                + "    END,\n"
+                + "    o.orderCreatedAt ASC;";
 
         try {
             preStatement = connection.prepareStatement(sql);
@@ -143,7 +143,85 @@ public class OrdersDAO extends DBContext {
         }
         return orderDisplayList;
     }
-    
+
+    //Hàm để search order theo id hoặc receiverName
+    public List<OrderDTO> searchOrders(String query) {
+        List<OrderDTO> orderDisplayList = new ArrayList<>();
+        connection = getConnection();
+
+        String sql = """
+                 SELECT 
+                     o.orderId, 
+                     o.receiverName AS customerName, 
+                     o.paymentStatus, 
+                     SUM(od.unitPriceOut * od.quantity * (1 - COALESCE(p.discount, 0) / 100)) + 20000 AS totalPrice, 
+                     o.orderCreatedAt AS orderDate, 
+                     u_shipper.fullName AS shipperName, 
+                     o.deliveryStatus
+                 FROM Orders o
+                 JOIN Users u ON o.userId = u.userId
+                 LEFT JOIN Shippers s ON o.shipperId = s.shipperId
+                 LEFT JOIN Users u_shipper ON s.userId = u_shipper.userId
+                 JOIN OrderDetails od ON o.orderId = od.orderId
+                 JOIN BatchesProduct bp ON od.batchId = bp.batchId
+                 LEFT JOIN Promos p ON bp.productId = p.productId
+                 WHERE o.orderId LIKE ? OR o.receiverName LIKE ?  -- Search condition
+                 GROUP BY 
+                     o.orderId, 
+                     o.receiverName, 
+                     o.paymentStatus, 
+                     o.orderCreatedAt, 
+                     u_shipper.fullName, 
+                     o.deliveryStatus
+                 ORDER BY 
+                     CASE 
+                         WHEN u_shipper.fullName IS NULL THEN 0 
+                         WHEN o.deliveryStatus = 'Waiting' THEN 1
+                         WHEN o.deliveryStatus = 'Shipping' THEN 2
+                         ELSE 3
+                     END,
+                     o.orderCreatedAt ASC;""";
+
+        try {
+            preStatement = connection.prepareStatement(sql);
+            String searchPattern = "%" + query + "%";  // Using wildcards for LIKE
+            preStatement.setString(1, searchPattern); // For orderId
+            preStatement.setString(2, searchPattern); // For customerName
+
+            resultSet = preStatement.executeQuery();
+            while (resultSet.next()) {
+                int orderId = resultSet.getInt("orderId");
+                String customerName = resultSet.getString("customerName");
+                String paymentStatus = resultSet.getString("paymentStatus");
+                double totalPrice = resultSet.getDouble("totalPrice");
+                String orderDate = resultSet.getString("orderDate");
+                String shipperName = resultSet.getString("shipperName");
+                String deliveryStatus = resultSet.getString("deliveryStatus");
+
+                OrderDTO orderDisplay = new OrderDTO(orderId, customerName, paymentStatus, totalPrice, orderDate, shipperName, deliveryStatus);
+                orderDisplayList.add(orderDisplay);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error in searchOrders: " + ex.getMessage());
+        } finally {
+            // Close resources
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preStatement != null) {
+                    preStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                System.out.println("Error in closing resources: " + e.getMessage());
+            }
+        }
+        return orderDisplayList;
+    }
+
     //Mục đích sử dụng: Tính tổng giá trị đơn hàng (hiện sử dụng cho vnPay)
     public double findOrderValueById(int orderId) {
         double totalOrderValue = -1;        //Nếu trả về -1 là lỗi
@@ -175,7 +253,7 @@ public class OrdersDAO extends DBContext {
         }
         return totalOrderValue;
     }
-    
+
     //Mục đích sử dụng: Cập nhật paymentStatus (hiện sử dụng cho vnPay)
     public void updatePaymentStatusById(int orderId, String paymentStatus) {
         //- connect w/Database

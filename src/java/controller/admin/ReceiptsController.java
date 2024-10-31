@@ -83,7 +83,7 @@ public class ReceiptsController extends HttpServlet {
             } else if (role.equals("shipper")) {        //nếu là shipper thì ko cho coi trang này
                 session.setAttribute("notifyAuth", "notAuthorized");
 
-                String targetURL = request.getContextPath() + "/admin/Delivery.jsp";      //đổi dường dẫn ở đây
+                String targetURL = request.getContextPath() + "/admin/DeliveryList";      //đổi dường dẫn ở đây
                 String encodedURL = response.encodeRedirectURL(targetURL);
                 response.sendRedirect(encodedURL);
                 return;
@@ -139,7 +139,7 @@ public class ReceiptsController extends HttpServlet {
             } else if (role.equals("shipper")) {        //nếu là shipper thì ko cho coi trang này
                 session.setAttribute("notifyAuth", "notAuthorized");
 
-                String targetURL = request.getContextPath() + "/admin/Delivery.jsp";      //đổi dường dẫn ở đây
+                String targetURL = request.getContextPath() + "/admin/DeliveryList";      //đổi dường dẫn ở đây
                 String encodedURL = response.encodeRedirectURL(targetURL);
                 response.sendRedirect(encodedURL);
                 return;
@@ -152,7 +152,7 @@ public class ReceiptsController extends HttpServlet {
             return;
         }
         //===================End Hàm phân quyền=================================================
-        
+
         try {
             //- Lấy giá trị action về
             String action = request.getParameter("action") == null ? "" : request.getParameter("action");
@@ -166,6 +166,9 @@ public class ReceiptsController extends HttpServlet {
                     break;
                 case "addDetailNew":
                     handleAddDetailNew(request, response);
+                    break;
+                case "search":
+                    handleSearch(request, response);
                     break;
                 default:
                     throw new AssertionError();
@@ -194,8 +197,8 @@ public class ReceiptsController extends HttpServlet {
         List<ReceiptDetailDTO> listReDetail = redao.getReceiptDetailById(receiptId);
         ReceiptDTO receiptInfo = redao.getReceiptById(receiptId);
         List<Products> listProducts = redao.getAllProducts();
-        
-        if(!listReDetail.isEmpty()){
+
+        if (!listReDetail.isEmpty()) {
             //lấy thông tin các lô hàng liên quan đến đơn nhập
             List<Integer> receiptDetailIds = new ArrayList<>();
             for (ReceiptDetailDTO rd : listReDetail) {
@@ -233,11 +236,11 @@ public class ReceiptsController extends HttpServlet {
 
         //thêm ReceiptDetails vào db
         int receiptDetailId = redao.insertReDetail(rd);
-       
+
         if (receiptDetailId > 0) {
             //thêm thông tin vào BatchesProduct
             boolean kqb = redao.insertBatchesProduct(receiptDetailId, productId, quantity, expiryDate);
-            
+
             // Chuyển hướng về trang JSP với trạng thái mới
             response.sendRedirect("receipts?action=viewReceiptDetail&currentId=" + receiptId);
         } else {
@@ -266,7 +269,7 @@ public class ReceiptsController extends HttpServlet {
 
         // Call addProduct method from ProductDao   //lấy ảnh đầu tiên làm thumbail
         int productId = redao.addProductInReceipt(name, unitMeasure, supplierId, categoryId, description, unitPrice, status, proImages.get(0));
-        
+
         if (productId != -1) {
             // Kiểm tra nếu có ảnh mới được tải lên
             if (!proImages.isEmpty()) {
@@ -277,7 +280,7 @@ public class ReceiptsController extends HttpServlet {
             } else {
                 System.out.println("???No new images uploaded, gallery add skipped.");
             }
-            
+
             //Thêm thông tin đơn nhập
             int receiptId = Integer.parseInt(request.getParameter("receiptId"));
             int quantity = Integer.parseInt(request.getParameter("quantity"));
@@ -288,10 +291,10 @@ public class ReceiptsController extends HttpServlet {
             ReceiptDetails rd = new ReceiptDetails(receiptId, productId, quantity, inputPrice, expiryDate);
             //thêm ReceiptDetails vào db
             int receiptDetailId = redao.insertReDetail(rd);
-            
+
             //thêm thông tin vào BatchesProduct
             boolean kqb = redao.insertBatchesProduct(receiptDetailId, productId, quantity, expiryDate);
-            
+
             // Chuyển hướng về trang JSP với trạng thái mới
             response.sendRedirect("receipts?action=viewReceiptDetail&currentId=" + receiptId);
         } else {
@@ -333,10 +336,10 @@ public class ReceiptsController extends HttpServlet {
                     File fileToSave = new File(filePath);
                     Files.copy(fileContent, fileToSave.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 }
-                
+
                 // Trả về tên file đã lưu (là fileName và thêm ../images/products/ ở phía trc)
                 fileName = "../images/products/" + fileName;
-                
+
                 // Thêm tên file vào danh sách
                 fileNames.add(fileName);
 
@@ -346,6 +349,20 @@ public class ReceiptsController extends HttpServlet {
 
         // Trả về danh sách tên các file đã lưu
         return fileNames;
+    }
+
+    private void handleSearch(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String searchQuery = request.getParameter("searchQuery");
+
+        // Khởi tạo ReceiptsDAO để lấy danh sách đơn hàng từ cơ sở dữ liệu
+        ReceiptsDAO redao = new ReceiptsDAO();
+        List<ReceiptDTO> listReceipt = redao.searchReceipts(searchQuery);
+
+        // Đặt dữ liệu vào request attribute
+        request.setAttribute("listReceipt", listReceipt);
+
+        // Chuyển tiếp đến trang Orders.jsp
+        request.getRequestDispatcher("Receipts.jsp").forward(request, response);
     }
 
 }

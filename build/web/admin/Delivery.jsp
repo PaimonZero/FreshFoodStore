@@ -21,34 +21,34 @@
         <%@include file="HeadSidebar/header.jsp" %>
 
         <%
-            DeliveryDAO dao = new DeliveryDAO();
-            
-            // Get the user account from the session
-            Users account = (Users) session.getAttribute("account");
-            
-            if (account != null) {
-                String role = account.getRole();
-
-                // Redirect if the role is not manager, staff, or shipper
-                if (!role.equals("manager") && !role.equals("staff") && !role.equals("shipper")) {
-                    session.setAttribute("notifyAuth", "notAuthorized");
-                    String targetURL = request.getContextPath() + "/customer/Homepage";
-                    String encodedURL = response.encodeRedirectURL(targetURL);
-                    response.sendRedirect(encodedURL);
-                    return;
-                } else if (role.equals("shipper")) {
-                    //Lấy shipperId để lấy listDelivery cho shipper đó
-                    int shipperId = dao.getShipperIdByUserId(account.getUserId());
-                    List<Delivery> deliveryList = dao.getAllDeliveryForShipper(shipperId);
-                    request.setAttribute("deliveryList", deliveryList);
-                }
-            } else {
-                // If no account is found in the session, redirect to login or another appropriate page
-                String loginURL = request.getContextPath() + "/SignIn.jsp";
-                String encodedURL = response.encodeRedirectURL(loginURL);
-                response.sendRedirect(encodedURL);
-                return;
-            }
+//            DeliveryDAO dao = new DeliveryDAO();
+//            
+//            // Get the user account from the session
+//            Users account = (Users) session.getAttribute("account");
+//            
+//            if (account != null) {
+//                String role = account.getRole();
+//
+//                // Redirect if the role is not manager, staff, or shipper
+//                if (!role.equals("manager") && !role.equals("staff") && !role.equals("shipper")) {
+//                    session.setAttribute("notifyAuth", "notAuthorized");
+//                    String targetURL = request.getContextPath() + "/customer/Homepage";
+//                    String encodedURL = response.encodeRedirectURL(targetURL);
+//                    response.sendRedirect(encodedURL);
+//                    return;
+//                } else if (role.equals("shipper")) {
+//                    //Lấy shipperId để lấy listDelivery cho shipper đó
+//                    int shipperId = dao.getShipperIdByUserId(account.getUserId());
+//                    List<Delivery> deliveryList = dao.getAllDeliveryForShipper(shipperId);
+//                    request.setAttribute("deliveryList", deliveryList);
+//                }
+//            } else {
+//                // If no account is found in the session, redirect to login or another appropriate page
+//                String loginURL = request.getContextPath() + "/SignIn.jsp";
+//                String encodedURL = response.encodeRedirectURL(loginURL);
+//                response.sendRedirect(encodedURL);
+//                return;
+//            }
         %>
         <div class="scale-container">
             <div class="container-fluid">
@@ -64,10 +64,14 @@
                                 <div class="card text-dark bg-light d-flex mb-3">
                                     <div class="card-header bg-light d-flex align-items-center justify-content-between">
                                         <h4 class="mb-0" style="font-weight: bold;">Delivery List for ${sessionScope.account.fullName}</h4>
-                                        <!--                                        <div>
-                                                                                    <button class="btn btn-sm btn-outline-success" style="width: 105px;">Order History</button>
-                                                                                    <button class="btn btn-sm btn-outline-secondary" style="width: 105px;">Filter</button>
-                                                                                </div>-->
+                                        <div>
+                                            <form action="${pageContext.request.contextPath}/admin/DeliveryList?action=search" method="POST" style="display: flex; align-items: center;">
+                                                <input type="text" name="searchQuery" placeholder="Find id,name,phone" class="form-control" style="width: 200px; margin-right: 10px; margin-bottom: 0">
+                                                <button type="submit" class="btn btn-sm btn-outline-success" style="width: 105px;">Search</button>
+                                            </form>
+<!--                                            <button class="btn btn-sm btn-outline-success" style="width: 105px;">Order History</button>
+                                            <button class="btn btn-sm btn-outline-secondary" style="width: 105px;">Filter</button>-->
+                                        </div>
                                     </div>
                                     <div class="card-body" style="height: auto;">
                                         <table class="table table-hover">
@@ -127,10 +131,18 @@
 
                                         </table>
                                     </div>
-                                    <div class="card-footer d-flex justify-content-between" style="bottom: 0; background-color: white;">
-                                        <button class="btn btn-outline-secondary" style="width: 100px;">Previous</button>
-                                        <span class="mx-3">Page 1 of 10</span>
-                                        <button class="btn btn-outline-secondary" style="width: 100px;">Next</button>
+                                    <!--                                    <div class="card-footer d-flex justify-content-between" style="bottom: 0; background-color: white;">
+                                                                            <button class="btn btn-outline-secondary" style="width: 100px;">Previous</button>
+                                                                            <span class="mx-3">Page 1 of 10</span>
+                                                                            <button class="btn btn-outline-secondary" style="width: 100px;">Next</button>
+                                                                        </div>-->
+
+                                    <!-- Pagination buttons -->
+                                    <div class="card-footer d-flex justify-content-between"
+                                         style="bottom: 0; background-color: white;">
+                                        <button class="btn btn-outline-secondary" id="prevPage" style="width: 100px;">Previous</button>
+                                        <span class="mx-3" id="pageInfo"></span>
+                                        <button class="btn btn-outline-secondary" id="nextPage" style="width: 100px;">Next</button>
                                     </div>
                                 </div>
                             </div>
@@ -158,6 +170,56 @@
                     notifyAuthField.remove();
                 }
             };
+        </script>
+        <script>
+// Dữ liệu sẽ được hiển thị trong bảng
+            let table = document.querySelector('table tbody');
+            let rows = table.querySelectorAll('tr');
+            let rowsPerPage = 8; // Số hàng hiển thị trên mỗi trang
+            let currentPage = 1; // Trang hiện tại
+            let totalPages = Math.ceil(rows.length / rowsPerPage); // Tổng số trang
+
+// Hàm hiển thị hàng theo trang
+            function displayTablePage(page) {
+                // Tính toán chỉ mục bắt đầu và kết thúc
+                let start = (page - 1) * rowsPerPage;
+                let end = start + rowsPerPage;
+
+                // Ẩn tất cả các hàng trước
+                rows.forEach((row, index) => {
+                    row.style.display = (index >= start && index < end) ? '' : 'none';
+                });
+
+                // Cập nhật trạng thái nút phân trang
+                document.getElementById('prevPage').disabled = (page === 1);
+                document.getElementById('nextPage').disabled = (page === totalPages);
+
+                // Cập nhật số trang hiển thị
+                document.getElementById('pageInfo').innerText = "Page " + page + " of " + totalPages;
+            }
+
+// Hàm chuyển sang trang trước
+            function prevPage() {
+                if (currentPage > 1) {
+                    currentPage--;
+                    displayTablePage(currentPage);
+                }
+            }
+
+// Hàm chuyển sang trang tiếp theo
+            function nextPage() {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    displayTablePage(currentPage);
+                }
+            }
+
+// Gắn sự kiện cho các nút "Previous" và "Next"
+            document.getElementById('prevPage').addEventListener('click', prevPage);
+            document.getElementById('nextPage').addEventListener('click', nextPage);
+
+// Hiển thị trang đầu tiên khi trang tải
+            displayTablePage(currentPage);
         </script>
 
         <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>

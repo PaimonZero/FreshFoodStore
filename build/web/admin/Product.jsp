@@ -40,7 +40,8 @@
         } else if (role.equals("shipper")) {
             // Redirect if the role is shipper to avoid access to this page
             session.setAttribute("notifyAuth", "notAuthorized");
-            String targetURL = request.getContextPath() + "/admin/Dashboard";
+
+            String targetURL = request.getContextPath() + "/admin/DeliveryList";      //đổi dường dẫn ở đây
             String encodedURL = response.encodeRedirectURL(targetURL);
             response.sendRedirect(encodedURL);
             return;

@@ -30,25 +30,26 @@ public class ReceiptsDAO extends DBContext {
         connection = getConnection();
         //- Chuẩn bị câu lệnh sql
         String sql = """
-                     SELECT 
-                         r.receiptId,
-                         s.name AS supplierName,
-                         r.dateInput AS inputDate,
-                         SUM(rd.quantity * rd.inputPrice) AS totalPrice, -- Tính tổng giá tiền của đơn nhập
-                         COUNT(DISTINCT rd.productId) AS productTypes,   -- Đếm số loại sản phẩm (số sản phẩm khác nhau)
-                         SUM(rd.quantity) AS totalQuantity               -- Tính tổng số lượng sản phẩm
-                     FROM 
-                         Receipts r
-                     JOIN 
-                         Suppliers s ON r.supplierId = s.supplierId
-                     LEFT JOIN 
-                         ReceiptDetails rd ON r.receiptId = rd.receiptId
-                     GROUP BY 
-                         r.receiptId, s.name, r.dateInput;""";
+                 SELECT 
+                     r.receiptId,
+                     s.name AS supplierName,
+                     r.dateInput AS inputDate,
+                     SUM(rd.quantity * rd.inputPrice) AS totalPrice, -- Tính tổng giá tiền của đơn nhập
+                     COUNT(DISTINCT rd.productId) AS productTypes,   -- Đếm số loại sản phẩm (số sản phẩm khác nhau)
+                     SUM(rd.quantity) AS totalQuantity               -- Tính tổng số lượng sản phẩm
+                 FROM 
+                     Receipts r
+                 JOIN 
+                     Suppliers s ON r.supplierId = s.supplierId
+                 LEFT JOIN 
+                     ReceiptDetails rd ON r.receiptId = rd.receiptId
+                 GROUP BY 
+                     r.receiptId, s.name, r.dateInput
+                 ORDER BY 
+                     r.dateInput DESC;""";  // Thêm ORDER BY để sắp xếp theo ngày giảm dần
         try {
             //- tạo đối tượng PrepareStatement
             preStatement = connection.prepareStatement(sql);
-            //- Set parameter (optional)
             //- Thực thi câu lệnh
             resultSet = preStatement.executeQuery();
             //- Trả về kết quả
@@ -65,6 +66,59 @@ public class ReceiptsDAO extends DBContext {
             }
         } catch (SQLException e) {
             System.out.println("??(Receipts)getAllReceipts: " + e.getMessage());
+        }
+        return listReceipt;
+    }
+
+    public List<ReceiptDTO> searchReceipts(String query) {
+        List<ReceiptDTO> listReceipt = new ArrayList<>();
+        // Connect to the database
+        connection = getConnection();
+        // Prepare SQL query
+        String sql = """
+                 SELECT 
+                     r.receiptId,
+                     s.name AS supplierName,
+                     r.dateInput AS inputDate,
+                     SUM(rd.quantity * rd.inputPrice) AS totalPrice,
+                     COUNT(DISTINCT rd.productId) AS productTypes,
+                     SUM(rd.quantity) AS totalQuantity
+                 FROM 
+                     Receipts r
+                 JOIN 
+                     Suppliers s ON r.supplierId = s.supplierId
+                 LEFT JOIN 
+                     ReceiptDetails rd ON r.receiptId = rd.receiptId
+                 WHERE 
+                     r.receiptId LIKE ? OR s.name LIKE ? -- Search condition
+                 GROUP BY 
+                     r.receiptId, s.name, r.dateInput
+                 ORDER BY 
+                     r.dateInput DESC;""";
+
+        try {
+            preStatement = connection.prepareStatement(sql);
+            // Use "%" for wildcard search
+            String searchPattern = "%" + query + "%";
+            preStatement.setString(1, searchPattern);
+            preStatement.setString(2, searchPattern);
+
+            resultSet = preStatement.executeQuery();
+
+            while (resultSet.next()) {
+                // Extract data as before
+                int receiptId = resultSet.getInt("receiptId");
+                String supplierName = resultSet.getString("supplierName");
+                Date inputDate = resultSet.getDate("inputDate");
+                double totalPrice = resultSet.getDouble("totalPrice");
+                int productTypes = resultSet.getInt("productTypes");
+                int totalQuantity = resultSet.getInt("totalQuantity");
+
+                ReceiptDTO re = new ReceiptDTO(receiptId, supplierName, inputDate, totalPrice, productTypes, totalQuantity);
+                listReceipt.add(re);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error in searchReceipts: " + e.getMessage());
         }
         return listReceipt;
     }
