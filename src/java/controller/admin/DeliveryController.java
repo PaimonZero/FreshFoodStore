@@ -82,6 +82,7 @@ public class DeliveryController extends HttpServlet {
 
                         // Chuyển tiếp đến trang Orders.jsp
                         request.getRequestDispatcher("Delivery.jsp").forward(request, response);
+                        return;
                 }
 
             }
@@ -92,6 +93,10 @@ public class DeliveryController extends HttpServlet {
             response.sendRedirect(encodedURL);
             return;
         }
+
+        //hàm lấy dữ liệu toàn bộ delivery cho manager và staff, trả về dữ liệu rỗng
+        // Chuyển tiếp đến trang Orders.jsp
+        request.getRequestDispatcher("Delivery.jsp").forward(request, response);
     }
 
     /**
@@ -115,7 +120,7 @@ public class DeliveryController extends HttpServlet {
 
         //Lấy shipperId để lấy listDelivery cho shipper đó
         int shipperId = dao.getShipperIdByUserId(account.getUserId());
-        
+
         List<Delivery> deliveryList = dao.searchDeliveries(shipperId, searchQuery);
         request.setAttribute("deliveryList", deliveryList);
 

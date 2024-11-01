@@ -102,8 +102,16 @@
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated profile-dropdown p-2 dropdown--menu">
                                         <!-- Display only for roles: manager, shipper, staff -->
-                                        <c:if test="${account.role == 'manager' || account.role == 'shipper' || account.role == 'staff'}">
+                                        <c:if test="${account.role == 'manager' || account.role == 'staff'}">
                                             <form action="/FreshFoodStore/admin/Dashboard" class="menu-user" style="border-bottom: 1px solid black;"> 
+                                                <button class="menu-button mb-1">
+                                                    <i class="fas fa-users-cog menu-icon text-light bg-warning"></i>
+                                                    Admin Page
+                                                </button>
+                                            </form>
+                                        </c:if>
+                                        <c:if test="${account.role == 'shipper'}">
+                                            <form action="/FreshFoodStore/admin/DeliveryList" class="menu-user" style="border-bottom: 1px solid black;"> 
                                                 <button class="menu-button mb-1">
                                                     <i class="fas fa-users-cog menu-icon text-light bg-warning"></i>
                                                     Admin Page
