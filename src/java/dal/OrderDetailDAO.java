@@ -29,7 +29,20 @@ public class OrderDetailDAO {
     // Viet cho Product
     public ProductDTO findProductById(int id) {
 
-        String sql = "select top 1 p.*, bp.*, pr.discount FROM products p join BatchesProduct bp on p.productId = bp.productId join Promos pr on pr.productId = p.productId WHERE p.productId= ? and bp.expiryDate > getDate()";
+        //String sql = "select top 1 p.*, bp.*, pr.discount FROM products p join BatchesProduct bp on p.productId = bp.productId join Promos pr on pr.productId = p.productId WHERE p.productId= ? and bp.expiryDate > getDate()";
+        
+        //Note: Nam đã chặn điều kiện ở (ProductDAO)findProductById khi hiển thị chi tiết sản phẩm để user thao tác, 
+        //      hàm này chạy sau khi hàm kia validate nên KHÔNG cần dk nếu ko tồn tại bp.quantity > 0 và xử lý Promo khi bp.quantity = 0
+        //      hàm này chạy khi người dùng bấm thêm sản phẩm vào giỏ hàng
+        String sql = "SELECT TOP 1 p.*, bp.*, pr.discount " +
+             "FROM products p " +
+             "JOIN BatchesProduct bp ON p.productId = bp.productId " +
+             "JOIN Promos pr ON pr.productId = p.productId " +
+             "WHERE p.productId = ? " +
+             "AND bp.expiryDate > GETDATE() " +
+             "AND bp.quantity > 0 " + 
+             "ORDER BY bp.expiryDate DESC";
+
         try {
             // connect
             con = new DBContext().getConnection();

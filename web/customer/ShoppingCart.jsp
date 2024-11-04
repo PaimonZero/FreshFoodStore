@@ -67,7 +67,6 @@
                                                                                                                                             </div>
                                                                                                                                         </div>-->
                                                                     <div class="item-quantity d-flex justify-content-center w-100">
-
                                                                         <c:choose>  
                                                                             <c:when test="${p.batchQuantity == 0}">  
                                                                                 <div class="qty-container d-none">

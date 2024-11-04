@@ -115,13 +115,17 @@
                                 <div class="card text-dark bg-light d-flex mb-3">
                                     <div class="card-header bg-light d-flex align-items-center justify-content-between">
                                         <h4 class="mb-0" style="font-weight: bold;">Đơn hàng</h4>
-                                        <div>
+                                        <div class="d-flex justify-content-center align-items-center">
+                                            <form action="exportProducts" method="post">
+                                                <button class="btn btn-sm btn-outline-secondary me-2">Export to Excel</button>
+                                            </form>
                                             <form action="${pageContext.request.contextPath}/admin/OrdersController?action=search" method="POST" style="display: flex; align-items: center;">
                                                 <input type="text" name="searchQuery" placeholder="Find orderId, receiverName" class="form-control" style="width: 200px; margin-right: 10px; margin-bottom: 0">
                                                 <button type="submit" class="btn btn-sm btn-outline-success" style="width: 105px;">Search</button>
                                             </form>
-<!--                                            <button class="btn btn-sm btn-outline-secondary"style="width: 105px;">Bộ lọc</button>
-                                            <button class="btn btn-sm btn-outline-secondary"style="width: 105px;">Lịch sử đơn hàng</button>-->
+                                            
+                                            <!--                                            <button class="btn btn-sm btn-outline-secondary"style="width: 105px;">Bộ lọc</button>
+                                                                                        <button class="btn btn-sm btn-outline-secondary"style="width: 105px;">Lịch sử đơn hàng</button>-->
                                         </div>
                                     </div>
 
@@ -141,9 +145,9 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                            
+
                                                 <c:forEach var="order" items="${orderDisplayList}">
-                                                   <form id="infoForm2_${order.orderId}" action="OrdersController?action=viewOrderDetail" method="POST">
+                                                <form id="infoForm2_${order.orderId}" action="OrdersController?action=viewOrderDetail" method="POST">
                                                     <tr onclick="document.getElementById('infoForm2_${order.orderId}').submit();" style="cursor: pointer;">
                                                         <td>${order.orderId}</td>
                                                         <td>${order.receiverName}</td>
@@ -168,14 +172,14 @@
                                                             </button>
                                                         </td>
                                                     </tr>
-                                                   </form>
-                                                </c:forEach>
-                                                <c:if test="${empty orderDisplayList}">
-                                                    <tr>
-                                                        <td colspan="8" class="text-center">Không có đơn hàng nào</td>
-                                                    </tr>
-                                                </c:if>
-                                            
+                                                </form>
+                                            </c:forEach>
+                                            <c:if test="${empty orderDisplayList}">
+                                                <tr>
+                                                    <td colspan="8" class="text-center">Không có đơn hàng nào</td>
+                                                </tr>
+                                            </c:if>
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -207,53 +211,53 @@
     <!-- JavaScript to handle pagination -->
     <script>
 // Dữ liệu sẽ được hiển thị trong bảng
-                                                            let table = document.querySelector('table tbody');
-                                                            let rows = table.querySelectorAll('tr');
-                                                            let rowsPerPage = 8; // Số hàng hiển thị trên mỗi trang
-                                                            let currentPage = 1; // Trang hiện tại
-                                                            let totalPages = Math.ceil(rows.length / rowsPerPage); // Tổng số trang
+                                                        let table = document.querySelector('table tbody');
+                                                        let rows = table.querySelectorAll('tr');
+                                                        let rowsPerPage = 8; // Số hàng hiển thị trên mỗi trang
+                                                        let currentPage = 1; // Trang hiện tại
+                                                        let totalPages = Math.ceil(rows.length / rowsPerPage); // Tổng số trang
 
 // Hàm hiển thị hàng theo trang
-                                                            function displayTablePage(page) {
-                                                                // Tính toán chỉ mục bắt đầu và kết thúc
-                                                                let start = (page - 1) * rowsPerPage;
-                                                                let end = start + rowsPerPage;
+                                                        function displayTablePage(page) {
+                                                            // Tính toán chỉ mục bắt đầu và kết thúc
+                                                            let start = (page - 1) * rowsPerPage;
+                                                            let end = start + rowsPerPage;
 
-                                                                // Ẩn tất cả các hàng trước
-                                                                rows.forEach((row, index) => {
-                                                                    row.style.display = (index >= start && index < end) ? '' : 'none';
-                                                                });
+                                                            // Ẩn tất cả các hàng trước
+                                                            rows.forEach((row, index) => {
+                                                                row.style.display = (index >= start && index < end) ? '' : 'none';
+                                                            });
 
-                                                                // Cập nhật trạng thái nút phân trang
-                                                                document.getElementById('prevPage').disabled = (page === 1);
-                                                                document.getElementById('nextPage').disabled = (page === totalPages);
+                                                            // Cập nhật trạng thái nút phân trang
+                                                            document.getElementById('prevPage').disabled = (page === 1);
+                                                            document.getElementById('nextPage').disabled = (page === totalPages);
 
-                                                                // Cập nhật số trang hiển thị
-                                                                document.getElementById('pageInfo').innerText = "Page " + page + " of " + totalPages;
-                                                            }
+                                                            // Cập nhật số trang hiển thị
+                                                            document.getElementById('pageInfo').innerText = "Page " + page + " of " + totalPages;
+                                                        }
 
 // Hàm chuyển sang trang trước
-                                                            function prevPage() {
-                                                                if (currentPage > 1) {
-                                                                    currentPage--;
-                                                                    displayTablePage(currentPage);
-                                                                }
+                                                        function prevPage() {
+                                                            if (currentPage > 1) {
+                                                                currentPage--;
+                                                                displayTablePage(currentPage);
                                                             }
+                                                        }
 
 // Hàm chuyển sang trang tiếp theo
-                                                            function nextPage() {
-                                                                if (currentPage < totalPages) {
-                                                                    currentPage++;
-                                                                    displayTablePage(currentPage);
-                                                                }
+                                                        function nextPage() {
+                                                            if (currentPage < totalPages) {
+                                                                currentPage++;
+                                                                displayTablePage(currentPage);
                                                             }
+                                                        }
 
 // Gắn sự kiện cho các nút "Previous" và "Next"
-                                                            document.getElementById('prevPage').addEventListener('click', prevPage);
-                                                            document.getElementById('nextPage').addEventListener('click', nextPage);
+                                                        document.getElementById('prevPage').addEventListener('click', prevPage);
+                                                        document.getElementById('nextPage').addEventListener('click', nextPage);
 
 // Hiển thị trang đầu tiên khi trang tải
-                                                            displayTablePage(currentPage);
+                                                        displayTablePage(currentPage);
     </script>
 </body>
 </html>

@@ -118,13 +118,16 @@
                             <div class="card text-dark bg-light d-flex mb-3">
                                 <div class="card-header bg-light d-flex align-items-center justify-content-between">
                                     <h4 class="mb-0" style="font-weight: bold;">Product</h4>
-                                    <!--                                    <div>
-                                                                                                                    <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal"
-                                                                                                                            data-bs-target="#addProductModal"style="width: 96px;">Add Product</button>
-                                    
-                                                                            <button class="btn btn-sm btn-outline-secondary"style="width: 70px;">Filter</button>
-                                                                            <button class="btn btn-sm btn-outline-secondary"style="width: 96px;">Dowload All</button>
-                                                                        </div>-->
+                                    <div>
+                                        <!--                                        <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal"
+                                                                                        data-bs-target="#addProductModal"style="width: 96px;">Add Product</button>-->
+
+                                        <form action="exportProducts" method="post">
+                                            <button class="btn btn-sm btn-outline-secondary">Export to Excel</button>
+                                        </form>
+<!--                                        <button class="btn btn-sm btn-outline-secondary"style="width: 70px;">Filter</button>
+                                        <button class="btn btn-sm btn-outline-secondary"style="width: 96px;">Dowload All</button>-->
+                                    </div>
                                 </div>
                                 <div class="card-body" style="height: auto; ">
                                     <table class="table table-hover">

@@ -29,7 +29,11 @@
                             <div class="card text-dark bg-light d-flex mb-3">
                                 <div class="card-header bg-light d-flex align-items-center justify-content-between">
                                     <h4 class="mb-0" style="font-weight: bold;">Users</h4>
-                                    <div>
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <form action="exportProducts" method="post">
+                                            <button class="btn btn-sm btn-outline-secondary me-2">Export to Excel</button>
+                                        </form>
+
                                         <form action="${pageContext.request.contextPath}/admin/users?action=search" method="POST" style="display: flex; align-items: center;">
                                             <input type="text" name="searchQuery" placeholder="Find name,email,phone,.." class="form-control" style="width: 200px; margin-right: 10px; margin-bottom: 0">
                                             <button type="submit" class="btn btn-sm btn-outline-success" style="width: 105px;">Search</button>

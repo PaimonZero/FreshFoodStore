@@ -72,7 +72,7 @@
                             </ul>
                             <ul>
                                 <li><strong>Proxy</strong></li>
-                                <li><a href="#">About</a></li>
+                                <li><a href="./about.jsp">About</a></li>
                                 <li><a href="#">Shop</a></li>
                                 <li><a href="#">Product</a></li>
                                 <li><a href="#">Track Order</a></li>
@@ -131,7 +131,7 @@
                                          aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                         <div class="accordion-body">
                                             <ul class="list-unstyled">
-                                                <li><a href="#">About</a></li>
+                                                <li><a href="./about.jsp">About</a></li>
                                                 <li><a href="#">Shop</a></li>
                                                 <li><a href="#">Product</a></li>
                                                 <li><a href="#">Track Order</a></li>

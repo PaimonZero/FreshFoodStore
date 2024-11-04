@@ -40,7 +40,50 @@ public class ProductDAO extends DBContext {
     // tìm sản phẩm theo id
     public ProductDTO findProductById(int id) {
 
-        String sql = "select p.*,c.name,pr.discount, bp.quantity FROM BatchesProduct bp join Products p on bp.productId = p.productId join Category c on p.categoryId = c.categoryId  left join Promos pr on p.productId = pr.productId   WHERE p.productId=? order by bp.expiryDate desc";
+        //String sql = "select p.*,c.name,pr.discount, bp.quantity FROM BatchesProduct bp join Products p on bp.productId = p.productId join Category c on p.categoryId = c.categoryId  left join Promos pr on p.productId = pr.productId   WHERE p.productId=? order by bp.expiryDate desc";
+        //Nam Chỉnh
+//        String sql = "SELECT p.*, c.name, pr.discount, bp.quantity \n"
+//                + "FROM BatchesProduct bp \n"
+//                + "JOIN Products p ON bp.productId = p.productId \n"
+//                + "JOIN Category c ON p.categoryId = c.categoryId  \n"
+//                + "LEFT JOIN Promos pr ON p.productId = pr.productId   \n"
+//                + "WHERE p.productId = ? \n"
+//                + "AND bp.quantity > 0 \n"
+//                + "ORDER BY bp.expiryDate DESC;";
+//  Xử lý trường hợp ko tìm thấy kết quả ở điều kiện bp.quantity > 0
+        String sql = "SELECT p.*, c.name, \n"
+                + "       CASE \n"
+                + "           WHEN bp.quantity = 0 THEN 0 \n"
+                + "           ELSE pr.discount \n"
+                + "       END AS discount,  -- Sử dụng CASE để xử lý điều kiện discount\n"
+                + "       bp.quantity, \n"
+                + "       bp.expiryDate\n"
+                + "FROM BatchesProduct bp \n"
+                + "JOIN Products p ON bp.productId = p.productId \n"
+                + "JOIN Category c ON p.categoryId = c.categoryId  \n"
+                + "LEFT JOIN Promos pr ON p.productId = pr.productId   \n"
+                + "WHERE p.productId = ?\n"
+                + "AND bp.quantity > 0 \n"
+                + "\n"
+                + "UNION ALL\n"
+                + "\n"
+                + "SELECT p.*, c.name, \n"
+                + "       0 AS discount,  -- Đặt discount là 0 nếu không có lô hàng nào\n"
+                + "       bp.quantity, \n"
+                + "       NULL AS expiryDate\n" //Thêm expiryDate, sử dụng NULL nếu không có giá trị
+                + "FROM BatchesProduct bp \n"
+                + "JOIN Products p ON bp.productId = p.productId \n"
+                + "JOIN Category c ON p.categoryId = c.categoryId  \n"
+                + "LEFT JOIN Promos pr ON p.productId = pr.productId   \n"
+                + "WHERE p.productId = ?\n"
+                + "AND NOT EXISTS (\n"
+                + "    SELECT 1 \n"
+                + "    FROM BatchesProduct \n"
+                + "    WHERE productId = ?\n"
+                + "    AND quantity > 0\n"
+                + ")\n"
+                + "\n"
+                + "ORDER BY expiryDate DESC;  -- Sắp xếp kết quả chung";
 
         try {
             // connect
@@ -48,6 +91,11 @@ public class ProductDAO extends DBContext {
             // sql
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
+
+            //Nam thêm
+            ps.setInt(2, id);
+            ps.setInt(3, id);
+
             rs = ps.executeQuery();
             while (rs.next()) {
                 return new ProductDTO(rs.getInt(1),
@@ -67,7 +115,8 @@ public class ProductDAO extends DBContext {
                 );
 
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            System.out.println("???(ProductDAO)findProductById: " + e);
         }
         return null;
     }
@@ -94,8 +143,8 @@ public class ProductDAO extends DBContext {
         }
         return p;
     }
-    
-        // 4 sản phẩm nổi bật có đụng
+
+    // 4 sản phẩm nổi bật có đụng
     public List<ProductDTO> top4ProductNoiBat() {
         List<ProductDTO> p = new ArrayList<>();
         String sql = """
@@ -231,17 +280,16 @@ public class ProductDAO extends DBContext {
         }
         return proDTO;
     }
-        //----------------------------------------------------------------------------------------------------------------------------------------------//
+    //----------------------------------------------------------------------------------------------------------------------------------------------//
 
-    
-     public int countProductSearch(String textSearch) {
+    public int countProductSearch(String textSearch) {
         String sql = "select COUNT(*) from Products p join Category c on p.categoryId = c.categoryId left join Promos pr on pr.productId = p.productId  where p.name like ?";
         try {
             // connect
             con = new DBContext().getConnection();
             // write sql
             ps = con.prepareStatement(sql);
-            ps.setString(1, "%"+textSearch+"%");
+            ps.setString(1, "%" + textSearch + "%");
 
             // excute
             rs = ps.executeQuery();
@@ -255,8 +303,7 @@ public class ProductDAO extends DBContext {
         return 0;
 
     }
-    
-    
+
     //-----------------------Huy--------------------------------------//
     public int calculateTotalProducts() {
         int totalProducts = 0;
@@ -360,32 +407,123 @@ public class ProductDAO extends DBContext {
         return totalOutStock;
     }
 
+//    public List<Products> getAllProducts() {
+//        List<Products> productList = new ArrayList<>();
+//        String sql = "SELECT p.productId, \n"
+//                + "       p.name, \n"
+//                + "       p.unitMeasure, \n"
+//                + "       p.status, \n"
+//                + "       p.unitPrice, \n"
+//                + "       COALESCE(SUM(b.quantity), 0) AS totalQuantity, \n"
+//                + "       COUNT(b.batchId) AS activeBatches, \n"
+//                + "       MIN(pr.startDate) AS minStartDate, \n"
+//                + "       MAX(pr.endDate) AS maxEndDate, \n"
+//                + "       COUNT(pr.promotionId) AS promoCount\n"
+//                + "FROM Products p\n"
+//                + "LEFT JOIN BatchesProduct b ON p.productId = b.productId AND b.expiryDate >= GETDATE()  -- Chỉ lấy lô hàng còn hiệu lực\n"
+//                + "LEFT JOIN Promos pr ON p.productId = pr.productId\n"
+//                + "GROUP BY p.productId, \n"
+//                + "         p.name, \n"
+//                + "         p.unitMeasure, \n"
+//                + "         p.status, \n"
+//                + "         p.unitPrice\n"
+//                + "ORDER BY p.productId;";  // Sắp xếp theo productId
+//
+//        try {
+//            connection = getConnection();
+//            preStatement = connection.prepareStatement(sql);
+//            resultSet = preStatement.executeQuery();
+//            while (resultSet.next()) {
+//                int productId = resultSet.getInt("productId");
+//                String name = resultSet.getString("name");
+//                String unitMeasure = resultSet.getString("unitMeasure");
+//                String status = resultSet.getString("status");
+//                BigDecimal unitPrice = resultSet.getBigDecimal("unitPrice");
+//                int quantity = resultSet.getInt("totalQuantity");
+//                int promoCount = resultSet.getInt("promoCount");
+//                Date minStartDate = resultSet.getDate("minStartDate");
+//                Date maxEndDate = resultSet.getDate("maxEndDate");
+//                int activeBatches = resultSet.getInt("activeBatches"); // Số lượng lô hàng còn hiệu lực
+//
+//                // Xác định trạng thái khuyến mãi
+//                String promotionStatus = "None"; // Mặc định là None
+//                Date currentDate = new Date();  // Lấy thời gian hiện tại
+//
+//                // Kiểm tra điều kiện trạng thái khuyến mãi
+//                if (promoCount > 0) { // Nếu có khuyến mãi
+//                    if (minStartDate != null && maxEndDate != null) {
+//                        if (minStartDate.before(currentDate) && maxEndDate.after(currentDate) && activeBatches > 0) {
+//                            promotionStatus = "In progress";  // Khuyến mãi đang diễn ra
+//                        }
+//                    }
+//                }
+//
+//                // Nếu không có lô hàng nào còn hiệu lực, trạng thái khuyến mãi sẽ là None
+//                if (activeBatches == 0) {
+//                    promotionStatus = "None";
+//                }
+//
+//                Products product = new Products(productId, name, unitMeasure, status, unitPrice, quantity);
+//                product.setPromotionStatus(promotionStatus);
+//                productList.add(product);
+//            }
+//        } catch (SQLException e) {
+//            System.err.println("Error getAllProducts: " + e.getMessage());
+//        } finally {
+//            closeConnection();
+//        }
+//        return productList;
+//    }
+    
     public List<Products> getAllProducts() {
         List<Products> productList = new ArrayList<>();
-        String sql = "SELECT p.productId, \n"
-                + "       p.name, \n"
-                + "       p.unitMeasure, \n"
-                + "       p.status, \n"
-                + "       p.unitPrice, \n"
-                + "       COALESCE(SUM(b.quantity), 0) AS totalQuantity, \n"
-                + "       COUNT(b.batchId) AS activeBatches, \n"
-                + "       MIN(pr.startDate) AS minStartDate, \n"
-                + "       MAX(pr.endDate) AS maxEndDate, \n"
-                + "       COUNT(pr.promotionId) AS promoCount\n"
-                + "FROM Products p\n"
-                + "LEFT JOIN BatchesProduct b ON p.productId = b.productId AND b.expiryDate >= GETDATE()  -- Chỉ lấy lô hàng còn hiệu lực\n"
-                + "LEFT JOIN Promos pr ON p.productId = pr.productId\n"
-                + "GROUP BY p.productId, \n"
-                + "         p.name, \n"
-                + "         p.unitMeasure, \n"
-                + "         p.status, \n"
-                + "         p.unitPrice\n"
-                + "ORDER BY p.productId;";  // Sắp xếp theo productId
+
+        // SQL để cập nhật trạng thái "In Stock" hoặc "Out of Stock" dựa trên totalQuantity
+        String updateStatusSql = "WITH ProductQuantities AS ( "
+                + "    SELECT p.productId, "
+                + "           COALESCE(SUM(b.quantity), 0) AS totalQuantity "
+                + "    FROM Products p "
+                + "    LEFT JOIN BatchesProduct b ON p.productId = b.productId AND b.expiryDate >= GETDATE() "
+                + "    GROUP BY p.productId "
+                + ") "
+                + "UPDATE Products "
+                + "SET status = CASE "
+                + "                 WHEN pq.totalQuantity = 0 THEN 'Out of Stock' "
+                + "                 ELSE 'In Stock' "
+                + "             END "
+                + "FROM Products p "
+                + "JOIN ProductQuantities pq ON p.productId = pq.productId;";
+
+        // SQL để lấy dữ liệu sản phẩm
+        String selectSql = "SELECT p.productId, "
+                + "       p.name, "
+                + "       p.unitMeasure, "
+                + "       p.status, "
+                + "       p.unitPrice, "
+                + "       COALESCE(SUM(b.quantity), 0) AS totalQuantity, "
+                + "       COUNT(b.batchId) AS activeBatches, "
+                + "       MIN(pr.startDate) AS minStartDate, "
+                + "       MAX(pr.endDate) AS maxEndDate, "
+                + "       COUNT(pr.promotionId) AS promoCount "
+                + "FROM Products p "
+                + "LEFT JOIN BatchesProduct b ON p.productId = b.productId AND b.expiryDate >= GETDATE() "
+                + "LEFT JOIN Promos pr ON p.productId = pr.productId "
+                + "GROUP BY p.productId, p.name, p.unitMeasure, p.status, p.unitPrice "
+                + "ORDER BY p.productId;";
 
         try {
+            // Kết nối tới cơ sở dữ liệu
             connection = getConnection();
-            preStatement = connection.prepareStatement(sql);
+
+            // Thực thi lệnh UPDATE để cập nhật trạng thái sản phẩm
+            preStatement = connection.prepareStatement(updateStatusSql);
+            preStatement.executeUpdate();
+
+            // Thực thi lệnh SELECT để lấy dữ liệu sản phẩm sau khi đã cập nhật
+            preStatement = connection.prepareStatement(selectSql);
             resultSet = preStatement.executeQuery();
+
+            // Duyệt qua từng hàng dữ liệu trả về và tạo đối tượng sản phẩm
             while (resultSet.next()) {
                 int productId = resultSet.getInt("productId");
                 String name = resultSet.getString("name");
@@ -396,22 +534,20 @@ public class ProductDAO extends DBContext {
                 int promoCount = resultSet.getInt("promoCount");
                 Date minStartDate = resultSet.getDate("minStartDate");
                 Date maxEndDate = resultSet.getDate("maxEndDate");
-                int activeBatches = resultSet.getInt("activeBatches"); // Số lượng lô hàng còn hiệu lực
+                int activeBatches = resultSet.getInt("activeBatches");
 
                 // Xác định trạng thái khuyến mãi
-                String promotionStatus = "None"; // Mặc định là None
-                Date currentDate = new Date();  // Lấy thời gian hiện tại
+                String promotionStatus = "None";
+                Date currentDate = new Date();
 
-                // Kiểm tra điều kiện trạng thái khuyến mãi
-                if (promoCount > 0) { // Nếu có khuyến mãi
+                if (promoCount > 0) {
                     if (minStartDate != null && maxEndDate != null) {
                         if (minStartDate.before(currentDate) && maxEndDate.after(currentDate) && activeBatches > 0) {
-                            promotionStatus = "In progress";  // Khuyến mãi đang diễn ra
+                            promotionStatus = "In progress";
                         }
                     }
                 }
 
-                // Nếu không có lô hàng nào còn hiệu lực, trạng thái khuyến mãi sẽ là None
                 if (activeBatches == 0) {
                     promotionStatus = "None";
                 }
@@ -806,6 +942,32 @@ public class ProductDAO extends DBContext {
                     + ", Sold Quantity: " + product.getQuantity()
                     + ", Price: " + product.getUnitPrice()
                     + ", Promotion Status: " + product.getPromotionStatus());
+        }
+    }
+
+    // 
+    public void uppr() {
+        //- Chuan bi cau lenh sql
+        String sql = "UPDATE pr\n"
+                + "SET pr.discount = 0\n"
+                + "FROM Promos pr\n"
+                + "JOIN Products p ON p.productId = pr.productId\n"
+                + "WHERE pr.endDate < GETDATE();";
+        boolean isUpdated = false;
+        try {
+            connection = getConnection();
+            //- Tao doi tuong prepareStatement (thêm generated key vao tham so thu 2)
+            preStatement = connection.prepareStatement(sql);            //- set parameter
+
+            //- thuc thi cau lenh
+            int rowsAffected = preStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                isUpdated = true;
+            }
+        } catch (SQLException e) {
+            System.err.println("Error updateBatchs: " + e.getMessage());
+        } finally {
+            closeConnection();
         }
     }
 }

@@ -65,6 +65,10 @@ public class HomepageController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        ProductDAO prdao = new ProductDAO();
+        prdao.uppr();
+        
         HttpSession session = request.getSession();
         try {
             //Lấy về userID từ account trong sesion khi đăng nhập

@@ -88,7 +88,11 @@ public class ShoppingCartController extends HttpServlet {
             odDTO.setUnitPriceOut(BigDecimal.valueOf(unitPriceAfterDiscount));
             od.createOrderDetail(odDTO);
         } else {
-            odDTO.setQuantity(odDTO.getQuantity() + quantity);
+            //Kiểm tra lại xem thử số lượng mới có lớn hơn số lượng max hay không
+            int oldQuantity = odDTO.getQuantity();      //số lượng cũ trong giỏ hàng
+            int maxQuantity = Integer.parseInt(request.getParameter("maxSoLuong"));
+            //Kiểm tra nếu tổng số lượng mới vượt quá maxQuantity
+            odDTO.setQuantity((maxQuantity < (oldQuantity + quantity)) ? maxQuantity : (oldQuantity + quantity));
             od.updateQuantity(odDTO);
         }
         List<OrderDetailDTO> listOrderDetail = od.listOrderDetail(o.getOrderId());

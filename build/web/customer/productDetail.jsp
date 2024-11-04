@@ -98,7 +98,9 @@
                     <form action="${pageContext.request.contextPath}/customer/shoppingcart" method="get"> 
                         <div class="product-quantity d-flex align-items-center mb-4">
                             <label class="me-3">Số lượng:</label>
-                            <input type="number" name="soluong" value="1" min="1" max="${requestScope.product.batchQuantity}" class="form-control w-25">
+                            <input type="number" name="soluong" value="1" min="1" max="${requestScope.product.batchQuantity}" class="form-control w-25"/>
+                            <span>&nbsp;/ ${requestScope.product.batchQuantity}</span>
+                            <input type="hidden" name="maxSoLuong" value="${requestScope.product.batchQuantity}"/>
                         </div>
 
                         <input type="hidden" name="id" id="id" value="${requestScope.product.productId}" />

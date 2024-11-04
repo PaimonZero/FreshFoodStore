@@ -48,6 +48,8 @@ public class ProductDetailController extends HttpServlet {
             x.setUnitPriceString(Validate.BigDecimalToMoney(x.getUnitPrice()));
         }
         ArrayList<ProductDTO> listImage = p.findProductGalleryById(productId);
+        //Xử lý trường hợp hết hàng
+        
         pdto.setUnitPriceString(Validate.BigDecimalToMoney(pdto.getUnitPrice()));
         request.setAttribute("listImage", listImage);
         request.setAttribute("lienquan", lienquan);
