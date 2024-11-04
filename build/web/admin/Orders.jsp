@@ -116,7 +116,7 @@
                                     <div class="card-header bg-light d-flex align-items-center justify-content-between">
                                         <h4 class="mb-0" style="font-weight: bold;">Đơn hàng</h4>
                                         <div class="d-flex justify-content-center align-items-center">
-                                            <form action="exportProducts" method="post">
+                                            <form action="export?action=orders" method="post">
                                                 <button class="btn btn-sm btn-outline-secondary me-2">Export to Excel</button>
                                             </form>
                                             <form action="${pageContext.request.contextPath}/admin/OrdersController?action=search" method="POST" style="display: flex; align-items: center;">

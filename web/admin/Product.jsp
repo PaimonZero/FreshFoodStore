@@ -122,7 +122,7 @@
                                         <!--                                        <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal"
                                                                                         data-bs-target="#addProductModal"style="width: 96px;">Add Product</button>-->
 
-                                        <form action="exportProducts" method="post">
+                                        <form action="export?action=products" method="post">
                                             <button class="btn btn-sm btn-outline-secondary">Export to Excel</button>
                                         </form>
 <!--                                        <button class="btn btn-sm btn-outline-secondary"style="width: 70px;">Filter</button>

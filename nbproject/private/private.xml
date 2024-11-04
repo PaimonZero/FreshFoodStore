@@ -3,16 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/All%20Book/FromUniversity/Ki_5/SWP391/FreshFoodStore/web/customer/productDetail.jsp</file>
-            <file>file:/E:/All%20Book/FromUniversity/Ki_5/SWP391/FreshFoodStore/src/java/controller/ProductDetailController.java</file>
-            <file>file:/E:/All%20Book/FromUniversity/Ki_5/SWP391/FreshFoodStore/src/java/controller/HomepageController.java</file>
-            <file>file:/E:/All%20Book/FromUniversity/Ki_5/SWP391/FreshFoodStore/src/java/dal/ProductDAO.java</file>
-            <file>file:/E:/All%20Book/FromUniversity/Ki_5/SWP391/FreshFoodStore/src/java/dal/OrderDetailDAO.java</file>
+            <file>file:/E:/All%20Book/FromUniversity/Ki_5/SWP391/FreshFoodStore/web/admin/Product.jsp</file>
             <file>file:/E:/All%20Book/FromUniversity/Ki_5/SWP391/FreshFoodStore/src/java/feature/loginGoogle/Constants.java</file>
-            <file>file:/E:/All%20Book/FromUniversity/Ki_5/SWP391/FreshFoodStore/src/java/controller/ShoppingCartController.java</file>
-            <file>file:/E:/All%20Book/FromUniversity/Ki_5/SWP391/FreshFoodStore/src/java/feature/exportExcel/Book.java</file>
-            <file>file:/E:/All%20Book/FromUniversity/Ki_5/SWP391/FreshFoodStore/web/customer/ShoppingCart.jsp</file>
-            <file>file:/E:/All%20Book/FromUniversity/Ki_5/SWP391/FreshFoodStore/src/java/feature/exportExcel/WriteExcelExample.java</file>
+            <file>file:/E:/All%20Book/FromUniversity/Ki_5/SWP391/FreshFoodStore/web/admin/Users.jsp</file>
+            <file>file:/E:/All%20Book/FromUniversity/Ki_5/SWP391/FreshFoodStore/web/admin/Orders.jsp</file>
         </group>
     </open-files>
 </project-private>

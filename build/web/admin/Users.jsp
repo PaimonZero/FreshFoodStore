@@ -30,7 +30,7 @@
                                 <div class="card-header bg-light d-flex align-items-center justify-content-between">
                                     <h4 class="mb-0" style="font-weight: bold;">Users</h4>
                                     <div class="d-flex justify-content-center align-items-center">
-                                        <form action="exportProducts" method="post">
+                                        <form action="export?action=users" method="post">
                                             <button class="btn btn-sm btn-outline-secondary me-2">Export to Excel</button>
                                         </form>
 

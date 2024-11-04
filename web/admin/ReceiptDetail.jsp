@@ -69,13 +69,17 @@
 
                                     <div class="card-header bg-light d-flex align-items-center justify-content-between">
                                         <h4 class="mb-0" style="font-weight: bold;">Đơn nhập hàng số ${receiptInfo.receiptId}</h4>
-                                        <!--                                        <div>
-                                                                                    <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal" 
-                                                                                            data-bs-target="#editProductModal" style="width: 105px;">Edit Product</button>
-                                        
-                                                                                    <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
-                                                                                            data-bs-target="#deleteConfirmationModal"  style="width: 105px;">Delete</button>
-                                                                                </div>-->
+                                        <div>
+                                            <form action="export?action=receipts" method="post">
+                                                <input type="hidden" name="receiptId" value="${receiptInfo.receiptId}"/>
+                                                <button class="btn btn-sm btn-outline-secondary me-2">Export to Excel</button>
+                                            </form>
+<!--                                            <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal" 
+                                                    data-bs-target="#editProductModal" style="width: 105px;">Edit Product</button>
+
+                                            <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
+                                                    data-bs-target="#deleteConfirmationModal"  style="width: 105px;">Delete</button>-->
+                                        </div>
                                     </div>
 
                                     <!-- Start of the Content Section with 2 Columns -->

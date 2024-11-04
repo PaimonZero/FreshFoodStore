@@ -117,6 +117,7 @@
                                         <div class="col-md-6 desktop-view ">
                                             <img src="${listInfo.avatar}"
                                                  alt="Uploaded Image" class="user-img" id="uploaded-image">
+                                            <input type="hidden" name="avatarOld" value="${listInfo.avatar}">
                                             <div class="panel">
                                                 <div class="button_outer">
                                                     <div class="btn_upload">

@@ -130,10 +130,13 @@ public class AccountSettingController extends HttpServlet {
     }
 
     private String handleFile(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Sử dụng getServletContext().getRealPath("") để lấy đường dẫn gốc của dự án
+        // Lấy giá trị của avatar cũ từ input hidden
+        String avatarOld = request.getParameter("avatarOld");
+
+        // Thiết lập đường dẫn để lưu ảnh
         String uploadPath = getServletContext().getRealPath("") + File.separator + "images";
 
-        // Tạo thư mục lưu file nếu chưa có
+        // Tạo thư mục lưu file nếu chưa tồn tại
         File uploadDir = new File(uploadPath);
         if (!uploadDir.exists()) {
             boolean created = uploadDir.mkdirs();
@@ -142,15 +145,16 @@ public class AccountSettingController extends HttpServlet {
             }
         }
 
-        // Lấy phần file từ form với tên là "avatar"
+        // Lấy phần file từ form với tên là "file"
         Part filePart = request.getPart("file");
-        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+        String fileName = filePart != null ? Paths.get(filePart.getSubmittedFileName()).getFileName().toString() : null;
+
+        // Nếu không có file mới, trả về avatarOld
         if (fileName == null || fileName.isEmpty()) {
-            return null;
+            return avatarOld;
         }
 
         // Đường dẫn đầy đủ của file sẽ được lưu
-        //String filePath = uploadPath + File.separator + fileName;
         String filePath = uploadPath + File.separator + fileName;
 
         // Ghi file vào thư mục đích
@@ -162,9 +166,8 @@ public class AccountSettingController extends HttpServlet {
         System.out.println("Upload Path: " + uploadPath);
         System.out.println("File Path: " + filePath);
 
-        // Trả về tên file đã lưu (là fileName và thêm ../images/ ở phía trc)
-        fileName = "../images/" + fileName;
-        return fileName;
+        // Trả về đường dẫn mới của file đã lưu
+        return "../images/" + fileName;
     }
 
     private void handleChangePassword(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -178,7 +181,7 @@ public class AccountSettingController extends HttpServlet {
         Users listInfo = dao1.findAllInfo(account.getUserId());
         if (oldPassword.equals(listInfo.getPassword())) {
             // Nếu mật khẩu cũ đúng, cập nhật mật khẩu mới
-            dao.updatePasswordUserDB(account.getUserId(), newPassword);   
+            dao.updatePasswordUserDB(account.getUserId(), newPassword);
             request.setAttribute("listInfo", listInfo);
             request.setAttribute("successMessage", "Mật khẩu đã được cập nhật thành công!");
             request.getRequestDispatcher("/customer/AccountSetting.jsp").forward(request, response);
@@ -199,5 +202,5 @@ public class AccountSettingController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    
+
 }

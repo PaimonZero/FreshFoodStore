@@ -37,7 +37,7 @@ public class LoginGoogleController extends HttpServlet {
             //Xử lý đăng nhập
             handleLoginGoogle(user, request, response);
         } else {
-            String encodedURL = response.encodeRedirectURL("auth.jsp");
+            String encodedURL = response.encodeRedirectURL(request.getContextPath() + "/customer/Homepage");
             response.sendRedirect(encodedURL);
         }
     }
@@ -61,7 +61,8 @@ public class LoginGoogleController extends HttpServlet {
             checkUser.setRole("customer");                     //là customer
             checkUser.setPhone("1234567890");           //set mặt định sđt là 1234567890
             checkUser.setAddress(acc.getName() + " location"); //set mặt định sđt là name + location
-
+            checkUser.setAvatar(acc.getPicture());
+            
             int id = dao.insertUserDB(checkUser);
             checkUser.setUserId(id);            //set thêm userID để gửi cho session
             //Xong cho đăng nhập thôi
@@ -76,12 +77,12 @@ public class LoginGoogleController extends HttpServlet {
                 case "manager":
                 case "shipper":
                 //Chuyển hướng trang qua admin (chưa làm)
-                targetURL = "index2.html";      //đổi dường dẫn ở đây //request.getContextPath() + "/Admin/index.jsp";
+                targetURL = request.getContextPath() + "/customer/Homepage";      //đổi dường dẫn ở đây //request.getContextPath() + "/Admin/index.jsp";
                 encodedURL = response.encodeRedirectURL(targetURL);
                 break;
             case "customer":
                 //Chuyển hướng trang qua user
-                targetURL = "customer/CustomerDashboard.jsp";      //đổi dường dẫn ở đây
+                targetURL = request.getContextPath() + "/customer/Homepage";      //đổi dường dẫn ở đây
                 encodedURL = response.encodeRedirectURL(targetURL);
                 break;
             default:
