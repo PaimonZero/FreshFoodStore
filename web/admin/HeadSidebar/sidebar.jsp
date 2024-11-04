@@ -64,6 +64,6 @@
                 <p>Log Out</p>
             </div>
         </div>
-        <div class="sidebar-footer"></div>
+<!--        <div class="sidebar-footer"></div>-->
     </div>
 
