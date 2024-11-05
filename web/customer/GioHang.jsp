@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html>
@@ -12,6 +13,7 @@
         <script src="https://kit.fontawesome.com/54f0cb7e4a.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <link rel="stylesheet" href="../css/customerCss/ShoppingCart.css">
+        <link rel="shotcut icon" href="../images/logoFFSNoBG.png"/>
     </head>
     <body>
         <%@include file="HeaderLogin1.jsp" %>
@@ -36,57 +38,76 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <c:forEach var="p" items="${listOrderDetail}"> 
-                                                    <tr class="product">
-                                                        <td>
-                                                            <img src="${p.image}" alt="contact-img" title="contact-img"
-                                                                 class="rounded me-3" height="64" />
-                                                            <p class="m-0 d-inline-block align-middle font-16 product-name">
-                                                                <a href="#">
-                                                                    ${p.name}</a>
-                                                                <!-- <br>
-                                                                <small class="me-2"><b>Size:</b> Large </small>
-                                                                <small><b>Color:</b> Orange </small> -->
-                                                            </p>
-                                                        </td>
-                                                        <td>
-                                                            <div class="item-price">${p.unitPriceString} đ</div>
-                                                            <div class="d-none">${p.discountString}%</div>
-                                                        </td>
-                                                        <!-- <input type="number" min="1" value="1" class="form-control"
-                                                            placeholder="Qty" style="width: 90px;"> -->
-                                                        <td class="text-center d-flex">
-                                                            <div class="item-quantity d-flex justify-content-center" style="padding-left: 20px;">
-                                                                <div class="qty-container w-100">
-                                                                    <!--                                                                    <button class="qty-btn-minus btn-light" type="button"><i
-                                                                                                                                                class="fa fa-minus"></i></button>-->
+                                                <c:choose>
+                                                    <c:when test="${not empty listOrderDetail}">
+                                                        <c:forEach var="p" items="${requestScope.listOrderDetail}"> 
+                                                            <tr class="product">
+                                                                <td>
+                                                                    <img src="${p.image}" alt="contact-img" title="contact-img"
+                                                                         class="rounded me-3" height="64" />
+                                                                    <p class="m-0 d-inline-block align-middle font-16 product-name">
+                                                                        <a href="#">
+                                                                            ${p.name}</a>
+                                                                    </p>
 
-                                                                    <button type="button" class="qty-btn-minus btn-light" onclick="changeQuantity(${p.orderDetailId}, -1, this)">-</button>
-                                                                    <input type="number" name="quantity" class="input-qty" style="width: 55px;" value="${p.quantity}" min="1" max="${p.batchQuantity}" readonly />
-                                                                    <button type="button" class="qty-btn-plus btn-light" onclick="changeQuantity(${p.orderDetailId}, +1, this)">+</button>
-                                                                    <!--                                                                                                                                <!--                                                                    <button class="qty-btn-plus btn-light" type="button"><i
-                                                                                                                                                                                                        class="fa fa-plus"></i></button>-->
-                                                                </div>
-                                                            </div>
-                                                            <input type="submit" class="col-5 ok" style="display: none; background: none; border: none; padding: 0; cursor: pointer; outline: none; color: blue;" value="OK"> <%--update giỏ hàng khi số lượng tăng hoặc giảm--%>
-                                                        </td>
-                                                        <td>
-                                                            <!--<div class="item-total-price">${p.quantity*(100-p.discount)*p.unitPrice}</div>-->
-                                                            <div class="item-total-price"></div>
-                                                        </td>
-                                                        <td>
-                                                            <!--                                                            <a href="javascript:void(0);" class="action-icon"> <i
-                                                                                                                                class="far fa-trash-alt"></i></a>-->
-                                                            <!--<h1>${p.orderDetailId}</h1>-->
-                                                            <form id="delete" action="shoppingcart?action=delete" method="POST"> <%--đổi đường dẫn--%>
-                                                                <input type="hidden" name="deleteId" id="deleteId" value="${p.orderDetailId}" />
-                                                                <a class="action-icon" onclick="document.getElementById('delete').submit();" style="cursor: pointer;">
-                                                                    <i class="far fa-trash-alt me-2"></i>
-                                                                </a>
-                                                            </form>
-                                                        </td>
-                                                    </tr>
-                                                </c:forEach>
+
+                                                                </td>
+                                                                <td>
+                                                                    <div class="item-price">${p.unitPriceString} đ</div>
+                                                                    <div class="d-none discount">${p.discountString}%</div>
+                                                                </td>
+                                                                <!-- <input type="number" min="1" value="1" class="form-control"
+                                                                    placeholder="Qty" style="width: 90px;"> -->
+                                                                <td class="text-center d-flex">
+                                                                    <div class="item-quantity d-flex justify-content-center w-100">
+
+                                                                        <c:choose>  
+                                                                            <c:when test="${p.batchQuantity == 0}">  
+                                                                                <div class="qty-container w-100 d-none">
+                                                                                    <button type="button" class="qty-btn-minus btn-light" onclick="changeQuantity(${p.orderDetailId}, -1, this)">-</button>
+                                                                                    <input type="number" name="quantity" class="input-qty" style="width: 55px;" value="0" min="1" max="${p.batchQuantity}" readonly />
+                                                                                    <button type="button" class="qty-btn-plus btn-light" onclick="changeQuantity(${p.orderDetailId}, +1, this)">+</button>
+                                                                                </div>
+                                                                                <div class="alert alert-danger p-1" style="font-size: 13px;" role="alert">
+                                                                                    <i class="bi bi-exclamation-triangle-fill"></i> Sản phẩm này đang tạm thời <br> hết hàng không thể thanh toán
+                                                                                </div>
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                                <div class="qty-container">
+                                                                                    <button type="button" class="qty-btn-minus btn-light" onclick="changeQuantity(${p.orderDetailId}, -1, this)">-</button>
+                                                                                    <input type="number" name="quantity" class="input-qty" style="width: 55px;" value="${p.quantity}" min="1" max="${p.batchQuantity}" readonly />
+                                                                                    <button type="button" class="qty-btn-plus btn-light" onclick="changeQuantity(${p.orderDetailId}, +1, this)">+</button>
+                                                                                </div>
+                                                                            </c:otherwise>
+                                                                        </c:choose>  
+                                                                    </div>
+                                                                    <input type="submit" class="col-5 ok" style="display: none; background: none; border: none; padding: 0; cursor: pointer; outline: none; color: blue;" value="OK"> <%--update giỏ hàng khi số lượng tăng hoặc giảm--%>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="item-total-price"></div>
+                                                                </td>
+                                                                <td>
+                                                                    <!--                                                            <a href="javascript:void(0);" class="action-icon"> <i
+                                                                                                                                        class="far fa-trash-alt"></i></a>-->
+                                                                    <!--<h1>${p.orderDetailId}</h1>-->
+                                                                    <form id="delete" action="shoppingcart?action=delete" method="POST"> <%--đổi đường dẫn--%>
+                                                                        <input type="hidden" name="deleteId" id="deleteId" value="${p.orderDetailId}" />
+                                                                        <a class="action-icon" onclick="document.getElementById('delete').submit();" style="cursor: pointer;">
+                                                                            <i class="far fa-trash-alt me-2"></i>
+                                                                        </a>
+                                                                    </form>
+                                                                </td>
+                                                            </tr>
+                                                        </c:forEach>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <tr>
+                                                            <td colspan="5" class="text-center pt-3 text-danger">
+                                                                <p>Giỏ hàng của bạn đang trống.</p>
+                                                            </td>
+                                                        </tr>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </tbody>
                                         </table>
 
@@ -130,7 +151,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td>Phí vận chuyển :</td>
-                                                            <td><div class="shipping-amount"></div></td>
+                                                            <td><div class="shipping-amount">${shippingFeeString} đ</div></td>
                                                         </tr>
                                                         <tr>
                                                             <th>Tổng tiền phải thanh toán :</th>
@@ -138,8 +159,16 @@
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                                <button type="submit" class="process-pay-btn btn w-100 mt-4">Đi đến thanh
-                                                    toán</button>
+                                                <c:choose>
+                                                    <c:when test="${not empty listOrderDetail}">
+                                                        <button type="submit" class="process-pay-btn btn w-100 mt-4">Đi đến thanh
+                                                            toán</button>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                        <button type="submit" class="process-pay-btn btn w-100 mt-4" disabled>Đi đến thanh
+                                                            toán</button>
+                                                        </c:otherwise>
+                                                    </c:choose>
                                             </div>
                                         </form>
                                         <!-- end table-responsive -->
@@ -155,10 +184,10 @@
         <%@ include file="Footer.jsp" %>
         <script src="../js/bootstrap.bundle.min.js"></script>
         <script src="../js/authJs/ShoppingCart.js"></script>
-          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script>
-    const contextPath = "${pageContext.request.contextPath}";
-</script>
+                                                                            const contextPath = "${pageContext.request.contextPath}";
+        </script>
 
 
     </body>

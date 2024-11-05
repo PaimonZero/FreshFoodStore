@@ -77,7 +77,7 @@ public class authController extends HttpServlet {
             //khi này account = null; ko cho sài tính năng (limited access)
             session.setAttribute("account", account);
             request.setAttribute("notifyAuth", "failed");
-
+            request.setAttribute("error", "Đăng nhập thất bại, vui lòng kiểm tra lại email hoặc mật khẩu.");
             request.getRequestDispatcher("SignIn.jsp").forward(request, response);
             //Chuyển hướng trang
 //            String targetURL = "auth";
@@ -94,37 +94,52 @@ public class authController extends HttpServlet {
             userName.setMaxAge(30 * 60);
             response.addCookie(userName);
 
-            String targetURL;
-            String encodedURL;
-            switch (account.getRole()) {
-                case "staff":
-                case "manager":
-                case "shipper":
-                    //Chuyển hướng trang qua admin 
-                    session.setAttribute("account", account);
-                    request.setAttribute("notifyAuth", "success");
+            if (!account.getStatus().equalsIgnoreCase("blocked")) {     //account ko bị blocked
+                String targetURL;
+                String encodedURL;
+                switch (account.getRole()) {
+                    case "staff":
+                    case "manager":
+                        //Chuyển hướng trang qua admin 
+                        session.setAttribute("account", account);
+                        session.setAttribute("notifyAuth", "success");      //đổi thành session
 
-                    //targetURL = request.getContextPath() + "/Admin/index";
-                    targetURL = "admin/Dashboard.jsp";      //đổi dường dẫn ở đây
-                    encodedURL = response.encodeRedirectURL(targetURL);
-                    response.sendRedirect(encodedURL);
-                    break;
-                case "customer":
-                    session.setAttribute("account", account);
-                    request.setAttribute("notifyAuth", "success");
+                        targetURL = "admin/Dashboard";                              //đổi dường dẫn ở đây
+                        encodedURL = response.encodeRedirectURL(targetURL);
+                        response.sendRedirect(encodedURL);
+                        break;
+                    case "shipper":
+                        session.setAttribute("account", account);
+                        session.setAttribute("notifyAuth", "success");
+                        
+                        //Chuyển hướng sang trang delivery
+                        targetURL = request.getContextPath() + "/admin/DeliveryList";      //đổi dường dẫn ở đây
+                        encodedURL = response.encodeRedirectURL(targetURL);
+                        response.sendRedirect(encodedURL);
+                        break;
+                    case "customer":
+                        session.setAttribute("account", account);
+                        session.setAttribute("notifyAuth", "success");      //đổi thành session
 
-                    //Chuyển hướng trang qua user
-                    targetURL = request.getContextPath() + "/customer/Homepage";      //đổi dường dẫn ở đây  //homePage
-                    encodedURL = response.encodeRedirectURL(targetURL);
-                    response.sendRedirect(encodedURL);
-                    break;
-                case "unknown":                                 //Tài khoản bị block
-                    //Thông báo cho khách hàng và chuyển lại trang đăng nhập
-                    request.setAttribute("notifyAuth", "blocked");
-                    request.getRequestDispatcher("SignIn.jsp").forward(request, response);
-                    break;
-                default:
-                    throw new AssertionError();
+                        //Chuyển hướng trang qua user
+                        targetURL = request.getContextPath() + "/customer/Homepage";      //đổi dường dẫn ở đây
+                        encodedURL = response.encodeRedirectURL(targetURL);
+                        response.sendRedirect(encodedURL);
+                        break;
+                    case "unknown":                                 //Tài khoản bị chưa được setRole
+                        //Thông báo cho khách hàng và chuyển lại trang đăng nhập
+//                        session.setAttribute("notifyAuth", "blocked");      //đổi thành session
+                        request.setAttribute("error", "Tài khoản của bạn đã bị khóa. Hãy liên hệ bộ phận chăm sóc khách hàng (0582647644) để biết thêm thông tin!");
+                        request.getRequestDispatcher("SignIn.jsp").forward(request, response);
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
+            } else {    //account bị blocked
+                //Thông báo cho khách hàng và chuyển lại trang đăng nhập
+//                session.setAttribute("notifyAuth", "blocked");              //đổi thành session
+                request.setAttribute("error", "Tài khoản của bạn đã bị khóa. Hãy liên hệ bộ phận chăm sóc khách hàng (0582647644) để biết thêm thông tin!");
+                request.getRequestDispatcher("SignIn.jsp").forward(request, response);
             }
         }
     }

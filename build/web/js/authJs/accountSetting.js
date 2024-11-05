@@ -59,6 +59,38 @@
 //        }, 3500);
 //    }
 //});
+var btnUpload = $("#upload-avatar"),
+    btnOuter = $(".button_outer"),
+    uploadedImage = $("#uploaded-image");
+
+// Handle file input change event
+btnUpload.on("change", function (e) {
+    // Check file extension
+    var ext = btnUpload.val().split('.').pop().toLowerCase();
+    if ($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1) {
+        $(".error_msg").text("Chỉ hỗ trợ nhận file gif, png, jpg, jpeg.");
+    } else {
+        $(".error_msg").text(""); // Clear error message if valid file type
+        btnOuter.addClass("file_uploading");
+
+        // Show processing bar and file uploading effect
+        setTimeout(function () {
+            btnOuter.addClass("file_uploaded");
+        }, 3000);
+
+        // Display the uploaded image
+        setTimeout(function () {
+            uploadedImage.attr("src", uploadedFile).show(); // Set the src attribute of the img tag
+
+            // Reset upload button state after showing success box
+            setTimeout(function () {
+                btnOuter.removeClass("file_uploaded file_uploading"); // Reset to initial state
+                btnUpload.val(""); // Clear the file input value
+            }, 1000); // Adjust time as necessary
+        }, 3500);
+    }
+});
+
 
 //con mắt password
 $(".toggle-password").click(function () {
@@ -93,7 +125,7 @@ document.getElementById('save-btn').addEventListener('click', function (event) {
     } else {
         errorElement.style.display = 'none'; // Ẩn thông báo lỗi  
         // Nếu mật khẩu trùng khớp, cho phép form submit hoặc xử lý tiếp theo  
-        alert("Mật khẩu đã được lưu thành công!");
+//        alert("Mật khẩu đã được lưu thành công!");
         // Nếu bạn không muốn form submit ở đây, cũng có thể sử dụng event.preventDefault();  
     }
 });

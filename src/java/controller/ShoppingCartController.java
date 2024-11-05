@@ -46,15 +46,7 @@ public class ShoppingCartController extends HttpServlet {
 
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -70,30 +62,45 @@ public class ShoppingCartController extends HttpServlet {
 
         Users user = (Users) session.getAttribute("account");
         OrderDetailDAO od = new OrderDetailDAO();
-        OrderDTO o = od.findOrderById(user.getUserId());
 
         ProductDTO p = od.findProductById(productId);
+        OrderDTO o = od.findOrderById(user.getUserId());
 
         if (o == null) { //không có order
             o = new OrderDTO(); //tạo order mới
             o.setUserId(user.getUserId());
             od.createOrder(o);
         }
-        
+
         OrderDetailDTO odDTO = od.findOrderDetail(o.getOrderId(), productId);
         if (odDTO == null) {
             odDTO = new OrderDetailDTO();
             odDTO.setOrderId(o.getOrderId());
             odDTO.setQuantity(quantity);
             odDTO.setBatchId(p.getBatchId());
-            odDTO.setUnitPriceOut(BigDecimal.valueOf(quantity).multiply(p.getUnitPrice()).multiply(BigDecimal.valueOf(p.getDiscount())));
+            // Tính giá trị giảm giá dưới dạng double
+//            double unitPriceAfterDiscount = p.getUnitPrice().doubleValue() * (1 - (p.getDiscount() / 100));
+            // Chuyển đổi lại thành BigDecimal
+//            odDTO.setUnitPriceOut(BigDecimal.TEN);
+// Tính giá trị giảm giá dưới dạng double
+            double unitPriceAfterDiscount = p.getUnitPrice().doubleValue() * (1 - (p.getDiscount() / 100));
+            // Chuyển đổi lại thành BigDecimal
+            odDTO.setUnitPriceOut(BigDecimal.valueOf(unitPriceAfterDiscount));
             od.createOrderDetail(odDTO);
         } else {
-            odDTO.setQuantity(odDTO.getQuantity() + quantity);
+            //Kiểm tra lại xem thử số lượng mới có lớn hơn số lượng max hay không
+            int oldQuantity = odDTO.getQuantity();      //số lượng cũ trong giỏ hàng
+            int maxQuantity = Integer.parseInt(request.getParameter("maxSoLuong"));
+            //Kiểm tra nếu tổng số lượng mới vượt quá maxQuantity
+            odDTO.setQuantity((maxQuantity < (oldQuantity + quantity)) ? maxQuantity : (oldQuantity + quantity));
             od.updateQuantity(odDTO);
         }
         List<OrderDetailDTO> listOrderDetail = od.listOrderDetail(o.getOrderId());
-        for(OrderDetailDTO x:listOrderDetail){
+        if (!listOrderDetail.isEmpty()) {
+            String shippingFeeString = Validate.doubleToMoney(listOrderDetail.get(0).getShippingFee());
+            request.setAttribute("shippingFeeString", shippingFeeString);
+        }
+        for (OrderDetailDTO x : listOrderDetail) {
             x.setUnitPriceString(Validate.BigDecimalToMoney(x.getUnitPrice()));
             x.setDiscountString(Validate.doubleToMoney(x.getDiscount()));
         }
@@ -124,12 +131,11 @@ public class ShoppingCartController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
- 
-        
+
         String action = request.getParameter("action") == null ? "" : request.getParameter("action");
         switch (action) {
             case "delete":
-                handleDeleteOrderId(request,response);
+                handleDeleteOrderId(request, response);
                 break;
             case "updateCartInfo":
 //                handleUpdateInfo(request, response);
@@ -137,18 +143,17 @@ public class ShoppingCartController extends HttpServlet {
             default:
                 throw new AssertionError();
         }
-        
+
     }
-   private void handleDeleteOrderId(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-       
-       int deleteId = Integer.parseInt(request.getParameter("deleteId"));
-       OrderDetailDAO od = new OrderDetailDAO();
-       od.deleteOrderDetailById(deleteId);
-       response.sendRedirect(request.getContextPath()+"/customer/giohang");
-       
-       
-   }
-   
+
+    private void handleDeleteOrderId(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        int deleteId = Integer.parseInt(request.getParameter("deleteId"));
+        OrderDetailDAO od = new OrderDetailDAO();
+        od.deleteOrderDetailById(deleteId);
+        response.sendRedirect(request.getContextPath() + "/customer/giohang");
+
+    }
 
     /**
      * Returns a short description of the servlet.
@@ -161,3 +166,4 @@ public class ShoppingCartController extends HttpServlet {
     }// </editor-fold>
 
 }
+//done

@@ -40,7 +40,8 @@ public class OrderDetailDTO {
     private String UnitPriceString;
     private String discountString;
     private int batchQuantity;
-
+    private double shippingFee;
+    private String shippingFeeString;
     public OrderDetailDTO() {
     }
 
@@ -51,7 +52,31 @@ public class OrderDetailDTO {
         this.unitPriceOut = unitPriceOut;
         this.quantity = quantity;
     }
-
+    public OrderDetailDTO(int orderDetailId, int orderId, int batchId, BigDecimal unitPriceOut, int quantity, int productId, String name, String unitMeasure, int supplierId, int categoryId, String description, String image, BigDecimal unitPrice, String status, Date createdAt, Date updateAt, int promotionId, int quantitySale, double discount, Date startDate, Date endDate, int batchQuantity, double shippingFee) {
+        this.orderDetailId = orderDetailId;
+        this.orderId = orderId;
+        this.batchId = batchId;
+        this.unitPriceOut = unitPriceOut;
+        this.quantity = quantity;
+        this.productId = productId;
+        this.name = name;
+        this.unitMeasure = unitMeasure;
+        this.supplierId = supplierId;
+        this.categoryId = categoryId;
+        this.description = description;
+        this.image = image;
+        this.unitPrice = unitPrice;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.updateAt = updateAt;
+        this.promotionId = promotionId;
+        this.quantitySale = quantitySale;
+        this.discount = discount;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.batchQuantity = batchQuantity;
+        this.shippingFee = shippingFee;
+    }
     public OrderDetailDTO(int orderDetailId, int orderId, int batchId, BigDecimal unitPriceOut, int quantity, int productId, String name, String unitMeasure, int supplierId, int categoryId, String description, String image, BigDecimal unitPrice, String status, Date createdAt, Date updateAt, int promotionId, int quantitySale, double discount, Date startDate, Date endDate, int batchQuantity) {
         this.orderDetailId = orderDetailId;
         this.orderId = orderId;
@@ -77,6 +102,8 @@ public class OrderDetailDTO {
         this.batchQuantity = batchQuantity;
 
     }
+    
+    
 
     public int getBatchQuantity() {
         return batchQuantity;
@@ -271,5 +298,27 @@ public class OrderDetailDTO {
     public void setDiscountString(String discountString) {
         this.discountString = discountString;
     }
+
+    public double getShippingFee() {
+        return shippingFee;
+    }
+
+    public void setShippingFee(double shippingFee) {
+        this.shippingFee = shippingFee;
+    }
+
+    public String getShippingFeeString() {
+        return shippingFeeString;
+    }
+
+    public void setShippingFeeString(String shippingFeeString) {
+        this.shippingFeeString = shippingFeeString;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderDetailDTO{" + "orderDetailId=" + orderDetailId + ", orderId=" + orderId + ", batchId=" + batchId + ", unitPriceOut=" + unitPriceOut + ", quantity=" + quantity + ", productId=" + productId + ", name=" + name + ", unitMeasure=" + unitMeasure + ", supplierId=" + supplierId + ", categoryId=" + categoryId + ", description=" + description + ", image=" + image + ", unitPrice=" + unitPrice + ", status=" + status + ", createdAt=" + createdAt + ", updateAt=" + updateAt + ", promotionId=" + promotionId + ", quantitySale=" + quantitySale + ", discount=" + discount + ", startDate=" + startDate + ", endDate=" + endDate + ", UnitPriceString=" + UnitPriceString + ", discountString=" + discountString + ", batchQuantity=" + batchQuantity + ", shippingFee=" + shippingFee + ", shippingFeeString=" + shippingFeeString + '}';
+    }
     
 }
+//done

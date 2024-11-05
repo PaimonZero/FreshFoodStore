@@ -1,27 +1,29 @@
-<%-- 
-    Document   : customerDashboard
-    Created on : Sep 30, 2024, 9:02:20 AM
-    Author     : DELL
---%>
+<%-- Document : customerDashboard Created on : Sep 30, 2024, 9:02:20 AM Author : DELL --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <!DOCTYPE html>
 <html>
+
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Body Customer Dashboard</title>
-        <link rel="stylesheet" href="../css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="../css/bootstrap.min.css" />
         <link rel="stylesheet" href="../css/customerCss/customerDashboard.css">
+        <link rel="shotcut icon" href="../images/logoFFSNoBG.png"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
         <script src="https://kit.fontawesome.com/54f0cb7e4a.js" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        <link rel="stylesheet"
+              href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <style>
-            .edit-btn button{
+            .edit-btn button {
                 padding: 10px 20px;
             }
         </style>
     </head>
+
     <body>
         <%@include file="HeaderLogin1.jsp" %>
         <div class="mobile-header">
@@ -40,7 +42,9 @@
                         <ul class="nav nav-pills flex-column mb-auto">
                             <li class="nav-item">
                                 <form id="infoForm1" action="Dashboard?action=listInfo" method="POST">
-                                    <a class="nav-link active" aria-current="page" onclick="document.getElementById('infoForm1').submit();" style="cursor: pointer;">
+                                    <a class="nav-link active" aria-current="page"
+                                       onclick="document.getElementById('infoForm1').submit();"
+                                       style="cursor: pointer;">
                                         <i class="fas fa-th-large me-2"></i>
                                         Bảng điều khiển
                                     </a>
@@ -48,39 +52,51 @@
                             </li>
                             <li>
                                 <form id="infoForm2" action="OrderHistory" method="POST"> <%--đổi đường dẫn--%>
-                                    <a class="nav-link" onclick="document.getElementById('infoForm2').submit();" style="cursor: pointer;">
+                                    <a class="nav-link"
+                                       onclick="document.getElementById('infoForm2').submit();"
+                                       style="cursor: pointer;">
                                         <i class="fas fa-sync-alt me-2"></i>
                                         Lịch sử đơn hàng
                                     </a>
                                 </form>
                             </li>
-                            <li>
-                                <form id="infoForm3" action="" method="POST"> <%--đổi đường dẫn--%>
-                                    <a class="nav-link" onclick="document.getElementById('infoForm3').submit();" style="cursor: pointer;">
-                                        <i class="far fa-heart me-2"></i>
-                                        Danh sách yêu thích
-                                    </a>
-                                </form>
-                            </li>
+                            <!--                            <li>
+                                                            <form id="infoForm3" action="" method="POST"> <%--đổi đường dẫn--%>
+                                                                <a class="nav-link"
+                                                                   onclick="document.getElementById('infoForm3').submit();"
+                                                                   style="cursor: pointer;">
+                                                                    <i class="far fa-heart me-2"></i>
+                                                                    Danh sách yêu thích
+                                                                </a>
+                                                            </form>
+                                                        </li>-->
                             <li>
                                 <form id="infoForm4" action="giohang" method="GET"> <%--đổi đường dẫn--%>
-                                    <a class="nav-link" onclick="document.getElementById('infoForm4').submit();" style="cursor: pointer;">
+                                    <a class="nav-link"
+                                       onclick="document.getElementById('infoForm4').submit();"
+                                       style="cursor: pointer;">
                                         <i class="bi bi-bag me-2"></i>
                                         Giỏ hàng
                                     </a>
                                 </form>
                             </li>
                             <li>
-                                <form id="infoForm5" action="AccountSetting?action=showData" method="POST"> <%--đổi đường dẫn--%>
-                                    <a class="nav-link" onclick="document.getElementById('infoForm5').submit();" style="cursor: pointer;">
+                                <form id="infoForm5" action="AccountSetting?action=showData" method="POST">
+                                    <%--đổi đường dẫn--%>
+                                    <a class="nav-link"
+                                       onclick="document.getElementById('infoForm5').submit();"
+                                       style="cursor: pointer;">
                                         <i class="bi bi-gear me-2"></i>
                                         Cài đặt
                                     </a>
                                 </form>
                             </li>
                             <li>
-                                <form id="infoForm6" action="authC?action=logout" method="POST"> <%--đổi đường dẫn--%>
-                                    <a class="nav-link" onclick="document.getElementById('infoForm6').submit();" style="cursor: pointer;">
+                                <form id="infoForm6" action="authC?action=logout" method="POST"> <%--đổi đường
+                                        dẫn--%>
+                                    <a class="nav-link"
+                                       onclick="document.getElementById('infoForm6').submit();"
+                                       style="cursor: pointer;">
                                         <i class="fas fa-sign-out-alt me-2"></i>
                                         Đăng xuất
                                     </a>
@@ -96,10 +112,12 @@
                             <div class="card shadow-sm edit-btn">
                                 <form action="AccountSetting?action=showData" method="POST">
                                     <div class="card-body text-center">
-                                        <img src="../images/${listInfo.avatar}" alt="Profile Image" class="profile-picture">
+                                        <img src="${listInfo.avatar}" alt="Profile Image"
+                                             class="profile-picture">
                                         <h5 class="card-title">${listInfo.fullName}</h5>
-                                        <p class="text-muted">Customer</p> <%--tạm để cứng ở đây--%>
-                                        <button type="submit" class="btn btn-outline-success btn-sm">Edit Profile</button>
+                                        <p class="text-muted" style="text-transform: uppercase;">${account.role}</p> <%--tạm để cứng ở đây--%>
+                                        <button type="submit" class="btn btn-outline-success btn-sm">Edit
+                                            Profile</button>
                                     </div>
                                 </form>
                             </div>
@@ -115,20 +133,60 @@
                                         <p>${listInfo.address}</p>
                                         <p>${listInfo.email}</p>
                                         <p>${listInfo.phone}</p>
-                                        <button type="submit" class="btn btn-outline-success btn-sm">Edit Address</button>
+                                        <button type="submit" class="btn btn-outline-success btn-sm">Edit
+                                            Address</button>
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>
+                    <c:set var="totalAmount" value="0" />
+                    <c:forEach var="order" items="${listOrder}">
+                        <c:set var="totalAmount" value="${totalAmount + order.total}" />
+                    </c:forEach>
+                    <div class="card shadow-sm mb-3">
+                        <div class="card-body content">
+                            <!--<div class="d-flex justify-content-between align-items-center mb-3">-->
+                            <h5 class="card-title">THÀNH VIÊN</h5>
+                            <p>${account.fullName}</p>
+                            <div class="card">
+                                <div class="row p-3">
+                                    <div class="col-6 border-end border-3">
+                                        <p class="h6 mb-0 fw-bold">Số lượng đơn hàng</p>
+                                        <div class="d-flex align-items-center justify-content-between mt-2">
+                                            <div><span class="h2 text-danger">${listOrder.size()} </span><small class="h6">Đơn
+                                                    hàng</small></div>
+                                            <span><i class="fas fa-luggage-cart text-success h2"></i></span>
+                                        </div>
+                                    </div>
 
+                                    <div class="col-6">
+                                        <p class="h6 mb-0 fw-bold">Chi tiêu</p>
+                                        <div class="d-flex align-items-center justify-content-between mt-2">
+                                            <div>
+                                                <span class="h2 text-danger">
+                                                    <fmt:formatNumber value="${totalAmount}" type="currency" currencySymbol="" groupingUsed="true" />
+                                                </span>
+                                                <small class="h6">VNĐ</small>
+                                            </div>
+                                            <span><i class="fas fa-money-bill text-success h2"></i></span>
+                                        </div>
+                                        <!--                                                <progress style="width: 80%;" value="32" max="100"> 32% </progress>-->
+                                    </div>
+                                </div>
+                            </div>
+                            <!--</div>-->
+                        </div>
+                    </div>
                     <!-- Order History -->
                     <div class="card shadow-sm">
                         <div class="card-body content">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h5 class="card-title">Recent Order History</h5>
                                 <form id="viewAll" action="OrderHistory" method="POST"> <%--đổi đường dẫn--%>
-                                    <a class="text-success" onclick="document.getElementById('viewAll').submit();" style="cursor: pointer;">
+                                    <a class="text-success"
+                                       onclick="document.getElementById('viewAll').submit();"
+                                       style="cursor: pointer;">
                                         Xem thêm
                                     </a>
                                 </form>
@@ -147,17 +205,20 @@
                                     <tbody>
                                         <c:if test="${empty listOrder}">
                                             <tr>
-                                                <td colspan="5" class="text-center text-danger fw-bold">Lịch sử giỏ hàng đang trống.</td>
+                                                <td colspan="5" class="text-center text-danger fw-bold">Lịch sử
+                                                    giỏ hàng đang trống.</td>
                                             </tr>
                                         </c:if>
 
                                         <c:if test="${!empty listOrder}">
-                                            <c:forEach var="order" items="${listOrder}" begin="0" end ="5">
+                                            <c:forEach var="order" items="${listOrder}" begin="0" end="5">
+                                                <c:set var="totalAmount" value="${totalAmount + order.total}" />
                                                 <tr>
                                                     <td>${order.orderId}</td>
                                                     <td>${order.orderCreatedAtString}</td>
                                                     <!--<td>$135.00 (5 Products)</td>-->
-                                                    <td>${order.totalString}₫ (${order.quantity} Product)</td><%--đã validate về dạng tiền VN--%>
+                                                    <td>${order.totalString}₫ (${order.quantity} Product)</td>
+                                                    <%--đã validate về dạng tiền VN--%>
                                                     <td><span class="badge 
                                                               <c:choose>
                                                                   <c:when test="${order.deliveryStatus == 'Waiting'}">bg-warning text-white</c:when>
@@ -170,12 +231,15 @@
                                                     </td>
                                                     <td>
                                                         <!--                                                        <a href="orderDetail" class="text-success">
-                                                                                                                    <input type="hidden" name="orderID" value="${order.orderId}">
-                                                                                                                    View Details
-                                                                                                                </a>-->
+                                                                                                        <input type="hidden" name="orderID" value="${order.orderId}">
+                                                                                                        View Details
+                                                                                                    </a>-->
                                                         <form action="orderDetail" method="POST">
-                                                            <input type="hidden" name="orderID" value="${order.orderId}">
-                                                            <button type="submit" class="btn p-0 px-2 btn-danger">Xem chi tiết</button>
+                                                            <input type="hidden" name="orderID"
+                                                                   value="${order.orderId}">
+                                                            <button type="submit"
+                                                                    class="btn p-0 px-2 btn-danger">Xem chi
+                                                                tiết</button>
                                                         </form>
                                                     </td>
                                                 </tr>
@@ -190,15 +254,16 @@
             </div>
         </div>
         <!--        <form action="Dashboard">
-                    <button type="submit">submit</button>
-                </form>-->
+            <button type="submit">submit</button>
+        </form>-->
         <%@include file="Footer.jsp" %>
         <script src="../js/bootstrap.bundle.min.js"></script>
         <script>
-                                        //hiện thanh sidebar mobile
-                                        document.querySelector('.menu-toggle').addEventListener('click', function () {
-                                            document.getElementById('sidebar').classList.toggle('show');
-                                        });
+                                           //hiện thanh sidebar mobile
+                                           document.querySelector('.menu-toggle').addEventListener('click', function () {
+                                               document.getElementById('sidebar').classList.toggle('show');
+                                           });
         </script>
     </body>
+
 </html>

@@ -4,6 +4,10 @@
 <%@page import="model.Supplier"%>
 <%@page import="model.Category"%>
 <%@page import="java.util.List"%>
+<%--<%@ page import="javax.servlet.http.HttpSession" %>--%>
+<%@page import="model.Users"%>
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Locale" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 
@@ -18,6 +22,40 @@
 </head>
 
 <body>
+    <%
+        //===================Hàm phân quyền=====================================================
+    // Get the user account from the session
+    Users account = (Users) session.getAttribute("account");
+
+    if (account != null) {
+        String role = account.getRole();
+
+        // Redirect if the role is not manager, staff, or shipper
+        if (!role.equals("manager") && !role.equals("staff") && !role.equals("shipper")) {
+            session.setAttribute("notifyAuth", "notAuthorized");
+            String targetURL = request.getContextPath() + "/customer/Homepage";
+            String encodedURL = response.encodeRedirectURL(targetURL);
+            response.sendRedirect(encodedURL);
+            return;
+        } else if (role.equals("shipper")) {
+            // Redirect if the role is shipper to avoid access to this page
+            session.setAttribute("notifyAuth", "notAuthorized");
+
+            String targetURL = request.getContextPath() + "/admin/DeliveryList";      //đổi dường dẫn ở đây
+            String encodedURL = response.encodeRedirectURL(targetURL);
+            response.sendRedirect(encodedURL);
+            return;
+        }
+    } else {
+        // If no account is found in the session, redirect to login or another appropriate page
+        String loginURL = request.getContextPath() + "/SignIn.jsp";
+        String encodedURL = response.encodeRedirectURL(loginURL);
+        response.sendRedirect(encodedURL);
+        return;
+    }
+        //===================End Hàm phân quyền=================================================
+    %>
+
     <%@include file="HeadSidebar/sidebar.jsp" %> 
     <%@include file="HeadSidebar/header.jsp" %>
     <div class="scale-container">
@@ -29,6 +67,14 @@
                 <div class="col-md-10 bg-Secondary text-white">
                     <div id="header-container"></div>
 
+                    <%
+                        ProductDAO productDao = new ProductDAO();
+                        int totalProducts = productDao.calculateTotalProducts();
+                        int totalPromos = productDao.calculateTotalPromos();
+                        int totalLow = productDao.calculateLowStock();
+                         int totalOut = productDao.calculateOutOfStock();
+
+                    %>
                     <div class="row mt-4">
                         <div class="col-md-12">
                             <div class="card text-dark bg-light d-flex mb-3">
@@ -37,44 +83,31 @@
                                     <div class="row">
                                         <div class="col-md-3" style="border-right: 3px solid #F0F1F3;">
                                             <h5 class="card-title" style="color:#00BA1E;">Total product</h5>
-                                            <p class="card-text">50</p>
-                                            <p class="card-text">Last 7 days</p>
+                                            <div class="d-flex justify-content-between">
+                                                <p class="card-text"><%= totalProducts %></p>
+                                                <p class="card-text">Products</p>
+                                            </div>
                                         </div>
                                         <div class="col-md-3" style="border-right: 3px solid #F0F1F3;">
                                             <h5 class="card-title" style="color:#845EBC;">Current Promotions</h5>
 
                                             <div class="d-flex justify-content-between">
-                                                <p class="card-text">5</p>
-                                                <p class="card-text">25000</p>
-                                            </div>
-
-                                            <div class="d-flex justify-content-between">
-                                                <p class="card-text">Last 7 days</p>
-                                                <p class="card-text">Revenue</p>
+                                                <p class="card-text"><%= totalPromos %></p>
+                                                <p class="card-text">Products</p>
                                             </div>
                                         </div>
                                         <div class="col-md-3" style="border-right: 3px solid #F0F1F3;">
                                             <h5 class="card-title" style="color:#E19133">Low Stock</h5>
                                             <div class="d-flex justify-content-between">
-                                                <p class="card-text">5</p>
-                                                <p class="card-text">2500</p>
-                                            </div>
-
-                                            <div class="d-flex justify-content-between">
-                                                <p class="card-text">Last 7 days</p>
-                                                <p class="card-text">Cost</p>
+                                                <p class="card-text"><%= totalLow %></p>
+                                                <p class="card-text">Products</p>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <h5 class="card-title" style="color:#F36960">Out of stock</h5>
                                             <div class="d-flex justify-content-between">
-                                                <p class="card-text">12</p>
-                                                <p class="card-text">2</p>
-                                            </div>
-
-                                            <div class="d-flex justify-content-between">
-                                                <p class="card-text">Ordered</p>
-                                                <p class="card-text">Not in stock</p>
+                                                <p class="card-text"><%= totalOut %></p>
+                                                <p class="card-text">Products</p>
                                             </div>
                                         </div>
                                     </div>
@@ -86,11 +119,14 @@
                                 <div class="card-header bg-light d-flex align-items-center justify-content-between">
                                     <h4 class="mb-0" style="font-weight: bold;">Product</h4>
                                     <div>
-                                        <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal"
-                                                data-bs-target="#addProductModal"style="width: 96px;">Add Product</button>
+                                        <!--                                        <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal"
+                                                                                        data-bs-target="#addProductModal"style="width: 96px;">Add Product</button>-->
 
-                                        <button class="btn btn-sm btn-outline-secondary"style="width: 70px;">Filter</button>
-                                        <button class="btn btn-sm btn-outline-secondary"style="width: 96px;">Dowload All</button>
+                                        <form action="export?action=products" method="post">
+                                            <button class="btn btn-sm btn-outline-secondary">Export to Excel</button>
+                                        </form>
+<!--                                        <button class="btn btn-sm btn-outline-secondary"style="width: 70px;">Filter</button>
+                                        <button class="btn btn-sm btn-outline-secondary"style="width: 96px;">Dowload All</button>-->
                                     </div>
                                 </div>
                                 <div class="card-body" style="height: auto; ">
@@ -109,31 +145,44 @@
                                         </thead>
                                         <tbody>
                                             <%
-                                                ProductDAO productDao = new ProductDAO();
+                                                
                                                 List<Products> productList = productDao.getAllProducts();
                                                 for (Products product : productList) {
                                             %>
+                                            <%
+                                                NumberFormat formatter = NumberFormat.getInstance(Locale.US); // or any locale you prefer
+                                            %>
                                             <tr style="cursor: pointer;" onclick="window.location.href = 'ProductInfo.jsp?productId=<%= product.getProductId() %>'">
                                         <input type="hidden" value="<%= product.getProductId()%>">
-                                                <td><%= product.getProductId() %></td>
-                                                <td><%= product.getName() %></td>
-                                                <td><%= product.getQuantity() %></td>
-                                                <td><%= product.getUnitMeasure() %></td>
-                                                <td>
-                                                    <%= (product.getDiscount() != 0) ? "In progress" : "None" %>
-                                                </td>
-                                                <td>$<%= product.getUnitPrice() %></td>
-                                                <td><%= product.getStatus() %></td>
-                                                <td>
-                                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
-                                                            data-bs-target="#editProductModal">
-                                                        <ion-icon name="pencil-outline"></ion-icon>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <%
-                                                }
-                                            %>
+                                        <td><%= product.getProductId() %></td>
+                                        <td><%= product.getName() %></td>
+                                        <td>
+                                            <span class="badge 
+                                                  <c:choose>
+                                                      <c:when test="<%= product.getQuantity() == 0 %>">bg-danger text-white</c:when>
+                                                      <c:when test="<%= product.getQuantity() <21 %>">bg-warning text-white</c:when>
+                                                      <c:otherwise>bg-success</c:otherwise>
+                                                  </c:choose>">
+                                                <%= product.getQuantity() %>
+                                            </span>
+                                        </td>
+
+                                        <td><%= product.getUnitMeasure() %></td>
+                                        <td>
+                                            <%= product.getPromotionStatus() %>
+                                        </td>
+                                        <td><%= formatter.format(product.getUnitPrice()) %></td>
+                                        <td><%= product.getStatus() %></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#editProductModal">
+                                                <ion-icon name="pencil-outline"></ion-icon>
+                                            </button>
+                                        </td>
+                                        </tr>
+                                        <%
+                                            }
+                                        %>
                                         </tbody>
                                     </table>
 
@@ -141,7 +190,7 @@
                                 <div class="card-footer d-flex justify-content-between"
                                      style="bottom: 0; background-color: white;">
                                     <button class="btn btn-outline-secondary"style="width: 100px;">Previous</button>
-                                    <span class="mx-3">Page 1 of 10</span>
+                                    <span class="mx-3">Page 1 of 1</span>
                                     <button class="btn btn-outline-secondary"style="width: 100px;">Next</button>
                                 </div>
                             </div>
@@ -244,7 +293,7 @@
         </div>
     </div>
 
-   
+
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js">
     </script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

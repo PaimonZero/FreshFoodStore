@@ -3,7 +3,7 @@
     Created on : Sep 30, 2024, 10:54:38 AM
     Author     : DELL
 --%>
-
+<%@page import="jakarta.servlet.http.HttpSession" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -16,9 +16,11 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <link rel="stylesheet" href="../css/bootstrap.min.css"/>
         <link rel="stylesheet" href="../css/customerCss/orderHistory.css">
+        <link rel="shotcut icon" href="../images/logoFFSNoBG.png"/>
     </head>
     <body>
         <%@include file="HeaderLogin1.jsp" %>
+        <input type="hidden" id="notifyOrder" name="notifyOrder" value="${notifyOrderSuccess}">
         <div class="mobile-header">
             <div class="d-flex justify-content-between align-items-center">
                 <button class="menu-toggle btn btn-outline-secondary">
@@ -49,14 +51,14 @@
                                     </a>
                                 </form>
                             </li>
-                            <li>
+<!--                            <li>
                                 <form id="infoForm3" action="" method="POST"> <%--đổi đường dẫn--%>
                                     <a class="nav-link" onclick="document.getElementById('infoForm3').submit();" style="cursor: pointer;">
                                         <i class="far fa-heart me-2"></i>
                                         Danh sách yêu thích
                                     </a>
                                 </form>
-                            </li>
+                            </li>-->
                             <li>
                                 <form id="infoForm4" action="giohang" method="GET"> <%--đổi đường dẫn--%>
                                     <a class="nav-link" onclick="document.getElementById('infoForm4').submit();" style="cursor: pointer;">
@@ -181,10 +183,26 @@
         <%@include file="Footer.jsp" %>
         <script src="../js/bootstrap.bundle.min.js"></script>
         <script>
-                                        //hiện thanh sidebar mobile
-                                        document.querySelector('.menu-toggle').addEventListener('click', function () {
-                                            document.getElementById('sidebar').classList.toggle('show');
-                                        });
+            window.onload = function () {
+                var notifyAuthField = document.getElementById('notifyOrder');
+                if (notifyAuthField) {
+                    var notifyAuth = notifyAuthField.value;
+                    if (notifyAuth === "success") {
+                        alert("Đặt hàng thành công, hóa đơn đã được gửi qua email của bạn!");
+                    }
+                    // Remove the hidden input field after alert
+                    notifyAuthField.remove();
+                }
+            };
+        </script>
+        <%
+            session.removeAttribute("notifyOrderSuccess");
+        %>
+        <script>
+            //hiện thanh sidebar mobile
+            document.querySelector('.menu-toggle').addEventListener('click', function () {
+                document.getElementById('sidebar').classList.toggle('show');
+            });
         </script>
     </body>
 </html>

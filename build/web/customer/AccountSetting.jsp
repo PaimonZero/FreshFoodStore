@@ -10,6 +10,7 @@
         <script src="https://kit.fontawesome.com/54f0cb7e4a.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <link rel="stylesheet" href="../css/customerCss/accountSetting.css">
+        <link rel="shotcut icon" href="../images/logoFFSNoBG.png"/>
     </head>
     <body>
         <%@include file="HeaderLogin1.jsp" %>
@@ -43,14 +44,14 @@
                                     </a>
                                 </form>
                             </li>
-                            <li>
+<!--                            <li>
                                 <form id="infoForm3" action="" method="POST"> <%--đổi đường dẫn--%>
                                     <a class="nav-link" onclick="document.getElementById('infoForm3').submit();" style="cursor: pointer;">
                                         <i class="far fa-heart me-2"></i>
                                         Danh sách yêu thích
                                     </a>
                                 </form>
-                            </li>
+                            </li>-->
                             <li>
                                 <form id="infoForm4" action="giohang" method="GET"> <%--đổi đường dẫn--%>
                                     <a class="nav-link" onclick="document.getElementById('infoForm4').submit();" style="cursor: pointer;">
@@ -91,7 +92,7 @@
                                             <div class="mb-3">
                                                 <label for="exampleFormControlInput1" class="form-label">Họ và tên</label>
                                                 <input type="text" class="form-control input" id="exampleFormControlInput1"
-                                                       placeholder="Họ và tên" name="fullName" value="${listInfo.fullName}" required>
+                                                       placeholder="Họ và tên" name="fullName" pattern="[A-Za-zÀ-ỹ\s]{1,100}" title="Tên chỉ được chứa chữ cái và tối đa 100 ký tự." value="${listInfo.fullName}" required>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="exampleFormControlInput3" class="form-label">Email</label>
@@ -114,8 +115,9 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6 desktop-view ">
-                                            <img src="../images/${listInfo.avatar}"
+                                            <img src="${listInfo.avatar}"
                                                  alt="Uploaded Image" class="user-img" id="uploaded-image">
+                                            <input type="hidden" name="avatarOld" value="${listInfo.avatar}">
                                             <div class="panel">
                                                 <div class="button_outer">
                                                     <div class="btn_upload">
@@ -133,7 +135,7 @@
                                 </form>
                                 <form action="">
                                     <div class="col-md-6 mobile-view">
-                                        <img src="../images/${listInfo.avatar}"
+                                        <img src="${listInfo.avatar}"
                                              alt="Uploaded Image" class="user-img" id="uploaded-image2">
                                         <div class="panel">
                                             <div class="button_outer">
@@ -151,7 +153,7 @@
                                         <div class="mb-3">
                                             <label for="exampleFormControlInput1" class="form-label">Họ và tên</label>
                                             <input type="text" class="form-control input" id="exampleFormControlInput1"
-                                                   placeholder="Họ và tên" value="${listInfo.fullName}" name="fullName" required>
+                                                   placeholder="Họ và tên" value="${listInfo.fullName}" name="fullName" pattern="[A-Za-zÀ-ỹ\s]{1,100}" title="Tên chỉ được chứa chữ cái và tối đa 100 ký tự." required>
                                         </div>
                                         <!--                                        <div class="mb-3">
                                                                                     <label for="exampleFormControlInput2" class="form-label">Tên</label>
@@ -191,25 +193,26 @@
                             <div class="card-body">
                                 <label for="pass" class="form-label">Mật khẩu hiện tại</label>
                                 <div class="position-relative">
-                                    <input type="password" class="form-control input" name="password" id="pass"
-                                           value="${listInfo.password}" disabled>
+                                    <input type="password" class="form-control input1" name="oldPassword" placeholder="Mật khẩu hiện tại" id="pass" required>
+
                                     <span toggle="#pass" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                 </div>
                                 <div class="row g-3 mt-1">
                                     <div class="col-md-6">
-                                        <label for="new-pass" class="form-label">Mật khẩu mới</label>
+                                        <label for="new-pass" class="form-label">Mật khẩu mới<span class="text-danger"> *</span></label>
                                         <div class="position-relative">
-                                            <input type="password" class="form-control input" name="new-password"
+                                            <input type="password" class="form-control input1" name="new-password"
                                                    id="new-pass" placeholder="Mật khẩu mới" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" 
                                                    title="Mật khẩu phải có ít nhất 8 kí tự và phải chứa cả chữ và số" required>
                                             <span toggle="#new-pass"
                                                   class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                         </div>
+                                        <p class="text-danger mt-2">*Mật khẩu phải có ít nhất 8 kí tự và phải chứa cả chữ và số</p>
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="confirm-pass" class="form-label">Xác nhận mật khẩu mới</label>
+                                        <label for="confirm-pass" class="form-label">Xác nhận mật khẩu mới <span class="text-danger"> *</span></label>
                                         <div class="position-relative">
-                                            <input type="password" class="form-control input" name="confirm-password"
+                                            <input type="password" class="form-control input1" name="confirm-password"
                                                    id="confirm-pass" placeholder="Xác nhận mật khẩu mới">
                                             <span toggle="#confirm-pass"
                                                   class="fa fa-fw fa-eye field-icon toggle-password"></span>
@@ -284,6 +287,14 @@
                 // Vô hiệu hóa nút "Lưu thay đổi" ban đầu nếu không có thay đổi
                 saveButton.disabled = true;
             });
+            <c:choose>
+                <c:when test="${not empty errorMessage}">
+            alert("${errorMessage}");
+                </c:when>
+                <c:when test="${not empty successMessage}">
+            alert("${successMessage}");
+                </c:when>
+            </c:choose>
         </script>
     </body>
 </html>

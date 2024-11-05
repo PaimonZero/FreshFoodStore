@@ -72,7 +72,14 @@
 .input {
     height: 50px;
 }
+.input1:focus-within {
+    border: 1px solid #1DBD3A;
+    box-shadow: 0 0 5px #1DBD3A;
+}
 
+.input1 {
+    height: 50px;
+}
 /* ảnh user */
 .user-img {
     width: 300px;

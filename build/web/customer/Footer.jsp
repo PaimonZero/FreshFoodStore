@@ -48,7 +48,7 @@
                 <div class="container">
                     <div class="footer-content row">
                         <div class="footer-logo col-md-4">
-                            <img src="../images/snapedit_1726937937080.png" alt="Ecobazar Logo">
+                            <img src="../images/logoFreshFoodStore.png" alt="Ecobazar Logo" class="w-100 h-100 mb-2">
                             <h6>Shop Fresh Food uy tín chất lượng nhất Việt Nam, chúng tôi có đội ngũ giao hàng nhanh chóng
                                 trong 24h. Hãy lựa chọn chúng tôi !!!</h6>
                             <p class="mt-3"><strong>(86+) 3374 432</strong> or <strong>freshfoodfpt@gmail.com</strong></p>
@@ -58,21 +58,33 @@
                         <div class="footer-info col-md-4 mt-5 mb-4 desktop-menu">
                             <ul>
                                 <li><strong>Liên hệ</strong></li>
-                                <li><a href="#">My Account</a></li>
-                                <li><a href="#">Order History</a></li>
-                                <li><a href="#">Shopping Cart</a></li>
-                                <li><a href="#">Wishlist</a></li>
+                                <li>
+                                    <form id="infoForm" action="Dashboard?action=listInfo" method="POST">
+                                        <a onclick="document.getElementById('infoForm').submit();" style="cursor: pointer;">Tài khoản của tôi</a>
+                                    </form>
+                                </li>
+                                <li>
+                                    <form id="infoForm2" action="OrderHistory" method="POST">
+                                        <a onclick="document.getElementById('infoForm2').submit();" style="cursor: pointer;">Lịch sử đơn hàng</a>
+                                    </form>
+                                </li>
+                                <li>
+                                    <form id="infoForm3" action="giohang" method="GET">
+                                        <a onclick="document.getElementById('infoForm3').submit();" style="cursor: pointer;">Giỏ hàng của tôi</a>
+                                    </form>
+                                </li>
+
                             </ul>
                             <ul>
                                 <li><strong>CSKH</strong></li>
-                                <li><a href="#">Contact</a></li>
+                                <li><a href="contact.jsp">Contact</a></li>
                                 <li><a href="#">Faqs</a></li>
                                 <li><a href="#">Terms & Condition</a></li>
                                 <li><a href="#">Privacy Policy</a></li>
                             </ul>
                             <ul>
                                 <li><strong>Proxy</strong></li>
-                                <li><a href="#">About</a></li>
+                                <li><a href="./about.jsp">About</a></li>
                                 <li><a href="#">Shop</a></li>
                                 <li><a href="#">Product</a></li>
                                 <li><a href="#">Track Order</a></li>
@@ -165,7 +177,7 @@
                 </div>
             </div>
         </footer>
-                <!--<script src="./js/bootstrap.bundle.min.js"></script>-->
+        <!--<script src="./js/bootstrap.bundle.min.js"></script>-->
         <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>-->
     </body>
 </html>

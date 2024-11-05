@@ -6,6 +6,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link rel="shotcut icon" href="./images/logoFreshFoodStore.png"/>
         <link rel="stylesheet" href="./css/customerCss/Header-login.css"/>
     </head>
     <body>
@@ -25,7 +26,7 @@
                         </a>
                         <div class="position-relative ms-4 d-none d-xl-inline-block">
                             <input class="searchInput bg-body-tertiary iconCursor ps-md-5 p-1 p-md-2 " type="search"
-                                   placeholder="Search Rides" aria-label="Search">
+                                   placeholder="Tìm kiếm sản phẩm..." aria-label="Search">
                             <img class="position-absolute searchImg iconCursor" src="./images/png/search.svg"
                                  alt="search">
                         </div>
@@ -34,7 +35,7 @@
                         <div class="d-none d-lg-block">
                             <ul class="d-flex m-0 list-unstyled ">
                                 <li class="nav-item iconChange  me-4 pt-2">
-                                    <a href="#" class="nav-link text-center  p-0">
+                                    <a href="./customer/contact.jsp" class="nav-link text-center  p-0">
                                         <div class=" d-flex align-items-center overflow-hidden changeWidth mx-auto">
                                             <img class="one iconHeight mx-2" src="./images/svg/telephone.png" alt="book">
                                             <img class="two iconHeight mx-2" src="./images/svg/telephone-tran.png"
@@ -43,8 +44,8 @@
                                         <div class="smallFont textColor">Gọi điện</div>
                                     </a>
                                 </li>
-                                <li class="nav-item iconChange   me-4 pt-2">
-                                    <a href="#" class="nav-link text-center p-0">
+                                <li class="nav-item iconChange me-4 pt-2">
+                                    <a href="./customer/contact.jsp" class="nav-link text-center p-0">
                                         <div class=" d-flex align-items-center overflow-hidden changeWidth mx-auto">
                                             <img class="iconHeight mx-2" src="./images/svg/placeholder.png" alt="dpad">
                                             <img class=" iconHeight mx-2" src="./images/svg/placehoder-tran.png" alt="dpad">
@@ -88,7 +89,7 @@
                             <c:when test="${not empty account}">
                                 <form id="infoForm" action="Dashboard?action=listInfo" method="POST">
                                     <div class="user-icon" onclick="document.getElementById('infoForm').submit();" style="cursor: pointer;">
-                                        <img src="../images/${account.avatar}" width="40" height="40" style="object-fit: cover; border-radius: 50%;" alt="alt"/>
+                                        <img src="${account.avatar}" width="40" height="40" style="object-fit: cover; border-radius: 50%;" alt="alt"/>
                                     </div>
                                 </form>
                                 <li class="dropdown" id="icon-drop" style="list-style: none;">

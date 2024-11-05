@@ -64,7 +64,7 @@
                 </div>
             </div>
         </section>
-        
+
         <%-- Thông báo lỗi --%>
         <c:if test="${not empty notifyForgot}">
             <input type="hidden" id="notifyForgot" value="${notifyForgot}" />
@@ -78,14 +78,14 @@
                     <div class="col-md-5">
                         <div class="card p-4">
                             <h3 class="text-center mb-3">Forgot password</h3>
-                            <p class="text-center mb-4">Please enter your email to verify your account!</p>
+                            <p class="text-center mb-4">Vui lòng nhập email để xác nhận!</p>
                             <form action="forgot" method="GET">    <%-- Do action ko nhận nên để trong thẻ input ở dưới --%>
                                 <input type="hidden" name="action" value="changePass"/>
                                 <div class="form-group">
                                     <label for="email" class="sr-only">Email</label>
                                     <input required type="email" name="email" class="form-control input-form" id="email" placeholder="Enter email">
                                 </div>
-                                <button class="btn btn-success btn-block w-100 mt-3 p-2" style="border-radius: 50px;">Send verification code</button>
+                                <button class="btn btn-success btn-block w-100 mt-3 p-2" style="border-radius: 50px;">Gủi mã xác nhận</button>
                                 <div class="text-center mt-3">
                                     <p class="text-center mt-3 link">Muốn quay lại? <a href="SignIn.jsp">Đăng nhập</a></p>
                                 </div>

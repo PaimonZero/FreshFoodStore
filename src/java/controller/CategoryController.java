@@ -4,7 +4,9 @@
  */
 package controller;
 
+import dal.BatchProductDAO;
 import dal.CategoryDAO;
+import dal.ProductDAO;
 import dto.ProductDTO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -38,6 +40,11 @@ public class CategoryController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+
+        ProductDAO prdao = new ProductDAO(); // hàng lẻ 
+        BatchProductDAO bpdao = new BatchProductDAO();
+        bpdao.updateBatchforProductDetail();
+
         CategoryDAO c = new CategoryDAO();
         int traicay = c.countProduct("Fruits");
         int raucu = c.countProduct("Vegetables");
@@ -62,24 +69,56 @@ public class CategoryController extends HttpServlet {
 
         String food = request.getParameter("food");
         String sortOrder = request.getParameter("sortProduct");
-        int productCount = getProductCount(food);
-        List<ProductDTO> products = getProductByType(food, offset, row, sortOrder);
+//          sort range
+        String minStr = request.getParameter("minRange");
+        String maxStr = request.getParameter("maxRange");
+
+        double min = 1000;
+        double max = 1000000;
+        if (minStr != null && !minStr.isBlank() && maxStr != null && !maxStr.isBlank()) {
+            min = Double.parseDouble(minStr);
+            max = Double.parseDouble(maxStr);
+        }
+        //  them
+        List<ProductDTO> products = new ArrayList<>();
 
         int pageCount;
-        if (productCount % PAGE_SIZE == 0) {
-            pageCount = productCount / PAGE_SIZE;
+        int pageCount2;
+
+        // search 
+        String textSearch = request.getParameter("textSearch");
+        if (textSearch == null || textSearch.trim().isEmpty() || !textSearch.matches("^[\\p{L}\\p{M}0-9\\s]*$")) {
+            products = getProductByType(food, min, max, offset, row, sortOrder);
+            int productCount = getProductCount(food);
+            if (productCount % PAGE_SIZE == 0) {
+                pageCount = productCount / PAGE_SIZE;
+            } else {
+                pageCount = productCount / PAGE_SIZE + 1;
+            }
+            request.setAttribute("pageCount", pageCount);
+            request.setAttribute("currentPage", page);
+            request.setAttribute("productCount", productCount);
+            request.setAttribute("textSearch", textSearch);
+
         } else {
-            pageCount = productCount / PAGE_SIZE + 1;
+            products = prdao.findByName(textSearch, offset, row);
+            int productCount2 = prdao.countProductSearch(textSearch);
+            if (productCount2 % PAGE_SIZE == 0) {
+                pageCount2 = productCount2 / PAGE_SIZE;
+            } else {
+                pageCount2 = productCount2 / PAGE_SIZE + 1;
+            }
+            request.setAttribute("pageCount2", pageCount2);
+            request.setAttribute("currentPage2", page);
+            request.setAttribute("productCount2", productCount2);
         }
 
         List<ProductDTO> sale = c.listProductSale();
 
         request.setAttribute("sale", sale);
+        request.setAttribute("textSearch", textSearch);
 
-        request.setAttribute("productCount", productCount);
         request.setAttribute("products", products);
-        request.setAttribute("pageCount", pageCount);
-        request.setAttribute("currentPage", page);
 
         request.setAttribute("raucu", raucu);
         request.setAttribute("traicay", traicay);
@@ -137,46 +176,46 @@ public class CategoryController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private List<ProductDTO> getProductByType(String food, int offset, int row, String sortOrder) {
+    private List<ProductDTO> getProductByType(String food, double min, double max, int offset, int row, String sortOrder) {
 
         CategoryDAO cd = new CategoryDAO();
         List<ProductDTO> p = new ArrayList<>();
         if ("Fruits".equals(food)) {
-            p = cd.findByName("Fruits", offset, row);
+            p = cd.findByName("Fruits", min, max, offset, row);
         } else if ("Vegetables".equals(food)) {
-            p = cd.findByName("Vegetables", offset, row);
+            p = cd.findByName("Vegetables", min, max, offset, row);
         } else if ("Seafood".equals(food)) {
-            p = cd.findByName("Seafood", offset, row);
+            p = cd.findByName("Seafood", min, max, offset, row);
         } else if ("Meat".equals(food)) {
-            p = cd.findByName("Meat", offset, row);
+            p = cd.findByName("Meat", min, max, offset, row);
         } else if ("Beverages".equals(food)) {
-            p = cd.findByName("Beverages", offset, row);
+            p = cd.findByName("Beverages", min, max, offset, row);
         } else if ("Snacks".equals(food)) {
-            p = cd.findByName("Snacks", offset, row);
+            p = cd.findByName("Snacks", min, max, offset, row);
         } else if ("Spices".equals(food)) {
-            p = cd.findByName("Spices", offset, row);
+            p = cd.findByName("Spices", min, max, offset, row);
         } else if ("VegetableOil".equals(food)) {
-            p = cd.findByName("VegetableOil", offset, row);
+            p = cd.findByName("VegetableOil", min, max, offset, row);
         } else if ("Egg".equals(food)) {
-            p = cd.findByName("Egg", offset, row);
+            p = cd.findByName("Egg", min, max, offset, row);
         } else if ("DairyProducts".equals(food)) {
-            p = cd.findByName("DairyProducts", offset, row);
+            p = cd.findByName("DairyProducts", min, max, offset, row);
         } else if ("Tuber".equals(food)) {
-            p = cd.findByName("Tuber", offset, row);
+            p = cd.findByName("Tuber", min, max, offset, row);
         } else if ("CerealsNuts".equals(food)) {
-            p = cd.findByName("CerealsNuts", offset, row);
+            p = cd.findByName("CerealsNuts", min, max, offset, row);
         }
 
         if (sortOrder != null) {
             switch (sortOrder) {
                 case "tang":
-                    p = cd.sortProductByUporDown(food, "p.unitPrice", "asc", offset, row);
+                    p = cd.sortProductByUporDown(food, min, max, "p.unitPrice", "asc", offset, row);
                     break;
                 case "giam":
-                    p = cd.sortProductByUporDown(food, "p.unitPrice", "desc", offset, row);
+                    p = cd.sortProductByUporDown(food, min, max, "p.unitPrice", "desc", offset, row);
                     break;
                 case "moi":
-                    p = cd.sortProductByUporDown(food, "p.productId", "desc", offset, row);
+                    p = cd.sortProductByUporDown(food, min, max, "p.productId", "desc", offset, row);
                     break;
 
                 default:
@@ -224,3 +263,4 @@ public class CategoryController extends HttpServlet {
     }
 
 }
+//done

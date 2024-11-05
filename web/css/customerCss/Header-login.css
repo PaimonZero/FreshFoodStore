@@ -207,7 +207,6 @@ input.searchInput::placeholder {
         width: 100%; /* Điều chỉnh chiều rộng khi mở */
         padding: 0.5rem; /* Điều chỉnh padding cho input */
         border: 1px solid #ccc; /* Điều chỉnh border cho input */
-
     }
 
     .search-btn {
@@ -230,6 +229,14 @@ input.searchInput::placeholder {
         box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
     }
 }
+@media (max-width: 768px){
+    .search-box.open .search-input {
+        width: 99px; /* Điều chỉnh chiều rộng khi mở */
+        padding: 0.5rem; /* Điều chỉnh padding cho input */
+        border: 1px solid #ccc; /* Điều chỉnh border cho input */
+    }
+
+}
 
 /* body */
 body {
@@ -237,4 +244,38 @@ body {
 }
 .dropdown{
     list-style: none;
+}
+.menu-user button{
+    background-color: #fff;
+}
+.menu-user button:hover{
+    background-color: #ddd;
+    border-radius: 5px;
+}
+.menu-user {
+    width: 100%;
+}
+.menu-button {
+    border: none;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    text-align: left;
+    padding: 5px;
+}
+
+.menu-icon {
+    margin-right: 8px; /* Khoảng cách giữa icon và text */
+    width: 30px;       /* Đặt kích thước cho icon */
+    height: 30px;
+    padding: 6px;
+    background-color: #dc3545; /* Màu nền đỏ */
+    border-radius: 50%;
+}
+.dropdown--menu{
+    width: 250px;
 }

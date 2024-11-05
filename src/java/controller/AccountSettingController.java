@@ -112,12 +112,12 @@ public class AccountSettingController extends HttpServlet {
 
         // Update the user information in the database
         Users newAccInfo = dao.updateUserInfo(account.getUserId(), fullName, email, phone, address, avatar);
-        
+
         // Check if the update was successful
         if (newAccInfo == null) {
             System.out.println("Error: HandleEdit update failed!");
         }
-        
+
         // Cập nhật lại giá trị trong session
         session.setAttribute("account", newAccInfo);
 
@@ -130,10 +130,13 @@ public class AccountSettingController extends HttpServlet {
     }
 
     private String handleFile(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Sử dụng getServletContext().getRealPath("") để lấy đường dẫn gốc của dự án
+        // Lấy giá trị của avatar cũ từ input hidden
+        String avatarOld = request.getParameter("avatarOld");
+
+        // Thiết lập đường dẫn để lưu ảnh
         String uploadPath = getServletContext().getRealPath("") + File.separator + "images";
 
-        // Tạo thư mục lưu file nếu chưa có
+        // Tạo thư mục lưu file nếu chưa tồn tại
         File uploadDir = new File(uploadPath);
         if (!uploadDir.exists()) {
             boolean created = uploadDir.mkdirs();
@@ -142,11 +145,13 @@ public class AccountSettingController extends HttpServlet {
             }
         }
 
-        // Lấy phần file từ form với tên là "avatar"
+        // Lấy phần file từ form với tên là "file"
         Part filePart = request.getPart("file");
-        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+        String fileName = filePart != null ? Paths.get(filePart.getSubmittedFileName()).getFileName().toString() : null;
+
+        // Nếu không có file mới, trả về avatarOld
         if (fileName == null || fileName.isEmpty()) {
-            return null;
+            return avatarOld;
         }
 
         // Đường dẫn đầy đủ của file sẽ được lưu
@@ -157,27 +162,35 @@ public class AccountSettingController extends HttpServlet {
             File fileToSave = new File(filePath);
             Files.copy(fileContent, fileToSave.toPath(), StandardCopyOption.REPLACE_EXISTING);
         }
-        
+
         System.out.println("Upload Path: " + uploadPath);
         System.out.println("File Path: " + filePath);
 
-        // Trả về tên file đã lưu
-        return fileName;
+        // Trả về đường dẫn mới của file đã lưu
+        return "../images/" + fileName;
     }
+
     private void handleChangePassword(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         UserDAO dao = new UserDAO();
-        DashboardDAO dao1=new DashboardDAO();
+        DashboardDAO dao1 = new DashboardDAO();
         HttpSession session = request.getSession();
         //Lấy về userID từ account trong sesion khi đăng nhập
         Users account = (Users) session.getAttribute("account");
         String newPassword = request.getParameter("new-password");
-        dao.updatePasswordUserDB(account.getUserId(), newPassword);
-        // Redirect to the account settings page after update
-        //lấy thông tin user
+        String oldPassword = request.getParameter("oldPassword");
         Users listInfo = dao1.findAllInfo(account.getUserId());
-        request.setAttribute("listInfo", listInfo);
-        //hiện thông tin order của user        
-        request.getRequestDispatcher("/customer/AccountSetting.jsp").forward(request, response);
+        if (oldPassword.equals(listInfo.getPassword())) {
+            // Nếu mật khẩu cũ đúng, cập nhật mật khẩu mới
+            dao.updatePasswordUserDB(account.getUserId(), newPassword);
+            request.setAttribute("listInfo", listInfo);
+            request.setAttribute("successMessage", "Mật khẩu đã được cập nhật thành công!");
+            request.getRequestDispatcher("/customer/AccountSetting.jsp").forward(request, response);
+        } else {
+            // Nếu mật khẩu cũ sai, trả về thông báo lỗi
+            request.setAttribute("listInfo", listInfo);
+            request.setAttribute("errorMessage", "Mật khẩu cũ không chính xác!");
+            request.getRequestDispatcher("/customer/AccountSetting.jsp").forward(request, response);
+        }
     }
 
     /**

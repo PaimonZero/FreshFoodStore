@@ -1,5 +1,6 @@
 <%-- Document : productDetail Created on : Oct 4, 2024, 7:29:26 PM Author : DELL --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<fmt:setLocale value="vi_VN"/><!--đổi thành location VN-->
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -14,6 +15,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
         <script src="https://kit.fontawesome.com/54f0cb7e4a.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        <link rel="shotcut icon" href="../images/logoFFSNoBG.png"/>
     </head>
 
     <body>
@@ -61,7 +63,12 @@
                 <div class="col-md-6">
                     <h3 class="product-title">${requestScope.product.name}</h3>
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="badge bg-success">${requestScope.product.status}</span>
+                        <span style="font-size: 18px;" class="badge<c:choose>
+                                  <c:when test="${requestScope.product.status == 'In Stock'}">bg-success</c:when>
+                                  <c:when test="${requestScope.product.status == 'Out of Stock'}">bg-danger</c:when>
+                              </c:choose>">
+                            ${requestScope.product.status}
+                        </span>
                         <div class="product-rating">
                             <i class="bi bi-star-fill text-warning"></i>
                             <i class="bi bi-star-fill text-warning"></i>
@@ -91,14 +98,27 @@
                     <form action="${pageContext.request.contextPath}/customer/shoppingcart" method="get"> 
                         <div class="product-quantity d-flex align-items-center mb-4">
                             <label class="me-3">Số lượng:</label>
-                            <input type="number" name="soluong" value="1" class="form-control w-25">
+                            <input type="number" name="soluong" value="1" min="1" max="${requestScope.product.batchQuantity}" class="form-control w-25"/>
+                            <span>&nbsp;/ ${requestScope.product.batchQuantity}</span>
+                            <input type="hidden" name="maxSoLuong" value="${requestScope.product.batchQuantity}"/>
                         </div>
 
                         <input type="hidden" name="id" id="id" value="${requestScope.product.productId}" />
-                        <button type="submit" class="btn btn-success btn-lg w-100 mb-3 position-relative add-btn">Thêm vào giỏ
-                            hàng
-                            <i class="fas fa-cart-plus cart-icon"></i>
-                        </button>
+                        <c:choose>
+                            <c:when test="${requestScope.product.status == 'In Stock'}">
+                                
+                                <button type="submit" class="btn btn-success btn-lg w-100 mb-3 position-relative add-btn">
+                                    Thêm vào giỏ hàng
+                                    <i class="fas fa-cart-plus cart-icon"></i>
+                                </button>
+                            </c:when>
+                            <c:otherwise>
+                                <button type="button" class="btn btn-secondary btn-lg w-100 mb-3 position-relative add-btn" disabled>
+                                    Hết hàng
+                                    <i class="fas fa-cart-plus cart-icon"></i>
+                                </button>
+                            </c:otherwise>
+                        </c:choose>
                     </form>
 
 

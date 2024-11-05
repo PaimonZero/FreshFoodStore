@@ -196,7 +196,7 @@ public class DashboardDAO extends DBContext {
                           O.orderCreatedAt,
                           O.orderCompletedAt
                       ORDER BY 
-                          O.orderId
+                          O.orderId desc
                      OFFSET ? ROWS FETCH NEXT ? ROWS ONLY""";
 
         try {

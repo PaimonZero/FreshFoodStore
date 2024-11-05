@@ -12,6 +12,7 @@
         <script src="https://kit.fontawesome.com/54f0cb7e4a.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <link rel="stylesheet" href="../css/customerCss/checkout.css">
+        <link rel="shotcut icon" href="../images/logoFFSNoBG.png"/>
     </head>
     <body>
         <%@include file="HeaderLogin1.jsp" %>
@@ -29,12 +30,12 @@
                                         <!--<div class="row g-3">-->
                                         <div class="form-group mt-2">
                                             <label for="first-name">Họ và tên người nhận</label>
-                                            <input type="text" id="first-name" name="fullName" placeholder="Họ" required>
+                                            <input type="text" id="first-name" name="fullName" placeholder="Họ" value="${account.fullName}" required>
                                         </div>
                                         <!--</div>-->
                                         <div class="form-group">
                                             <label for="street-address">Địa chỉ nhận</label>
-                                            <input type="text" id="street-address" name="address" placeholder="Địa chỉ" required>
+                                            <input type="text" id="street-address" name="address" placeholder="Địa chỉ" value="${account.address}" required>
                                         </div>
                                         <div class="row g-3">
                                             <div class="form-group col-md-6 email-form">
@@ -44,7 +45,7 @@
                                             <div class="form-group col-md-6">
                                                 <label for="phone">Số điện thoại</label>
                                                 <input type="text" id="phone" name="receiverPhone" pattern="[0-9]{10}"
-                                                       title="Vui lòng nhập đúng số điện thoại" placeholder="Số điện thoại" required>
+                                                       title="Vui lòng nhập đúng số điện thoại" placeholder="Số điện thoại" value="${account.phone}" required>
                                             </div>
 
                                         </div>
@@ -53,8 +54,7 @@
                                             <h4 class="mb-4">Thông tin bổ sung</h4>
                                             <span>Ghi chú đơn hàng (Tùy chọn)</span>
                                             <br>
-                                            <textarea placeholder="Ghi chú về đơn hàng của bạn, ví dụ: ghi chú đặc biệt về việc giao hàng, ...">
-                                            </textarea>
+                                            <textarea placeholder="Ghi chú về đơn hàng của bạn, ví dụ: ghi chú đặc biệt về việc giao hàng, ..."></textarea>
                                         </div>
                                     </div>
                                     <!-- end col -->
@@ -66,7 +66,7 @@
                                                 <c:forEach var="cartItem" items="${listCart}">
                                                     <div class="d-flex align-items-center mb-4">
                                                         <img src="${cartItem.productImage}" width="65" height="55" alt="contact-img" title="contact-img"
-                                                             class="rounded me-3" height="64" />
+                                                             class="rounded me-3 mx-3" height="64" />
                                                         <p class="m-0 d-inline-block align-middle font-16 product-name">
                                                             <a href="" class="text-body" <%--có thể gán link dẫn đến product detail--%>
                                                                style="font-weight: 500;"><strong>${cartItem.productName}</strong> x${cartItem.quantity}</a>
@@ -105,6 +105,7 @@
                                                 </table>
                                                 <div class="mt-3 payment">
                                                     <h5>Hình thức thanh toán</h5>
+
                                                     <div class="d-flex align-items-center mb-2">
                                                         <input type="radio" id="cod" name="payment" value="Cash" checked>
                                                         <label for="cod">Cash on Delivery</label> <br>
@@ -113,14 +114,18 @@
                                                         <input type="radio" id="paypal" name="payment" value="QRCode">
                                                         <label for="paypal">VNPay</label> <br>
                                                     </div>
-<!--                                                    <div class="d-flex align-items-center mb-2">
-                                                        <input type="radio" id="VNPay" name="payment" value="VNPay">
-                                                        <label for="VNPay">VNPay</label> <br>
-                                                    </div>-->
+
+                                                    <!--                                                    <div class="d-flex align-items-center mb-2">
+                                                                                                            <input type="radio" id="VNPay" name="payment" value="VNPay">
+                                                                                                            <label for="VNPay">VNPay</label> <br>
+                                                                                                        </div>-->
                                                 </div>
-                                                            <div><input type="hidden" name="isConfirmed" value="0"></div>
-                                                <button type="submit" class="process-pay-btn btn w-100 mt-4">Đi đến thanh
-                                                    toán</button>
+                                                <div><input type="hidden" name="isConfirmed" value="0"></div>
+                                                <button type="submit" class="process-pay-btn btn w-100 mt-4" 
+                                                        <c:if test="${empty listCart}">
+                                                            disabled
+                                                        </c:if> >Đi đến thanh toán
+                                                </button>
                                             </div>
                                             <!--</form>-->
                                             <!-- end table-responsive -->
@@ -136,5 +141,6 @@
         <%@ include file="Footer.jsp" %>
         <script src="../js/bootstrap.bundle.min.js"></script>
         <script src="../js/authJs/checkout.js"></script>
+
     </body>
 </html>

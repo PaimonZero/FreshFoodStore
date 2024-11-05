@@ -29,7 +29,20 @@ public class OrderDetailDAO {
     // Viet cho Product
     public ProductDTO findProductById(int id) {
 
-        String sql = "select top 1 p.*, bp.*, pr.discount FROM products p join BatchesProduct bp on p.productId = bp.productId join Promos pr on pr.productId = p.productId WHERE p.productId= ? order by bp.expiryDate asc";
+        //String sql = "select top 1 p.*, bp.*, pr.discount FROM products p join BatchesProduct bp on p.productId = bp.productId join Promos pr on pr.productId = p.productId WHERE p.productId= ? and bp.expiryDate > getDate()";
+        
+        //Note: Nam đã chặn điều kiện ở (ProductDAO)findProductById khi hiển thị chi tiết sản phẩm để user thao tác, 
+        //      hàm này chạy sau khi hàm kia validate nên KHÔNG cần dk nếu ko tồn tại bp.quantity > 0 và xử lý Promo khi bp.quantity = 0
+        //      hàm này chạy khi người dùng bấm thêm sản phẩm vào giỏ hàng
+        String sql = "SELECT TOP 1 p.*, bp.*, pr.discount " +
+             "FROM products p " +
+             "JOIN BatchesProduct bp ON p.productId = bp.productId " +
+             "JOIN Promos pr ON pr.productId = p.productId " +
+             "WHERE p.productId = ? " +
+             "AND bp.expiryDate > GETDATE() " +
+             "AND bp.quantity > 0 " + 
+             "ORDER BY bp.expiryDate DESC";
+
         try {
             // connect
             con = new DBContext().getConnection();
@@ -108,7 +121,7 @@ public class OrderDetailDAO {
             ps = con.prepareStatement(sql);
 
             ps.setInt(1, o.getUserId());
-            ps.setDouble(2, 5.00);
+            ps.setDouble(2, 20000);
             ps.setInt(3, 0);
             ps.setDate(4, Date.valueOf(LocalDate.now()));
 
@@ -122,9 +135,10 @@ public class OrderDetailDAO {
 
     // Viết cho OrderDetail
     public OrderDetailDTO findOrderDetail(int orderId, int productId) {
-        String sql = "select od.*,p.*, pr.*,bp.quantity from  OrderDetails od  join BatchesProduct bp on od.batchId = bp.batchId\n"
-                + "join Products p on bp.productId = p.productId \n"
-                + "join Promos pr on pr.productId = p.productId where od.orderId= ? and bp.productId = ?";
+        String sql = """
+                     select od.*,p.*, pr.*,bp.quantity from  OrderDetails od  join BatchesProduct bp on od.batchId = bp.batchId
+                     join Products p on bp.productId = p.productId 
+                     join Promos pr on pr.productId = p.productId where od.orderId= ? and bp.productId = ?""";
 
         try {
             con = new DBContext().getConnection();
@@ -166,7 +180,8 @@ public class OrderDetailDAO {
         return null;
 
     }
-     public OrderDetailDTO findOrderDetailByOrderId(int orderId) {
+
+    public OrderDetailDTO findOrderDetailByOrderId(int orderId) {
         String sql = "select od.*,p.*, pr.*,bp.quantity from  OrderDetails od  join BatchesProduct bp on od.batchId = bp.batchId\n"
                 + "join Products p on bp.productId = p.productId \n"
                 + "join Promos pr on pr.productId = p.productId where od.orderId= ?";
@@ -210,17 +225,16 @@ public class OrderDetailDAO {
         return null;
 
     }
-    
-    
-    
+
     public List<OrderDetailDTO> listOrderDetail(int orderId) {
         String sql = """
-                     SELECT od.*, p.*, pr.*, bp.quantity
+                     SELECT od.*, p.*, pr.*,  bp.quantity,o.shippingFee
                      FROM OrderDetails od
                      JOIN BatchesProduct bp ON od.batchId = bp.batchId
                      JOIN Products p ON bp.productId = p.productId
                      JOIN Promos pr ON pr.productId = p.productId
-                     WHERE od.orderId = ?""";
+                     JOIN Orders o on od.orderId = o.orderId
+                     WHERE od.orderId = ? order by bp.expiryDate desc """;
         List<OrderDetailDTO> listOrderDetail = new ArrayList<>();
 
         try {
@@ -230,7 +244,7 @@ public class OrderDetailDAO {
 
             rs = ps.executeQuery();
             while (rs.next()) {
-               listOrderDetail.add(new OrderDetailDTO(
+                listOrderDetail.add(new OrderDetailDTO(
                         rs.getInt(1),
                         rs.getInt(2),
                         rs.getInt(3),
@@ -252,12 +266,13 @@ public class OrderDetailDAO {
                         rs.getDouble(20),
                         rs.getDate(21),
                         rs.getDate(22),
-                       rs.getInt(23))
+                        rs.getInt(23),
+                        rs.getDouble(24))
                 );
             }
 
         } catch (Exception e) {
-                System.out.println("loi:" + e.getMessage());
+            System.out.println("loi:" + e.getMessage());
         }
         return listOrderDetail;
 
@@ -265,7 +280,7 @@ public class OrderDetailDAO {
 
     public void createOrderDetail(OrderDetailDTO odDTO) {
         String sql = "INSERT INTO OrderDetails (orderId,batchId, unitPriceOut, quantity) VALUES (?, ?, ?, ?)";
-         try {
+        try {
             // connect
             con = new DBContext().getConnection();
             // write sql
@@ -279,14 +294,13 @@ public class OrderDetailDAO {
             ps.executeUpdate();
 
         } catch (Exception e) {
-             System.out.println("loi:" + e.getMessage());
+            System.out.println("loi:" + e.getMessage());
         }
-        
-        
+
     }
 
     public OrderDetailDTO updateQuantity(OrderDetailDTO odDTO) {
-       String sql ="UPDATE OrderDetails SET quantity = ? WHERE orderDetailId = ?";
+        String sql = "UPDATE OrderDetails SET quantity = ? WHERE orderDetailId = ?";
         try {
             // connect
             con = new DBContext().getConnection();
@@ -299,14 +313,11 @@ public class OrderDetailDAO {
         } catch (Exception e) {
         }
         return odDTO;
-       
-       
-       
+
     }
-    
-    
+
     public Boolean updateQuantity2(int quantity, int orderDetailId) {
-       String sql ="UPDATE OrderDetails SET quantity = ? WHERE orderDetailId = ?";
+        String sql = "UPDATE OrderDetails SET quantity = ? WHERE orderDetailId = ?";
         boolean isUpdated = false;
         try {
             // connect
@@ -315,23 +326,21 @@ public class OrderDetailDAO {
             ps = con.prepareStatement(sql);
             ps.setInt(1, quantity);
             ps.setInt(2, orderDetailId);
-            
-             int rowsAffected = ps.executeUpdate();
-       if (rowsAffected > 0) {
-           isUpdated = true; // Cập nhật thành công
-       }
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                isUpdated = true; // Cập nhật thành công
+            }
 
             ps.executeUpdate();
         } catch (Exception e) {
         }
         return isUpdated;
-       
-       
-       
+
     }
 
     public void deleteOrderDetailById(int deleteId) {
-         String sql = "DELETE FROM orderDetails  WHERE orderDetailId=?";
+        String sql = "DELETE FROM orderDetails  WHERE orderDetailId=?";
 
         try {
             // connect
@@ -344,28 +353,33 @@ public class OrderDetailDAO {
             System.out.println("Loi: " + e.getMessage());
         }
     }
-    
+
     // viet cho gio hang 
-    public List<OrderDetailDTO> listGioHang() {
+    public List<OrderDetailDTO> listGioHang(int userId) {
         String sql = """
-                     SELECT od.*, p.*, pr.*, bp.quantity
-                     FROM OrderDetails od
-                     JOIN (
-                         SELECT TOP 1 *
-                         FROM Orders
-                         WHERE isConfirmed = 0
-                         ORDER BY orderId ASC
-                     ) o ON od.orderId = o.orderId join BatchesProduct bp on bp.batchId = od.batchId join Promos pr on pr.productId = bp.productId join Products p on p.productId = bp.productId
-                     ORDER BY o.orderId ASC;""";
+                     					 SELECT od.*, p.*, pr.*, bp.quantity, o.shippingFee
+                                          FROM OrderDetails od
+                                          JOIN (
+                                              SELECT TOP 1 ord.*
+                                              FROM Orders ord 
+                                              JOIN Users u ON u.userId = ord.userId
+                                              WHERE ord.isConfirmed = 0 AND u.userId = ?  -- Place WHERE clause before ORDER BY
+                                              ORDER BY ord.orderId ASC
+                                          ) o ON od.orderId = o.orderId 
+                                          JOIN BatchesProduct bp ON bp.batchId = od.batchId 
+                                          JOIN Promos pr ON pr.productId = bp.productId 
+                                          JOIN Products p ON p.productId = bp.productId
+                                          ORDER BY o.orderId ASC;""";
         List<OrderDetailDTO> listOrderDetail = new ArrayList<>();
 
         try {
             con = new DBContext().getConnection();
+            
             ps = con.prepareStatement(sql);
-
+            ps.setInt(1, userId);
             rs = ps.executeQuery();
             while (rs.next()) {
-               listOrderDetail.add(new OrderDetailDTO(
+                listOrderDetail.add(new OrderDetailDTO(
                         rs.getInt(1),
                         rs.getInt(2),
                         rs.getInt(3),
@@ -387,15 +401,24 @@ public class OrderDetailDAO {
                         rs.getDouble(20),
                         rs.getDate(21),
                         rs.getDate(22),
-                       rs.getInt(23))
+                        rs.getInt(23),
+                        rs.getDouble(24))
                 );
             }
 
         } catch (Exception e) {
-                System.out.println("loi:" + e.getMessage());
+            System.out.println("loi:" + e.getMessage());
         }
         return listOrderDetail;
 
     }
 
+    public static void main(String[] args) {
+        OrderDetailDAO dao = new OrderDetailDAO();
+        List<OrderDetailDTO> test1 = dao.listGioHang(3);
+        for (OrderDetailDTO t : test1) {
+            System.out.println(t.toString());
+        }
+    }
 }
+//done
