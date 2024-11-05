@@ -666,9 +666,9 @@ public class ProductDAO extends DBContext {
     }
 //----------------------------------------------------------------------------------------------------------------------------------------------//
 
-    public void updateProduct(int productId, String name, String unitMeasure, int supplierId, int categoryId, String description, BigDecimal unitPrice, String status, String image) {
+    public void updateProduct(int productId, String name, String unitMeasure, int categoryId, String description, BigDecimal unitPrice, String status, String image) {
 
-        String sqlUpdateProduct = "UPDATE Products SET name = ?, unitMeasure = ?, supplierId = ?, categoryId = ?, description = ?, unitPrice = ?, status = ?, image = ? WHERE productId = ?";
+        String sqlUpdateProduct = "UPDATE Products SET name = ?, unitMeasure = ?, categoryId = ?, description = ?, unitPrice = ?, status = ?, image = ? WHERE productId = ?";
 
         try {
             // Bắt đầu transaction
@@ -679,13 +679,12 @@ public class ProductDAO extends DBContext {
             try (PreparedStatement psProduct = connection.prepareStatement(sqlUpdateProduct)) {
                 psProduct.setString(1, name);
                 psProduct.setString(2, unitMeasure);
-                psProduct.setInt(3, supplierId);
-                psProduct.setInt(4, categoryId);
-                psProduct.setString(5, description);
-                psProduct.setBigDecimal(6, unitPrice);
-                psProduct.setString(7, status);
-                psProduct.setString(8, image);
-                psProduct.setInt(9, productId);
+                psProduct.setInt(3, categoryId);
+                psProduct.setString(4, description);
+                psProduct.setBigDecimal(5, unitPrice);
+                psProduct.setString(6, status);
+                psProduct.setString(7, image);
+                psProduct.setInt(8, productId);
 
                 psProduct.executeUpdate();
             }

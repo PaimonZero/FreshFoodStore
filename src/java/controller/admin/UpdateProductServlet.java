@@ -38,8 +38,7 @@ public class UpdateProductServlet extends HttpServlet {
         // Lấy thông tin từ request
         String productIdStr = request.getParameter("productId");
         String name = request.getParameter("name");
-        String unitMeasure = request.getParameter("unitMeasure");
-        String supplierIdStr = request.getParameter("supplierId");
+        String unitMeasure = request.getParameter("unitMeasure");;
         String categoryIdStr = request.getParameter("categoryId");
         String description = request.getParameter("description");
         String unitPriceStr = request.getParameter("unitPrice");
@@ -48,7 +47,7 @@ public class UpdateProductServlet extends HttpServlet {
 
         // Kiểm tra các giá trị null và hợp lệ
         if (productIdStr == null || productIdStr.isEmpty() || !productIdStr.matches("\\d+")
-                || supplierIdStr == null || supplierIdStr.isEmpty() || !supplierIdStr.matches("\\d+")
+//                || supplierIdStr == null || supplierIdStr.isEmpty() || !supplierIdStr.matches("\\d+")
                 || categoryIdStr == null || categoryIdStr.isEmpty() || !categoryIdStr.matches("\\d+")
                 || unitPriceStr == null || unitPriceStr.isEmpty() || !unitPriceStr.matches("\\d+")
                 ) {
@@ -59,7 +58,7 @@ public class UpdateProductServlet extends HttpServlet {
 
         try {
             int productId = Integer.parseInt(productIdStr);
-            int supplierId = Integer.parseInt(supplierIdStr);
+//            int supplierId = Integer.parseInt(supplierIdStr);
             int categoryId = Integer.parseInt(categoryIdStr);
             BigDecimal unitPrice = BigDecimal.valueOf(Double.parseDouble(unitPriceStr));
 
@@ -87,7 +86,7 @@ public class UpdateProductServlet extends HttpServlet {
             }
 
             //Xử lý update product
-            productDao.updateProduct(productId, name, unitMeasure, supplierId, categoryId, description, unitPrice, status, proImages.get(0));
+            productDao.updateProduct(productId, name, unitMeasure, categoryId, description, unitPrice, status, proImages.get(0));
             // Chuyển hướng về trang sản phẩm
             response.sendRedirect("ProductInfo.jsp?productId=" + productId);
         } catch (NumberFormatException e) {

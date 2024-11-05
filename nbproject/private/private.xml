@@ -3,10 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/All%20Book/FromUniversity/Ki_5/SWP391/FreshFoodStore/web/admin/Product.jsp</file>
-            <file>file:/E:/All%20Book/FromUniversity/Ki_5/SWP391/FreshFoodStore/src/java/feature/loginGoogle/Constants.java</file>
-            <file>file:/E:/All%20Book/FromUniversity/Ki_5/SWP391/FreshFoodStore/web/admin/Users.jsp</file>
-            <file>file:/E:/All%20Book/FromUniversity/Ki_5/SWP391/FreshFoodStore/web/admin/Orders.jsp</file>
+            <file>file:/D:/University/KI5%202024%20FALL/SWP391/GitHub/src/java/controller/admin/AdChartOrdersServlet.java</file>
+            <file>file:/D:/University/KI5%202024%20FALL/SWP391/GitHub/src/java/feature/loginGoogle/Constants.java</file>
+            <file>file:/D:/University/KI5%202024%20FALL/SWP391/GitHub/src/java/dal/DatabaseInfo.java</file>
         </group>
     </open-files>
 </project-private>

@@ -64,8 +64,8 @@
                                                     data-unitPrice="<%= String.format("%.0f", productInfo.getUnitPrice()) %>"
                                                     onclick="editProduct(this)" >Edit Product</button>
 
-                                            <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
-                                                    data-bs-target="#deleteConfirmationModal"  style="width: 105px;">Delete</button>
+<!--                                            <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
+                                                    data-bs-target="#deleteConfirmationModal"  style="width: 105px;">Delete</button>-->
 
                                         </div>
                                     </div>
@@ -334,7 +334,7 @@
                                             <label for="unitMeasure" class="form-label">Unit Measure</label>
                                             <input type="text" class="form-control" id="unitMeasure" name="unitMeasure" required>
                                         </div>
-                                        <div class="mb-3">
+<!--                                        <div class="mb-3">
                                             <label for="supplierSelect" class="form-label">Supplier</label>
                                             <select class="form-select" id="supplierSelect" name="supplierId" required>
                                                 <option selected disabled value="">Choose a Supplier</option>
@@ -344,7 +344,7 @@
                                                 <option value="<%= supplier.getSupplierId() %>"><%= supplier.getName() %></option>
                                                 <% } %>
                                             </select>
-                                        </div>
+                                        </div>-->
                                         <div class="mb-3">
                                             <label for="categorySelect" class="form-label">Category</label>
                                             <select class="form-select" id="categorySelect" name="categoryId" required>
