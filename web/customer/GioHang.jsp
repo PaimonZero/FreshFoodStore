@@ -119,22 +119,7 @@
                                                 tục mua hàng</button>
                                         </a>
                                     </div>
-                                    <div class="coupon mt-4">
-                                        <div class="row">
-                                            <div class="col-md-3 pt-2">
-                                                <h4>Coupon Code</h4>
-                                            </div>
-                                            <div class="col-md-9 position-relative">
-                                                <form action="">
-                                                    <input type="text" id="coupon-code"
-                                                           style="border-radius: 50px; padding: 10px 20px;"
-                                                           class="form-control" placeholder="Enter your coupon code" />
-                                                    <button type="submit" class="btn btn-dark apply-btn">Apply
-                                                        coupon</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    
                                 </div>
                                 <!-- end col -->
 
